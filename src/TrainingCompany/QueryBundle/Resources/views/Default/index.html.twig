@@ -1,0 +1,69 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div>
+    {% for child in form %}
+    	<div {{ block('widget_container_attributes') }}>
+	        {{ form_label(child) }}<br/>
+	        {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+
+{% block field_row %}
+{% spaceless %}
+    <div class="query_row">
+        <div class="query_label">
+		    {{ form_label(form) }}
+        </div>
+        <div class="query_widget">
+            {{ form_widget(form) }}
+            <div class="form_error">
+                {{ form_errors(form) }}
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction %}
+Side {{ page }}
+{% endblock instruction %}
+
+{% block maincontent %}
+<div class="form_header">
+    <div class="form_header_inner">
+        Side {{ page }} af {{ pages }}
+    </div>
+</div>
+
+<div class="form_content">
+    <form action="{{ path('_survey') }}" method="POST">
+		{{ form_rest(form) }}
+        <div class="query_clear"></div>
+        
+		<div style="float: right;">
+	        <input type="button" name="start" value="Start" class="form_button" onClick="window.location='{{ path('_start') }}'"/>
+	        {% if page > 1 %}
+	        <input type="button" name="back" value="Tilbage" class="form_button" onClick="window.location='{{ path('_back') }}'"/>
+	        {% endif %}
+	        {% if page == pages %}
+	        <input type="submit" name="complete" value="Afslut" class="form_button" />
+	        {% else %}
+	        <input type="submit" name="next" value="Videre" class="form_button" />
+	        {% endif %}
+        </div>
+        <div class="query_clear"></div>
+    </form>
+</div>
+{% endblock %}

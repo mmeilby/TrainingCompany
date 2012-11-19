@@ -1,0 +1,65 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block choice_widget_expanded %}
+{% spaceless %}
+    <div>
+    {% for child in form %}
+    	<div {{ block('widget_container_attributes') }}>
+	        {{ form_label(child) }}<br/>
+	        {{ form_widget(child) }}
+        </div>
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock choice_widget_expanded %}
+
+
+{% block field_row %}
+{% spaceless %}
+    <div class="query_row">
+        <div class="query_label">
+		    {{ form_label(form) }}
+        </div>
+        <div class="query_widget">
+            {{ form_widget(form) }}
+            <div class="form_error">
+                {{ form_errors(form) }}
+            </div>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+{% endspaceless %}
+{% endblock field_row %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction %}
+Administration
+{% endblock instruction %}
+
+{% block maincontent %}
+<div class="form_header">
+    <div class="form_header_inner">
+        Inviter respondent til ny kampagne
+    </div>
+</div>
+
+<div class="form_content">
+    <form action="{{ path('_admin') }}" method="POST">
+        <p>Indtast navn og e-mail adresse på respondenten.</p>
+        <p>Der sendes en invitation til kampagnen på e-mail adressen.
+           Nye respondenter oprettes desuden i personregisteret.</p>
+        <p>Respondenter kendes på e-mail adressen.</p>
+		{{ form_rest(form) }}
+        <div class="query_clear"></div>
+        
+		<div style="float: right;">
+	        <input type="submit" name="invite" value="Inviter" class="form_button" />
+        </div>
+        <div class="query_clear"></div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title "Training Company" %}</title>
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+        {% stylesheets '@TrainingCompanyQueryBundle/Resources/public/css/*' filter="cssrewrite" %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+    </head>
+    <body>
+        <img id="background_image" src="{{ asset('bundles/trainingcompanyquery/images/trncmp_bckg.png') }}"/>
+        <div id="top_bar">
+            <img id="logo" src="{{ asset('bundles/trainingcompanyquery/images/trncmp_logo.jpg') }}"/>
+            <div id="punchline">{% block punchline "Din udvikling - vores mission" %}</div>
+        </div>
+        <div id="wrapper">
+            <div id="content">
+                <div id="redfield">{% block headline "En bedre hverdag for dig!" %}</div>
+                <div id="bluefield">{% block instruction "" %}</div>
+                <div id="content_spacer">&nbsp;</div>
+                <div id="main_content">
+                    {% block maincontent %}{% endblock %}
+                </div>
+            </div>
+        </div>
+        <div id="copyright">{% block copyright "www.training-comp.dk * mail: jis@training-comp.dk - Tlf.: 20213020" %}</div>
+    </body>
+</html>
