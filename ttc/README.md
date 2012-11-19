@@ -1,4 +1,0 @@
-ttc
-===
-
-The Training Company
