@@ -17,6 +17,7 @@ class AdminController extends Controller
     private $repositoryPath = 'TrainingCompany\QueryBundle\Entity\Doctrine\QPersons';
 
     /**
+     * TEST
      * Administrationsside
      * @Route("/admin", name="_admin")
      * @Secure(roles="ROLE_ADMIN")
