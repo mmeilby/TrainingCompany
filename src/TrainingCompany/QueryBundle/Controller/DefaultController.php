@@ -22,10 +22,10 @@ class DefaultController extends Controller
      */
     public function startAction() {
         $request = $this->getRequest();
-        $e = $request->query->get('e');
+        $q = $request->query->get('e');
         $id = $request->query->get('id');
         $session = $request->getSession();
-        if (isset($e) && isset($id)) {
+        if (isset($q) && isset($id)) {
             try {
                 $em = $this->getDoctrine()->getManager();
                 $qpersons = $em->getRepository($this->repositoryPath)->findOneBy(array('token' => $id));
@@ -35,7 +35,8 @@ class DefaultController extends Controller
                 }
 
                 $session->set('personid', $qpersons->getId());
-                $session->set('questionid', $e);
+                $queryBuilder = new QueryBuilderFactory();
+                $session->set('questionid', $queryBuilder->getQueryId($q));
                 return $this->redirect($this->generateUrl('_start'));
             }
             catch (\PDOException $e) {
@@ -126,7 +127,7 @@ class DefaultController extends Controller
      * @Template("TrainingCompanyQueryBundle:Default:index.html.twig")
      */
     public function queryAction(Request $request) {
-		$session = $request->getSession();
+        $session = $request->getSession();
         $pid = $session->get('personid');
         $qid = $session->get('questionid');
        	$page = $session->get('page');
