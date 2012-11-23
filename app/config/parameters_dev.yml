@@ -1,0 +1,13 @@
+parameters:
+    database_driver: pdo_mysql
+    database_host: localhost
+    database_port: '3306'
+    database_name: training_company
+    database_user: root
+    database_password: null
+    database_path: training_company
+    mailer_user: mmeilby@gmail.com
+    mailer_password: bingoboy
+    security_password: bingoboy
+    locale: da
+    secret: 95e910aceacd17510f316697a05adbaf3e
