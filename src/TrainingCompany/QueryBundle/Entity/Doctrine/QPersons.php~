@@ -29,6 +29,13 @@ class QPersons
     private $name;
 
     /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=150, nullable=true)
+     */
+    private $email;
+
+    /**
      * @var string $phone
      *
      * @ORM\Column(name="phone", type="string", length=20, nullable=true)
@@ -41,13 +48,6 @@ class QPersons
      * @ORM\Column(name="jobtitle", type="string", length=50, nullable=true)
      */
     private $jobtitle;
-
-    /**
-     * @var string $date
-     *
-     * @ORM\Column(name="date", type="date", nullable=true)
-     */
-    private $date;
 
     /**
      * @var string $jobdomain
@@ -90,6 +90,29 @@ class QPersons
     }
 
     /**
+     * Set e-mail
+     *
+     * @param string $email
+     * @return QPersons
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get e-mail
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
      * Set phone
      *
      * @param string $phone
@@ -118,44 +141,21 @@ class QPersons
      * @param string $jobtitle
      * @return QPersons
      */
-    public function setJobTitle($jobtitle)
+    public function setJobtitle($jobtitle)
     {
         $this->jobtitle = $jobtitle;
-
+    
         return $this;
     }
 
     /**
      * Get jobtitle
      *
-     * @return string
+     * @return string 
      */
-    public function getJobTitle()
+    public function getJobtitle()
     {
         return $this->jobtitle;
-    }
-
-    /**
-     * Set date
-     *
-     * @param string $date
-     * @return QPersons
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return string
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 
     /**
@@ -164,19 +164,19 @@ class QPersons
      * @param string $jobdomain
      * @return QPersons
      */
-    public function setJobDomain($jobdomain)
+    public function setJobdomain($jobdomain)
     {
         $this->jobdomain = $jobdomain;
-
+    
         return $this;
     }
 
     /**
      * Get jobdomain
      *
-     * @return string
+     * @return string 
      */
-    public function getJobDomain()
+    public function getJobdomain()
     {
         return $this->jobdomain;
     }

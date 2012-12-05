@@ -1,0 +1,27 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction "Udsæt undersøgelsen" %}
+
+{% block maincontent %}
+    <div class="form_header">
+        <div class="form_header_inner">
+            Udsæt undersøgelsen
+        </div>
+    </div>
+
+    <div class="form_content">
+        <form action="{{ path('_survey') }}" method="POST">
+            <p>Du har valgt at udsætte undersøgelsen.</p>
+            <p>Dine svar indtil nu er registreret og du kan lukke din browser nu.</p>
+            <p>Når du er klar til at fortsætte undersøgelsen skal du klikke på det link der er tilsendt per e-mail...</p>
+            <p>Hvis du allerede nu ønsker at fortsætte undersøgelsen kan du klikke dig tilbage....
+            <div style="float: right;">
+                <input type="button" name="continue" value="Fortsæt" class="form_button" onClick="window.location='{{ path('_survey') }}'"/>
+            </div>
+            <div class="query_clear"></div>
+        </form>
+    </div>
+{% endblock %}

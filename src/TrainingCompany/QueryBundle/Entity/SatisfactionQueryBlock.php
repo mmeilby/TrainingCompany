@@ -5,10 +5,10 @@ use TrainingCompany\QueryBundle\Entity\Doctrine\QResponses;
 
 class SatisfactionQueryBlock extends QueryBlock {
 
-	public $label;
+    public $label;
     public $valueset;
-	// Satisfaction: 1-7 - completely disagree/completely agree
-	public $satisfaction;
+    // Satisfaction: 1-7 - completely disagree/completely agree
+    public $satisfaction;
 
     private $repositoryPath = 'TrainingCompany\QueryBundle\Entity\Doctrine\QResponses';
 

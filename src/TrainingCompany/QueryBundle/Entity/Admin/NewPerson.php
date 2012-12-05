@@ -5,4 +5,5 @@ class NewPerson {
 
 	public $name;
 	public $email;
+        public $survey;
 }

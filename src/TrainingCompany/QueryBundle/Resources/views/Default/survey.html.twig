@@ -1,0 +1,37 @@
+{% extends "TrainingCompanyQueryBundle::layout.script.html.twig" %}
+
+{% form_theme form _self %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction %}
+Side {{ page }}
+{% endblock instruction %}
+
+{% block maincontent %}
+<div class="form_header">
+    <div class="form_header_inner">
+        Side {{ page }} af {{ pages }}
+    </div>
+</div>
+
+<div class="form_content">
+    <form action="{{ path('_survey') }}" method="POST">
+        {{ form_rest(form) }}
+        <div class="query_clear"></div>
+        <div style="float: right;">
+            {% if page > 1 %}
+                <input type="button" name="back" value="Tilbage" class="form_button" onClick="window.location='{{ path('_back') }}'"/>
+            {% endif %}
+            <input type="button" name="suspend" value="Pause" class="form_button" onClick="window.location='{{ path('_suspend') }}'"/>
+            {% if page == pages %}
+                <input type="submit" name="complete" value="Afslut" class="form_button" />
+            {% else %}
+                <input type="submit" name="next" value="Videre" class="form_button" />
+            {% endif %}
+        </div>
+        <div class="query_clear"></div>
+    </form>
+</div>
+{% endblock %}

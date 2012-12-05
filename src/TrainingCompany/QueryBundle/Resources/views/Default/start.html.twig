@@ -1,35 +1,5 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block choice_widget_expanded %}
-{% spaceless %}
-    <div>
-    {% for child in form %}
-    	<div {{ block('widget_container_attributes') }}>
-	        {{ form_label(child) }}<br/>
-	        {{ form_widget(child) }}
-        </div>
-    {% endfor %}
-    </div>
-{% endspaceless %}
-{% endblock choice_widget_expanded %}
-
-
-{% block field_row %}
-{% spaceless %}
-    <div class="query_row">
-        <div class="query_label">
-		    {{ form_label(form) }}
-        </div>
-        <div class="query_widget">
-            {{ form_widget(form) }}
-            <div class="form_error">
-                {{ form_errors(form) }}
-            </div>
-        </div>
-    </div>
-{% endspaceless %}
-{% endblock field_row %}
-
 {% block title "Training Company" %}
 {% block punchline "Din udvikling - vores mission" %}
 {% block headline "En bedre hverdag for dig!" %}
@@ -47,7 +17,6 @@
             <p>Kære {{ name }}</p>
             <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.</p>
             <p>Tryk på ''Start'' for at gå i gang med besvarelsen.</p>
-            {{ form_rest(form) }}
             <div style="float: right;">
                 <input type="button" name="start" value="Start" class="form_button" onClick="window.location='{{ path('_survey') }}'"/>
             </div>

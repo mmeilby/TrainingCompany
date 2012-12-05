@@ -1,55 +1,28 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block choice_widget_expanded %}
-{% spaceless %}
-    <div>
-    {% for child in form %}
-    	<div {{ block('widget_container_attributes') }}>
-	        {{ form_label(child) }}<br/>
-	        {{ form_widget(child) }}
-        </div>
-    {% endfor %}
-    </div>
-{% endspaceless %}
-{% endblock choice_widget_expanded %}
-
-
-{% block field_row %}
-{% spaceless %}
-    <div class="query_row">
-        <div class="query_label">
-		    {{ form_label(form) }}
-        </div>
-        <div class="query_widget">
-            {{ form_widget(form) }}
-            <div class="form_error">
-                {{ form_errors(form) }}
-            </div>
-        </div>
-    </div>
-{% endspaceless %}
-{% endblock field_row %}
-
 {% block title "Training Company" %}
 {% block punchline "Din udvikling - vores mission" %}
 {% block headline "En bedre hverdag for dig!" %}
-{% block instruction "Der er opstået et problem" %}
+{% block instruction "Undersøgelsen kan ikke gennemføres" %}
 
 {% block maincontent %}
     <div class="form_header">
         <div class="form_header_inner">
-            Fejlbesked
+            Undersøgelsen kan ikke gennemføres
         </div>
     </div>
 
+
     <div class="form_content">
-    <form action="{{ path('_start') }}" method="POST">
-        <p>{{ error }}</p>
-		{{ form_rest(form) }}
-		<div style="float: right;">
-	        <input type="submit" name="start" value="Start" class="form_button" />
-        </div>
-        <div class="query_clear"></div>
-    </form>
-</div>
+        <form action="{{ path('_feedback') }}" method="POST">
+            <p>Der er opstået et problem som forhindrer at undersøgelsen kan gennemføres.</p>
+            <pre>{{ error }}</pre>
+            <p>Start igen ved at klikke på det link der er tilsendt per e-mail. Vi undskylder ulejligheden!</p>
+            <p>Hvis du ønsker at kommentere undersøgelsen eller angive yderligere information skal du klikke dig videre...</p>
+            <div style="float: right;">
+                <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
+            </div>
+            <div class="query_clear"></div>
+        </form>
+    </div>
 {% endblock %}

@@ -50,25 +50,11 @@ class QPersons
     private $jobtitle;
 
     /**
-     * @var string $date
-     *
-     * @ORM\Column(name="date", type="string", nullable=true)
-     */
-    private $date;
-
-    /**
      * @var string $jobdomain
      *
      * @ORM\Column(name="jobdomain", type="text", nullable=true)
      */
     private $jobdomain;
-
-    /**
-     * @var string $token
-     *
-     * @ORM\Column(name="token", type="string", length=36, nullable=true)
-     */
-    private $token;
 
     /**
      * Get id
@@ -155,44 +141,21 @@ class QPersons
      * @param string $jobtitle
      * @return QPersons
      */
-    public function setJobTitle($jobtitle)
+    public function setJobtitle($jobtitle)
     {
         $this->jobtitle = $jobtitle;
-
+    
         return $this;
     }
 
     /**
      * Get jobtitle
      *
-     * @return string
+     * @return string 
      */
-    public function getJobTitle()
+    public function getJobtitle()
     {
         return $this->jobtitle;
-    }
-
-    /**
-     * Set date
-     *
-     * @param string $date
-     * @return QPersons
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    /**
-     * Get date
-     *
-     * @return string
-     */
-    public function getDate()
-    {
-        return $this->date;
     }
 
     /**
@@ -201,43 +164,20 @@ class QPersons
      * @param string $jobdomain
      * @return QPersons
      */
-    public function setJobDomain($jobdomain)
+    public function setJobdomain($jobdomain)
     {
         $this->jobdomain = $jobdomain;
-
+    
         return $this;
     }
 
     /**
      * Get jobdomain
      *
-     * @return string
+     * @return string 
      */
-    public function getJobDomain()
+    public function getJobdomain()
     {
         return $this->jobdomain;
-    }
-
-    /**
-     * Set token
-     *
-     * @param string $token
-     * @return QPersons
-     */
-    public function setToken($token)
-    {
-        $this->token = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get token
-     *
-     * @return string
-     */
-    public function getToken()
-    {
-        return $this->token;
     }
 }

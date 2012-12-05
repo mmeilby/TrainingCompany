@@ -1,6 +1,7 @@
 <?php
 namespace TrainingCompany\QueryBundle\Controller;
 
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -11,6 +12,7 @@ use Symfony\Component\Security\Core\SecurityContext;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use TrainingCompany\QueryBundle\Entity\Admin\NewPerson;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QPersons;
+use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
 
 class AdminController extends Controller
 {
@@ -27,6 +29,16 @@ class AdminController extends Controller
         $formDef = $this->createFormBuilder($formData);
         $formDef->add('name', 'text', array('label' => 'Navn', 'required' => false));
         $formDef->add('email', 'text', array('label' => 'E-mail', 'required' => false));
+
+        $em = $this->getDoctrine()->getManager();
+
+        $queryBuilder = new QueryBuilderFactory();
+        $surveys = $queryBuilder->getSurveys($em);
+        $choices = array();
+        foreach ($surveys as $survey) {
+            $choices[$survey->id] = $survey->name;
+        }
+        $formDef->add('survey', 'choice', array('label' => 'Spørgeskema', 'required' => false, 'choices' => $choices, 'empty_value' => 'Vælg...'));
         $form = $formDef->getForm();
 
         $request = $this->getRequest();
@@ -34,33 +46,43 @@ class AdminController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 $formData = $form->getData();
-                $em = $this->getDoctrine()->getManager();
                 $qpersons = $em->getRepository($this->repositoryPath)->findOneBy(array('email' => $formData->email));
                 $new = !$qpersons;
                 if ($new) $qpersons = new QPersons();
                 $qpersons->setName($formData->name);
                 $qpersons->setEmail($formData->email);
-                $qpersons->setToken($this->generateToken($formData->email));
                 if ($new) $em->persist($qpersons);
                 $em->flush();
 
-                $questionid = 'GdwMiD8zdpFD8Ldm';
-                $from = 'mmeilby@gmail.com';
-                $sender = 'Henrik Thomsen';
-                $parms = array(
-                    'from' => $from,
-                    'sender' => $sender,
-                    'name' => $qpersons->getName(),
-                    'email' => $qpersons->getEmail(),
-                    'token' => $qpersons->getToken(),
-                    'qid' => $questionid);
-                $message = \Swift_Message::newInstance()
-                    ->setSubject('The Training Company har brug for din mening')
-                    ->setFrom(array($from => 'The Training Company'))
-                    ->setTo(array($qpersons->getEmail() => $qpersons->getName()))
-                    ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms), 'text/html');
-//                    ->addPart($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms));
-                $this->get('mailer')->send($message);
+                $qsurvey = new QSurveys();
+                $qsurvey->setPid($qpersons->getId());
+                $qsurvey->setSid($formData->survey);
+                $qsurvey->setQno(0);
+                $qsurvey->setDate(time());
+                $qsurvey->setState(0);
+                $qsurvey->setToken($this->generateToken($formData->email));
+                $em->persist($qsurvey);
+                $em->flush();
+                
+                foreach ($surveys as $survey) {
+                    if ($survey->id == $formData->survey) {
+                        $parms = array(
+                            'from' => $survey->email,
+                            'sender' => $survey->signer,
+                            'name' => $qpersons->getName(),
+                            'email' => $qpersons->getEmail(),
+                            'token' => $qsurvey->getToken(),
+//                            'survey' => $survey->ref,
+                            'host' => $request->getHost());
+                        $message = Swift_Message::newInstance()
+                            ->setSubject($survey->invitation)
+                            ->setFrom(array($survey->email => $survey->sender))
+                            ->setTo(array($qpersons->getEmail() => $qpersons->getName()))
+                            ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms), 'text/html');
+        //                    ->addPart($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms));
+                        $this->get('mailer')->send($message);
+                    }
+                }
             }
         }
 

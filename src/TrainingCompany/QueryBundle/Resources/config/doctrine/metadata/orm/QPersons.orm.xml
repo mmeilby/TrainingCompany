@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="QPersons" table="q_persons">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="50" nullable="true"/>
+    <field name="email" type="string" column="email" length="150" nullable="true"/>
+    <field name="phone" type="string" column="phone" length="50" nullable="true"/>
+    <field name="jobtitle" type="string" column="jobtitle" length="150" nullable="true"/>
+    <field name="jobdomain" type="text" column="jobdomain" nullable="true"/>
+  </entity>
+</doctrine-mapping>

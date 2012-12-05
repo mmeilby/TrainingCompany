@@ -1,0 +1,26 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction "Tak" %}
+
+{% block maincontent %}
+    <div class="form_header">
+        <div class="form_header_inner">
+            Undersøgelsen er færdig
+        </div>
+    </div>
+
+    <div class="form_content">
+        <form action="{{ path('_feedback') }}" method="POST">
+            <p>Tak fordi du tog dig tid til at deltage i undersøgelsen.</p>
+            <p>Dine svar er registreret og du kan lukke din browser nu.</p>
+            <p>Hvis du ønsker at kommentere undersøgelsen skal du klikke dig videre...</p>
+            <div style="float: right;">
+                <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
+            </div>
+            <div class="query_clear"></div>
+        </form>
+    </div>
+{% endblock %}

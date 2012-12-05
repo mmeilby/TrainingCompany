@@ -1,0 +1,26 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% block title "Training Company" %}
+{% block punchline "Din udvikling - vores mission" %}
+{% block headline "En bedre hverdag for dig!" %}
+{% block instruction "Respondentoplysninger mangler" %}
+
+{% block maincontent %}
+    <div class="form_header">
+        <div class="form_header_inner">
+            Respondentoplysninger mangler
+        </div>
+    </div>
+
+    <div class="form_content">
+        <form action="{{ path('_feedback') }}" method="POST">
+            <p>The Training Company udfører undersøgelser i forbindelse med træningsforløb.</p>
+            <p>Som deltager i et træningsforløb får du tilsendt en invitation på e-mail med anvisning om hvordan du deltager i undersøgelsen.</p>
+            <p>Hvis du mangler at modtage en invitation kan du kontakte os ved at klikke dig videre...</p>
+            <div style="float: right;">
+                <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
+            </div>
+            <div class="query_clear"></div>
+        </form>
+    </div>
+{% endblock %}

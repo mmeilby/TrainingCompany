@@ -5,14 +5,14 @@ use TrainingCompany\QueryBundle\Entity\Doctrine\QComments;
 
 class CommentQueryBlock extends QueryBlock {
 
-	public $label;
-	public $comment;
+    public $label;
+    public $comment;
 
     private $repositoryPath = 'TrainingCompany\QueryBundle\Entity\Doctrine\QComments';
 
-	public function __construct() {
-		$this->blocktype = 'COMMENT';
-	}
+    public function __construct() {
+            $this->blocktype = 'COMMENT';
+    }
 
     public function get($em, $pid, $qid, $qno) {
         $qcomments = $em->getRepository($this->repositoryPath)->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $qno));
