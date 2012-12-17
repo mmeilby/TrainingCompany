@@ -2,20 +2,20 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title "Training Company" %}</title>
+        <title>{% block title "The Training Company" %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
 
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
-        {% stylesheets '@TrainingCompanyQueryBundle/Resources/public/css/*' filter="cssrewrite" %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% stylesheets '@TrainingCompanyQueryBundle/Resources/public/css/*' output="bundles/trainingcompanyquery/css/*.css" filter="cssrewrite" %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
     <body>
         <img id="background_image" src="{{ asset('bundles/trainingcompanyquery/images/trncmp_bckg.png') }}"/>
         <div id="top_bar">
             <img id="logo" src="{{ asset('bundles/trainingcompanyquery/images/trncmp_logo.jpg') }}"/>
-            <div id="punchline">{% block punchline "Din udvikling - vores mission" %}</div>
+            <div id="punchline">{% block punchline %}<img src="http://www.training-comp.dk/cms/spaw/images//thetraining_images/din_udvikling.png" width="236" height="21">{% endblock %}</div>
         </div>
         <div id="wrapper">
             <div id="content">
@@ -27,6 +27,10 @@
                 </div>
             </div>
         </div>
-        <div id="copyright">{% block copyright "www.training-comp.dk * mail: jis@training-comp.dk - Tlf.: 20213020" %}</div>
+        <div id="copyright">
+        {% block copyright %}
+            <a href="http://www.training-comp.dk" target="_blank" style="color: white">www.training-comp.dk</a> - mail: jis@training-comp.dk - Tlf.: 20213020
+        {% endblock %}
+        </div>
     </body>
 </html>

@@ -2,12 +2,7 @@
 
 {% form_theme form _self %}
 
-{% block title "Training Company" %}
-{% block punchline "Din udvikling - vores mission" %}
-{% block headline "En bedre hverdag for dig!" %}
-{% block instruction %}
-Administration
-{% endblock instruction %}
+{% block instruction "Administration" %}
 
 {% block maincontent %}
 <div class="form_header">
@@ -18,6 +13,12 @@ Administration
 
 <div class="form_content">
     <form action="{{ path('_admin') }}" method="POST">
+        {% if send_name is defined %}
+        <div style="border: 1px solid black; padding: 10px;">
+            <p>Invitation blev sendt til {{ send_name }} med adressen {{ send_email }}</p>
+            <p>Ref.: {{ send_token }}</p>
+        </div>
+        {% endif %}
         <p>Indtast navn og e-mail adresse på respondenten.</p>
         <p>Der sendes en invitation til kampagnen på e-mail adressen.
            Nye respondenter oprettes desuden i personregisteret.</p>

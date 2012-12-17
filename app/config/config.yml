@@ -56,3 +56,10 @@ swiftmailer:
     username:   %mailer_user%
     password:   %mailer_password%
     spool:      { type: memory }
+
+parameters:
+    mailuser:      %mailer_user%
+    admin-name:    ttc-test admin
+    feedback-mail: mm@iserve.dk
+    feedback-name: Morten Meilby
+    

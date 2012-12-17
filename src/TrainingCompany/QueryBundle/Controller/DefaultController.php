@@ -1,6 +1,8 @@
 <?php
 namespace TrainingCompany\QueryBundle\Controller;
 
+use Swift_Message;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -31,36 +33,36 @@ class DefaultController extends Controller
         $request = $this->getRequest();
         $id = $request->query->get('id');
         $session = $request->getSession();
-        if (isset($id)) {
-            try {
-                $em = $this->getDoctrine()->getManager();
-                $qsurveys = $em->getRepository($this->repositoryPathSurveys)->findOneBy(array('token' => $id));
-                if (!$qsurveys) {
-                    return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-                }
-
-                if ($qsurveys->getState() == QSurveys::$STATE_INVITED) {
-                    $session->set($this->sessionPage, 0);
-                }
-                else if ($qsurveys->getState() == QSurveys::$STATE_ONGOING) {
-                    $session->set($this->sessionPage, $qsurveys->getQno());
-                }
-                else {
-                    return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig', array('survey' => $qsurveys));
-                }
-                
-                $session->set($this->sessionPersonId, $qsurveys->getPid());
-                $session->set($this->sessionSurveyId, $qsurveys->getId());
-                $session->set($this->sessionTemplateId, $qsurveys->getSid());
-                return $this->redirect($this->generateUrl('_start'));
-            }
-            catch (\PDOException $e) {
-                $session->set('error', $e->getMessage());
-                return $this->redirect($this->generateUrl('_error'));
-            }
+        if (!isset($id)) {
+            return $this->render('TrainingCompanyQueryBundle:Default:invalid_params.html.twig');
         }
 
-        return $this->render('TrainingCompanyQueryBundle:Default:invalid_params.html.twig');
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $qsurveys = $em->getRepository($this->repositoryPathSurveys)->findOneBy(array('token' => $id));
+            if (!$qsurveys) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+            }
+
+            if ($qsurveys->getState() == QSurveys::$STATE_INVITED) {
+                $session->set($this->sessionPage, 0);
+            }
+            else if ($qsurveys->getState() == QSurveys::$STATE_ONGOING) {
+                $session->set($this->sessionPage, $qsurveys->getQno());
+            }
+            else {
+                return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig', array('survey' => $qsurveys));
+            }
+
+            $session->set($this->sessionPersonId, $qsurveys->getPid());
+            $session->set($this->sessionSurveyId, $qsurveys->getId());
+            $session->set($this->sessionTemplateId, $qsurveys->getSid());
+            return $this->redirect($this->generateUrl('_start'));
+        }
+        catch (\PDOException $e) {
+            $session->set('error', $e->getMessage());
+            return $this->redirect($this->generateUrl('_error'));
+        }
     }
 
     /**
@@ -220,18 +222,84 @@ class DefaultController extends Controller
     /**
      * Test indgang til brugerundersøgelsen
      * @Route("/survey/feedback", name="_feedback")
-     * @Method("GET")
+     * @Template("TrainingCompanyQueryBundle:Default:feedback.html.twig")
      */
     public function feedbackAction() {
         $request = $this->getRequest();
         $session = $request->getSession();
-        $pid = $session->get($this->sessionPersonId);
-        $tid = $session->get($this->sessionSurveyId);
-       	$page = $session->get($this->sessionPage);
-        if (!isset($pid) || !isset($tid) || !isset($page)) {
-             return $this->render('TrainingCompanyQueryBundle:Default:timeout.html.twig');
+        if ($request->getMethod() != 'POST') {
+            $id = $request->query->get('id');
+            if (isset($id)) {
+                try {
+                    $em = $this->getDoctrine()->getManager();
+                    $qsurveys = $em->getRepository($this->repositoryPathSurveys)->findOneBy(array('token' => $id));
+                    if (!$qsurveys) {
+                        return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+                    }
+
+                    $session->set($this->sessionPersonId, $qsurveys->getPid());
+                    $session->set($this->sessionSurveyId, $qsurveys->getId());
+                    $session->set($this->sessionTemplateId, $qsurveys->getSid());
+                }
+                catch (\PDOException $e) {
+                    $session->set('error', $e->getMessage());
+                    return $this->redirect($this->generateUrl('_error'));
+                }
+            }
         }
-        return $this->redirect($this->generateUrl('_start'));
+        $pid = $session->get($this->sessionPersonId);
+
+        $formDef = $this->createFormBuilder();
+        if (!isset($pid)) {
+            $formDef->add('name', 'text', array('label' => 'Navn', 'required' => false));
+            $formDef->add('email', 'text', array('label' => 'E-mail', 'required' => false));
+        }
+        $formDef->add('feedback', 'textarea', array('label' => 'Kommentar', 'required' => false));
+        $form = $formDef->getForm();
+        if ($request->getMethod() != 'POST') {
+           return array('form' => $form->createView());
+        }
+        else {
+            $form->bind($request);
+            if ($form->isValid()) {
+                $formData = $form->getData();
+                $feedback = $formData['feedback'];
+                $from = '';
+                $sender = '';
+                if (!isset($pid)) {
+                    $from = $formData['email'];
+                    $sender = $formData['name'];
+                }
+                else {
+                    try {
+                       $em = $this->getDoctrine()->getManager();
+                       $qpersons = $em->getRepository($this->repositoryPathPersons)->find($pid);
+                       if ($qpersons) {
+                           $from = $qpersons->getEmail();
+                           $sender = $qpersons->getName();
+                       }
+                   }
+                   catch (\PDOException $e) {
+                       $session->set('error', $e->getMessage());
+                       return $this->redirect($this->generateUrl('_error'));
+                   }
+                }
+                $parms = array(
+                    'name' => $sender,
+                    'email' => $from,
+                    'feedback' => $feedback,
+                    'host' => $request->getHost());
+                $message = Swift_Message::newInstance()
+                    ->setSubject('TTC-TEST Feedback')
+                    ->setFrom(array($this->container->getParameter('mailuser') => $this->container->getParameter('admin-name')))
+                    ->setTo(array($this->container->getParameter('feedback-mail') => $this->container->getParameter('feedback-name')))
+                    ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:feedbackmail.html.twig', $parms), 'text/html');
+                $this->get('mailer')->send($message);
+                
+            }
+            return $this->render('TrainingCompanyQueryBundle:Default:feedback_ty.html.twig');
+        }
+
     }
 
     /**
@@ -270,38 +338,63 @@ class DefaultController extends Controller
     /**
      * Test indgang til brugerundersøgelsen
      * @Route("/survey/opt", name="_optout")
-     * @Method("GET")
+     * @Template("TrainingCompanyQueryBundle:Default:optout.html.twig")
      */
     public function optAction() {
         $request = $this->getRequest();
-        $id = $request->query->get('id');
         $session = $request->getSession();
-        if (isset($id)) {
+        $em = $this->getDoctrine()->getManager();
+
+        $form = $this->createFormBuilder()->getForm();
+        if ($request->getMethod() != 'POST') {
+            $id = $request->query->get('id');
+            if (!isset($id)) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_params.html.twig');
+            }
+
             try {
-                $em = $this->getDoctrine()->getManager();
                 $qsurveys = $em->getRepository($this->repositoryPathSurveys)->findOneBy(array('token' => $id));
                 if (!$qsurveys) {
                     return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
                 }
 
-                if ($qsurveys->getState() == QSurveys::$STATE_INVITED || $qsurveys->getState() == QSurveys::$STATE_ONGOING) {
-                    $qsurveys->setState(QSurveys::$STATE_OPTED);
-                    $qsurveys->setDate(time());
-                    $em->persist($qsurveys);
-                    $em->flush();
-                }
-                else {
+                $session->set($this->sessionPersonId, $qsurveys->getPid());
+                $session->set($this->sessionSurveyId, $qsurveys->getId());
+                $session->set($this->sessionTemplateId, $qsurveys->getSid());
+                
+                if ($qsurveys->getState() != QSurveys::$STATE_INVITED && $qsurveys->getState() != QSurveys::$STATE_ONGOING) {
                     return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig', array('survey' => $qsurveys));
                 }
                 
-//                $session->set($this->sessionPersonId, $qsurveys->getPid());
-//                $session->set($this->sessionSurveyId, $qsurveys->getId());
-//                $session->set($this->sessionTemplateId, $qsurveys->getSid());
-//                return $this->redirect($this->generateUrl('_start'));
+                return array('form' => $form->createView());
             }
             catch (\PDOException $e) {
                 $session->set('error', $e->getMessage());
                 return $this->redirect($this->generateUrl('_error'));
+            }
+        }
+        else {
+            $form->bind($request);
+            if ($form->isValid()) {
+
+                try {
+                    $qid = $session->get($this->sessionSurveyId);
+                    $qsurveys = $em->getRepository($this->repositoryPathSurveys)->find($qid);
+                    if (!$qsurveys) {
+                        return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+                    }
+                    if ($qsurveys->getState() == QSurveys::$STATE_INVITED || $qsurveys->getState() == QSurveys::$STATE_ONGOING) {
+                        $qsurveys->setState(QSurveys::$STATE_OPTED);
+                        $qsurveys->setDate(time());
+                        $em->persist($qsurveys);
+                        $em->flush();
+                    }
+                    return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig', array('survey' => $qsurveys));
+                }
+                catch (\PDOException $e) {
+                    $session->set('error', $e->getMessage());
+                    return $this->redirect($this->generateUrl('_error'));
+                }
             }
         }
 

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title "Feedback" %}</title>
+</head>
+<body>
+    Feedback fra {{ name }}<br/>
+    Ref.: {{ email }}<br/>
+    <br/>
+    <p>{{ feedback }}</p>
+    <br/>
+    <a href="http://{{ host }}{{ path('_admin') }}" target="_blank">
+    Link til admin.</a><br/>
+</body>
+</html>

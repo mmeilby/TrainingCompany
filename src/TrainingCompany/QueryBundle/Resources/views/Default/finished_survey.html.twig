@@ -1,8 +1,5 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block title "Training Company" %}
-{% block punchline "Din udvikling - vores mission" %}
-{% block headline "En bedre hverdag for dig!" %}
 {% block instruction "Undersøgelsen er færdig" %}
 
 {% block maincontent %}
@@ -14,15 +11,20 @@
 
     <div class="form_content">
         <form action="{{ path('_feedback') }}" method="POST">
-            {% if survey.state == 2 %}
-                <p>Denne undersøgelse er afsluttet og vi takker fordi du tog dig tid til at deltage i undersøgelsen.</p>
-            {% endif %}
-            {% if survey.state == 3 %}
-                <p>Denne undersøgelse blev afbrudt da du angav ikke at have tid til at deltage i undersøgelsen.</p>
-            {% endif %}
-            <p>Hvis du ønsker at tilføje kommentarer til undersøgelsen skal du klikke dig videre...</p>
-            <div style="float: right;">
-                <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
+            <div style="float: left;">
+                <img src="{{ asset('bundles/trainingcompanyquery/images/ID-10046440.jpg') }}" style="width: 230px;">
+            </div>
+            <div style="float: left; width: 475px; margin-left: 15px;">
+                {% if survey.state == 2 %}
+                    <p>Denne undersøgelse er afsluttet og vi takker fordi du tog dig tid til at deltage i undersøgelsen.</p>
+                {% endif %}
+                {% if survey.state == 3 %}
+                    <p>Denne undersøgelse er udløbet. Du har angivet at du ikke ønskede at deltage i undersøgelsen.</p>
+                {% endif %}
+                <p>Hvis du ønsker at tilføje kommentarer til undersøgelsen skal du klikke dig videre...</p>
+                <div style="float: right;">
+                    <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
+                </div>
             </div>
             <div class="query_clear"></div>
         </form>

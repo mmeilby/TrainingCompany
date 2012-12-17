@@ -81,7 +81,11 @@ class AdminController extends Controller
                             ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms), 'text/html');
         //                    ->addPart($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms));
                         $this->get('mailer')->send($message);
-                    }
+                        return array('form' => $form->createView(),
+                            'send_name' => $qpersons->getName(),
+                            'send_email' => $qpersons->getEmail(),
+                            'send_token' => $qsurvey->getToken());
+                   }
                 }
             }
         }
