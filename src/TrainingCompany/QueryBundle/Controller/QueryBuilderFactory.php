@@ -5,6 +5,7 @@ use TrainingCompany\QueryBundle\Entity\HeaderQueryBlock;
 use TrainingCompany\QueryBundle\Entity\ScaleQueryBlock;
 use TrainingCompany\QueryBundle\Entity\SatisfactionQueryBlock;
 use TrainingCompany\QueryBundle\Entity\CommentQueryBlock;
+use TrainingCompany\QueryBundle\Entity\InfoQueryBlock;
 use TrainingCompany\QueryBundle\Entity\Survey;
 
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSchema;
@@ -84,6 +85,10 @@ class QueryBuilderFactory {
                     $queryBlock->setQtype(4);
                     $queryBlock->setLabel($qb->label);
                 }
+                else if ($qb->blocktype == 'INFO') {
+                    $queryBlock->setQtype(5);
+                    $queryBlock->setLabel($qb->label);
+                }
                 $em->persist($queryBlock);
                 $em->flush();
                 
@@ -133,6 +138,7 @@ class QueryBuilderFactory {
                 $qdomains = $em->getRepository($this->repositoryPathDomain)->findBy(array('qbid' => $queryBlock->getId()));
 
                 $newBlock = new ScaleQueryBlock();
+                $newBlock->id = $queryBlock->getId();
                 $newBlock->label = $queryBlock->getLabel();
                 $newBlock->valueset = array();
                 foreach ($qdomains as $domain) {
@@ -155,6 +161,12 @@ class QueryBuilderFactory {
             // CommentQueryBlock
             else if ($queryBlock->getQtype() == 4) {
                 $newBlock = new CommentQueryBlock();
+                $newBlock->label = $queryBlock->getLabel();
+                $parsedBlock[] = $newBlock;
+            }
+            // InfoQueryBlock
+            else if ($queryBlock->getQtype() == 5) {
+                $newBlock = new InfoQueryBlock();
                 $newBlock->label = $queryBlock->getLabel();
                 $parsedBlock[] = $newBlock;
             }
@@ -217,6 +229,11 @@ class QueryBuilderFactory {
         }
         else if ($block->getName() == 'CommentQueryBlock') {
             $newBlock = new CommentQueryBlock();
+            $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
+            return $newBlock;
+        }
+        else if ($block->getName() == 'InfoQueryBlock') {
+            $newBlock = new InfoQueryBlock();
             $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
             return $newBlock;
         }

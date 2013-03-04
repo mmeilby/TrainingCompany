@@ -1,200 +1,679 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+        LEDERPROFIL SKEMA
+        
+A	Entusiasme
+B	Integretitet
+C	Selvudvikling
+D	Styrke
+E	Indsigt
+F	Dømmekraft
+G	Præstation
+H	Handlekraft
+I 	Teambuilding
+J	Samarbejde
+K	Inspiration
+L	Servicering
+-->
 <QueryForm>
     <QueryBlock>
         <HeaderQueryBlock>
             <Domain>
                 <Item key="name">Navn:</Item>
                 <Item key="phone">Tlf.:</Item>
-                <Item key="jobtitle">Jobtitel:</Item>
                 <Item key="date">Dato:</Item>
-                <Item key="jobdomain" block="clear">Beskriv kort dit arbejdsområde:</Item>
             </Domain>
         </HeaderQueryBlock>
     </QueryBlock>
     <QueryBlock>
-        <ScaleQueryBlock>
-            <Label>Hvor meget tid bruger du på kundepleje og afdækning af kundebehov?</Label>
-            <Domain>
-                <Item key="10">10%</Item>
-                <Item key="20">20%</Item>
-                <Item key="30">30%</Item>
-                <Item key="40">40%</Item>
-                <Item key="50">50%</Item>
-                <Item key="60">60%</Item>
-                <Item key="70">70%</Item>
-                <Item key="80">80%</Item>
-                <Item key="90">90%</Item>
-                <Item key="100">100%</Item>
-            </Domain>
-        </ScaleQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvad kundepleje er for dig.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <ScaleQueryBlock>
-            <Label>Hvor meget tid bruger du på at, producere tilbud, kontrakter og ordrehåndtering.</Label>
-            <Domain>
-                <Item key="10">10%</Item>
-                <Item key="20">20%</Item>
-                <Item key="30">30%</Item>
-                <Item key="40">40%</Item>
-                <Item key="50">50%</Item>
-                <Item key="60">60%</Item>
-                <Item key="70">70%</Item>
-                <Item key="80">80%</Item>
-                <Item key="90">90%</Item>
-                <Item key="100">100%</Item>
-            </Domain>
-        </ScaleQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver der primært anvendes tid på ved tilbud, kontrakter og ordrehåndtering.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <ScaleQueryBlock>
-            <Label>Hvor meget tid anvender du på ikke kundevendte aktiviteter (ugerapporter, statistisk, intern koordinering, fejl og mangler internt)</Label>
-            <Domain>
-                <Item key="10">10%</Item>
-                <Item key="20">20%</Item>
-                <Item key="30">30%</Item>
-                <Item key="40">40%</Item>
-                <Item key="50">50%</Item>
-                <Item key="60">60%</Item>
-                <Item key="70">70%</Item>
-                <Item key="80">80%</Item>
-                <Item key="90">90%</Item>
-                <Item key="100">100%</Item>
-            </Domain>
-        </ScaleQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv hvilke opgaver der primært anvendes tid på som ikke er kundevendte aktiviteter.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <ScaleQueryBlock>
-            <Label>Hvor meget tid anvender du på aftersale (service, statusmøder, mersalg)</Label>
-            <Domain>
-                <Item key="10">10%</Item>
-                <Item key="20">20%</Item>
-                <Item key="30">30%</Item>
-                <Item key="40">40%</Item>
-                <Item key="50">50%</Item>
-                <Item key="60">60%</Item>
-                <Item key="70">70%</Item>
-                <Item key="80">80%</Item>
-                <Item key="90">90%</Item>
-                <Item key="100">100%</Item>
-            </Domain>
-        </ScaleQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver du anvender mest tid på i aftersale fasen</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <SatisfactionQueryBlock>
-            <Label>Jeg bruger meget tid på tilbud kontrakter og ordrehåndtering.</Label>
-            <Domain>
-                <Item key="1">Helt uenig</Item>
-                <Item key="2">Meget uenig</Item>
-                <Item key="3">Delvis uenig</Item>
-                <Item key="4">Hverken eller</Item>
-                <Item key="5">Delvis enig</Item>
-                <Item key="6">Meget enig</Item>
-                <Item key="7">Helt enig</Item>
-            </Domain>
-        </SatisfactionQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver der kræver mest tid i arbejdet med tilbud, kontrakter og ordrehåndtering.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <SatisfactionQueryBlock>
-            <Label>Jeg bruger meget tid på at klargøre projekt til leverance (forberede ordre i de administrative systemer)</Label>
-            <Domain>
-                <Item key="1">Helt uenig</Item>
-                <Item key="2">Meget uenig</Item>
-                <Item key="3">Delvis uenig</Item>
-                <Item key="4">Hverken eller</Item>
-                <Item key="5">Delvis enig</Item>
-                <Item key="6">Meget enig</Item>
-                <Item key="7">Helt enig</Item>
-            </Domain>
-        </SatisfactionQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver der kræver mest tid i forberedelse af ordre til de administrative systemer</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <SatisfactionQueryBlock>
-            <Label>Jeg bruger meget tid på at få priser godkendt.</Label>
-            <Domain>
-                <Item key="1">Helt uenig</Item>
-                <Item key="2">Meget uenig</Item>
-                <Item key="3">Delvis uenig</Item>
-                <Item key="4">Hverken eller</Item>
-                <Item key="5">Delvis enig</Item>
-                <Item key="6">Meget enig</Item>
-                <Item key="7">Helt enig</Item>
-            </Domain>
-        </SatisfactionQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvorfor det tager tid at få godkendte priser</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <SatisfactionQueryBlock>
-            <Label>Jeg bruger meget tid på at vente på andre som skal levere information eller materiale til mig.</Label>
-            <Domain>
-                <Item key="1">Helt uenig</Item>
-                <Item key="2">Meget uenig</Item>
-                <Item key="3">Delvis uenig</Item>
-                <Item key="4">Hverken eller</Item>
-                <Item key="5">Delvis enig</Item>
-                <Item key="6">Meget enig</Item>
-                <Item key="7">Helt enig</Item>
-            </Domain>
-        </SatisfactionQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv hvilke informationer og materialer der er svære at få adgang til.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <SatisfactionQueryBlock>
-            <Label>Jeg bruger meget tid på CRM-systemet</Label>
-            <Domain>
-                <Item key="1">Helt uenig</Item>
-                <Item key="2">Meget uenig</Item>
-                <Item key="3">Delvis uenig</Item>
-                <Item key="4">Hverken eller</Item>
-                <Item key="5">Delvis enig</Item>
-                <Item key="6">Meget enig</Item>
-                <Item key="7">Helt enig</Item>
-            </Domain>
-        </SatisfactionQueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv hvilke opgaver du har i CRM og havd du bruger det til.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvordan du mener din hverdag kan gøres bedre.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver du udfører som du mener med fordel kunne løses af andre og hvilken funktion der kunne tage sig af den.</Label>
-        </CommentQueryBlock>
-    </QueryBlock>
-    <QueryBlock>
-        <CommentQueryBlock>
-            <Label>Beskriv kort hvilke opgaver du udfører som du mener med fordel kunne løses af andre og hvilken funktion der kunne tage sig af den.
+        <InfoQueryBlock>
+            <Label>
+                <p>Du skal besvare skemaet ud fra din vurdering af hvilke udsagn i spørgsmålsgruppen som bedst passer på dig som leder.</p>
+                <p>Prioriter udsagn i hver gruppe fra 1-5</p>
+                <p>5 = Det mest passende udsagn</p>
+                <p>1 = Det mindst passende udsagn</p>
             </Label>
-        </CommentQueryBlock>
+        </InfoQueryBlock>
+    </QueryBlock>
+    <!-- Blok 1 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du kan lide og tager gerne imod udfordringer</Label>
+            <Domain>
+                <Item key="H:1">1</Item>
+                <Item key="H:2">2</Item>
+                <Item key="H:3">3</Item>
+                <Item key="H:4">4</Item>
+                <Item key="H:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du har et klart billede af fremtiden</Label>
+            <Domain>
+                <Item key="E:1">1</Item>
+                <Item key="E:2">2</Item>
+                <Item key="E:3">3</Item>
+                <Item key="E:4">4</Item>
+                <Item key="E:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du tror på din egen succes</Label>
+            <Domain>
+                <Item key="D:1">1</Item>
+                <Item key="D:2">2</Item>
+                <Item key="D:3">3</Item>
+                <Item key="D:4">4</Item>
+                <Item key="D:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du tænker på hvad din medarbejdergruppe har behov for</Label>
+            <Domain>
+                <Item key="L:1">1</Item>
+                <Item key="L:2">2</Item>
+                <Item key="L:3">3</Item>
+                <Item key="L:4">4</Item>
+                <Item key="L:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du lever op til egne værdier og idealer</Label>
+            <Domain>
+                <Item key="B:1">1</Item>
+                <Item key="B:2">2</Item>
+                <Item key="B:3">3</Item>
+                <Item key="B:4">4</Item>
+                <Item key="B:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 2 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du involverer gerne andre i dialog</Label>
+            <Domain>
+                <Item key="J:1">1</Item>
+                <Item key="J:2">2</Item>
+                <Item key="J:3">3</Item>
+                <Item key="J:4">4</Item>
+                <Item key="J:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du viser engagement i dine opgaver</Label>
+            <Domain>
+                <Item key="A:1">1</Item>
+                <Item key="A:2">2</Item>
+                <Item key="A:3">3</Item>
+                <Item key="A:4">4</Item>
+                <Item key="A:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du udviser empati</Label>
+            <Domain>
+                <Item key="L:1">1</Item>
+                <Item key="L:2">2</Item>
+                <Item key="L:3">3</Item>
+                <Item key="L:4">4</Item>
+                <Item key="L:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du tager gerne en kalkuleret risiko</Label>
+            <Domain>
+                <Item key="F:1">1</Item>
+                <Item key="F:2">2</Item>
+                <Item key="F:3">3</Item>
+                <Item key="F:4">4</Item>
+                <Item key="F:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er effektiv trods modstand</Label>
+            <Domain>
+                <Item key="G:1">1</Item>
+                <Item key="G:2">2</Item>
+                <Item key="G:3">3</Item>
+                <Item key="G:4">4</Item>
+                <Item key="G:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 3 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at forudse fremtidige problemer og muligheder</Label>
+            <Domain>
+                <Item key="F:1">1</Item>
+                <Item key="F:2">2</Item>
+                <Item key="F:3">3</Item>
+                <Item key="F:4">4</Item>
+                <Item key="F:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er modig</Label>
+            <Domain>
+                <Item key="D:1">1</Item>
+                <Item key="D:2">2</Item>
+                <Item key="D:3">3</Item>
+                <Item key="D:4">4</Item>
+                <Item key="D:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du varetager de svages interesser</Label>
+            <Domain>
+                <Item key="L:1">1</Item>
+                <Item key="L:2">2</Item>
+                <Item key="L:3">3</Item>
+                <Item key="L:4">4</Item>
+                <Item key="L:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du varetager andres interesser før dine egne</Label>
+            <Domain>
+                <Item key="B:1">1</Item>
+                <Item key="B:2">2</Item>
+                <Item key="B:3">3</Item>
+                <Item key="B:4">4</Item>
+                <Item key="B:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du skaber consensus</Label>
+            <Domain>
+                <Item key="I:1">1</Item>
+                <Item key="I:2">2</Item>
+                <Item key="I:3">3</Item>
+                <Item key="I:4">4</Item>
+                <Item key="I:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 4 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er positiv overfor nytænkning</Label>
+            <Domain>
+                <Item key="C:1">1</Item>
+                <Item key="C:2">2</Item>
+                <Item key="C:3">3</Item>
+                <Item key="C:4">4</Item>
+                <Item key="C:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at prioritere</Label>
+            <Domain>
+                <Item key="F:1">1</Item>
+                <Item key="F:2">2</Item>
+                <Item key="F:3">3</Item>
+                <Item key="F:4">4</Item>
+                <Item key="F:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du har en god fornemmelse for at gå på kompromis når det er nødvendigt</Label>
+            <Domain>
+                <Item key="H:1">1</Item>
+                <Item key="H:2">2</Item>
+                <Item key="H:3">3</Item>
+                <Item key="H:4">4</Item>
+                <Item key="H:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du skaber mulighed for at andre kan nå deres mål</Label>
+            <Domain>
+                <Item key="J:1">1</Item>
+                <Item key="J:2">2</Item>
+                <Item key="J:3">3</Item>
+                <Item key="J:4">4</Item>
+                <Item key="J:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du støtter andre i at samarbejde</Label>
+            <Domain>
+                <Item key="I:1">1</Item>
+                <Item key="I:2">2</Item>
+                <Item key="I:3">3</Item>
+                <Item key="I:4">4</Item>
+                <Item key="I:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 5 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du tænker både med hjerte og hjerne</Label>
+            <Domain>
+                <Item key="A:1">1</Item>
+                <Item key="A:2">2</Item>
+                <Item key="A:3">3</Item>
+                <Item key="A:4">4</Item>
+                <Item key="A:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at træffe de rigtige valg</Label>
+            <Domain>
+                <Item key="F:1">1</Item>
+                <Item key="F:2">2</Item>
+                <Item key="F:3">3</Item>
+                <Item key="F:4">4</Item>
+                <Item key="F:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du styrker den enkeltes virkelyst</Label>
+            <Domain>
+                <Item key="J:1">1</Item>
+                <Item key="J:2">2</Item>
+                <Item key="J:3">3</Item>
+                <Item key="J:4">4</Item>
+                <Item key="J:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du ser muligheder og trends</Label>
+            <Domain>
+                <Item key="E:1">1</Item>
+                <Item key="E:2">2</Item>
+                <Item key="E:3">3</Item>
+                <Item key="E:4">4</Item>
+                <Item key="E:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du går gerne imod strømmen</Label>
+            <Domain>
+                <Item key="H:1">1</Item>
+                <Item key="H:2">2</Item>
+                <Item key="H:3">3</Item>
+                <Item key="H:4">4</Item>
+                <Item key="H:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 6 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er hele tiden åben for ny læring</Label>
+            <Domain>
+                <Item key="C:1">1</Item>
+                <Item key="C:2">2</Item>
+                <Item key="C:3">3</Item>
+                <Item key="C:4">4</Item>
+                <Item key="C:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du vurdere det du oplever</Label>
+            <Domain>
+                <Item key="E:1">1</Item>
+                <Item key="E:2">2</Item>
+                <Item key="E:3">3</Item>
+                <Item key="E:4">4</Item>
+                <Item key="E:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du kan lide vanskelige udfordringer</Label>
+            <Domain>
+                <Item key="G:1">1</Item>
+                <Item key="G:2">2</Item>
+                <Item key="G:3">3</Item>
+                <Item key="G:4">4</Item>
+                <Item key="G:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du viser engagement</Label>
+            <Domain>
+                <Item key="A:1">1</Item>
+                <Item key="A:2">2</Item>
+                <Item key="A:3">3</Item>
+                <Item key="A:4">4</Item>
+                <Item key="A:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du har en varm og venskabelig omgangstone</Label>
+            <Domain>
+                <Item key="L:1">1</Item>
+                <Item key="L:2">2</Item>
+                <Item key="L:3">3</Item>
+                <Item key="L:4">4</Item>
+                <Item key="L:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 7 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er nysgerrig på ting du ikke ved</Label>
+            <Domain>
+                <Item key="C:1">1</Item>
+                <Item key="C:2">2</Item>
+                <Item key="C:3">3</Item>
+                <Item key="C:4">4</Item>
+                <Item key="C:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at inspirere andre</Label>
+            <Domain>
+                <Item key="K:1">1</Item>
+                <Item key="K:2">2</Item>
+                <Item key="K:3">3</Item>
+                <Item key="K:4">4</Item>
+                <Item key="K:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du har et klart billed af hvor du vil hen</Label>
+            <Domain>
+                <Item key="E:1">1</Item>
+                <Item key="E:2">2</Item>
+                <Item key="E:3">3</Item>
+                <Item key="E:4">4</Item>
+                <Item key="E:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du tager gerne stilling og handler på det</Label>
+            <Domain>
+                <Item key="H:1">1</Item>
+                <Item key="H:2">2</Item>
+                <Item key="H:3">3</Item>
+                <Item key="H:4">4</Item>
+                <Item key="H:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du anerkende andre for jeres fælles successer</Label>
+            <Domain>
+                <Item key="J:1">1</Item>
+                <Item key="J:2">2</Item>
+                <Item key="J:3">3</Item>
+                <Item key="J:4">4</Item>
+                <Item key="J:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 8 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du inddrager de svageste i gruppen</Label>
+            <Domain>
+                <Item key="L:1">1</Item>
+                <Item key="L:2">2</Item>
+                <Item key="L:3">3</Item>
+                <Item key="L:4">4</Item>
+                <Item key="L:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du fastholder engagement og positivitet</Label>
+            <Domain>
+                <Item key="A:1">1</Item>
+                <Item key="A:2">2</Item>
+                <Item key="A:3">3</Item>
+                <Item key="A:4">4</Item>
+                <Item key="A:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at inspirere andre</Label>
+            <Domain>
+                <Item key="K:1">1</Item>
+                <Item key="K:2">2</Item>
+                <Item key="K:3">3</Item>
+                <Item key="K:4">4</Item>
+                <Item key="K:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du bliver ikke let stresset</Label>
+            <Domain>
+                <Item key="D:1">1</Item>
+                <Item key="D:2">2</Item>
+                <Item key="D:3">3</Item>
+                <Item key="D:4">4</Item>
+                <Item key="D:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at skabe resultater der holder</Label>
+            <Domain>
+                <Item key="G:1">1</Item>
+                <Item key="G:2">2</Item>
+                <Item key="G:3">3</Item>
+                <Item key="G:4">4</Item>
+                <Item key="G:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 9 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du har et klart billede af resultatet af handlinger</Label>
+            <Domain>
+                <Item key="F:1">1</Item>
+                <Item key="F:2">2</Item>
+                <Item key="F:3">3</Item>
+                <Item key="F:4">4</Item>
+                <Item key="F:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at motivere din gruppe til at opfylde aftalte mål</Label>
+            <Domain>
+                <Item key="I:1">1</Item>
+                <Item key="I:2">2</Item>
+                <Item key="I:3">3</Item>
+                <Item key="I:4">4</Item>
+                <Item key="I:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at eksekvere ændringer</Label>
+            <Domain>
+                <Item key="G:1">1</Item>
+                <Item key="G:2">2</Item>
+                <Item key="G:3">3</Item>
+                <Item key="G:4">4</Item>
+                <Item key="G:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du står ved dine holdninger og handlinger</Label>
+            <Domain>
+                <Item key="B:1">1</Item>
+                <Item key="B:2">2</Item>
+                <Item key="B:3">3</Item>
+                <Item key="B:4">4</Item>
+                <Item key="B:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du motiverer andre til at yde en ekstra indsats</Label>
+            <Domain>
+                <Item key="K:1">1</Item>
+                <Item key="K:2">2</Item>
+                <Item key="K:3">3</Item>
+                <Item key="K:4">4</Item>
+                <Item key="K:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 10 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er ikke bange for at tage fejl</Label>
+            <Domain>
+                <Item key="C:1">1</Item>
+                <Item key="C:2">2</Item>
+                <Item key="C:3">3</Item>
+                <Item key="C:4">4</Item>
+                <Item key="C:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at få andre til at se deres styrker</Label>
+            <Domain>
+                <Item key="K:1">1</Item>
+                <Item key="K:2">2</Item>
+                <Item key="K:3">3</Item>
+                <Item key="K:4">4</Item>
+                <Item key="K:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du kan se tingene i et større perspektiv</Label>
+            <Domain>
+                <Item key="E:1">1</Item>
+                <Item key="E:2">2</Item>
+                <Item key="E:3">3</Item>
+                <Item key="E:4">4</Item>
+                <Item key="E:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du går længere end de fleste for at nå dine mål</Label>
+            <Domain>
+                <Item key="G:1">1</Item>
+                <Item key="G:2">2</Item>
+                <Item key="G:3">3</Item>
+                <Item key="G:4">4</Item>
+                <Item key="G:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at skabe sammenhold i en gruppe</Label>
+            <Domain>
+                <Item key="I:1">1</Item>
+                <Item key="I:2">2</Item>
+                <Item key="I:3">3</Item>
+                <Item key="I:4">4</Item>
+                <Item key="I:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 11 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du stiller store krav til dig selv</Label>
+            <Domain>
+                <Item key="D:1">1</Item>
+                <Item key="D:2">2</Item>
+                <Item key="D:3">3</Item>
+                <Item key="D:4">4</Item>
+                <Item key="D:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er stærkt engageret i at opfylde dine mål</Label>
+            <Domain>
+                <Item key="A:1">1</Item>
+                <Item key="A:2">2</Item>
+                <Item key="A:3">3</Item>
+                <Item key="A:4">4</Item>
+                <Item key="A:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at vise vejen</Label>
+            <Domain>
+                <Item key="H:1">1</Item>
+                <Item key="H:2">2</Item>
+                <Item key="H:3">3</Item>
+                <Item key="H:4">4</Item>
+                <Item key="H:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er en troværdig samarbejdspartner</Label>
+            <Domain>
+                <Item key="J:1">1</Item>
+                <Item key="J:2">2</Item>
+                <Item key="J:3">3</Item>
+                <Item key="J:4">4</Item>
+                <Item key="J:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du handler på det du siger og mener</Label>
+            <Domain>
+                <Item key="B:1">1</Item>
+                <Item key="B:2">2</Item>
+                <Item key="B:3">3</Item>
+                <Item key="B:4">4</Item>
+                <Item key="B:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+    </QueryBlock>
+    <!-- Blok 12 -->
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du motiverer andre til at bidrage til gruppen</Label>
+            <Domain>
+                <Item key="K:1">1</Item>
+                <Item key="K:2">2</Item>
+                <Item key="K:3">3</Item>
+                <Item key="K:4">4</Item>
+                <Item key="K:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er god til at finde kompromisser i konflikter mellem mennesker</Label>
+            <Domain>
+                <Item key="I:1">1</Item>
+                <Item key="I:2">2</Item>
+                <Item key="I:3">3</Item>
+                <Item key="I:4">4</Item>
+                <Item key="I:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du handler i overensstemmelse med din overbevisning</Label>
+            <Domain>
+                <Item key="D:1">1</Item>
+                <Item key="D:2">2</Item>
+                <Item key="D:3">3</Item>
+                <Item key="D:4">4</Item>
+                <Item key="D:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du lærer af dine fejl</Label>
+            <Domain>
+                <Item key="C:1">1</Item>
+                <Item key="C:2">2</Item>
+                <Item key="C:3">3</Item>
+                <Item key="C:4">4</Item>
+                <Item key="C:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Du er en god rollemodel</Label>
+            <Domain>
+                <Item key="B:1">1</Item>
+                <Item key="B:2">2</Item>
+                <Item key="B:3">3</Item>
+                <Item key="B:4">4</Item>
+                <Item key="B:5">5</Item>
+            </Domain>
+        </ScaleQueryBlock>
     </QueryBlock>
     <QueryBlock>
         <CommentQueryBlock>
-            <Label>Beskriv kort hvordan din ledelse kan støtte dig i dit daglige arbejde.</Label>
+            <Label>Skriv eventuelle kommentarer her</Label>
         </CommentQueryBlock>
     </QueryBlock>
 </QueryForm>

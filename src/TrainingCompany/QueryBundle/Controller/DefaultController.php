@@ -409,9 +409,9 @@ class DefaultController extends Controller
     public function loadAction() {
         $em = $this->getDoctrine()->getManager();
         $queryBuilder = new QueryBuilderFactory();
-        $template = $queryBuilder->getTemplate(1);
+        $template = $queryBuilder->getTemplate(0);
         $survey = new \TrainingCompany\QueryBundle\Entity\Survey();
-        $survey->name = 'yousee';
+        $survey->name = 'Lederprofil skema';
         $survey->signer = 'Henrik Vrangbæk Thomsen';
         $survey->queryblocks = $template;
         $queryBuilder->saveTemplate($em, $survey);

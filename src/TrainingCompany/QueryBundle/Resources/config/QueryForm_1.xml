@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+1	1	H	Du kan lide og tager gerne imod udfordringer 
+1	2	E	Du har et klart billede af fremtiden
+1	3	D	Du tror på din egen succes
+1	4	L	Du tænker på hvad din medarbejdergruppe har behov for
+1	5	B	Du lever op til egne værdier og idealer
+			
+2	1	J	Du involvere gerne anbdre i dialog  
+2	2	A	Du viser engagement i dine opgaver
+2	3	L	Du udviser empati 
+2	4	F	Du tager gerne en kalkuleret risiko
+2	5	G	Du er effektiv trods modstand
+			
+3	1	F	Du er god til at forudse fremtidige problemer og muligheder
+3	2	D	Du er modig
+3	3	L	Du varetager de svages interesser
+3	4	B	Du varetager andres interesser før dine egne
+3	5	I	Du skaber consensus
+			
+4	1	C	Du er positiv overfor nytænkning
+4	2	F	Du er god til at prioritere
+4	3	H	Du har en god fornemmelse for at gå på kompromis når det er nødvendigt
+4	4	J	Du skaber mulighed for at andre kan nå deres mål
+4	5	I	Du støtter andre i at samarbejde
+			
+5	1	A	Du tænker både med hjerte og hjerne
+5	2	F	Du er god  til at træffe de rigtige valg
+5	3	J	Du styrker den enkeltes virkelyst
+5	4	E	Du ser muligheder og trends 
+5	5	H	Du går gerne imod strømmen
+			
+6	1	C	Du er hele tiden åben for ny læring
+6	2	E	Du vurdere det du oplever
+6	3	G	Du kan lide vanskelige udfordringer
+6	4	A	Du viser engagement
+6	5	L	Du har en varm og venskabelig omgangstone
+			
+7	1	C	Du er nysgerrig påting du ikke ved
+7	2	K	Du er god til at inspirere andre
+7	3	E	Du har et klart billed af hvor du vil hen
+7	4	H	Du tager gerne stilling og handler på det
+7	5	J	Du anerkende andre for jeres fælles successer
+			
+8	1	L	Du inddrager de svageste i gruppen
+8	2	A	Du fastholder engagement og positivitet
+8	3	K	Du er god til at inspirere andre
+8	4	D	Du bliver ikke let stresset
+8	5	G	Du er god til at skabe resultater der holder
+			
+9	1	F	Du har et klart billede af resultatet af handlinger
+9	2	I	Du er god til at motivere din gruppe til at opfylde aftalte mål
+9	3	G	Du er god til at eksekvere ændringer
+9	4	B	Du står ved dine holdninger og handlinger
+9	5	K	Du motivere andre til at yde en ekstra indsats
+			
+10	1	C	Du er ikke bange for at tage fejl
+10	2	K	Du er god til at få andre til at se deres styrker
+10	3	E	Du kan se tingene i et større perspektiv
+10	4	G	Du længere end de fleste for at nå dine mål
+10	5	I	Du er god til at skabe sammenhold i en gruppe
+			
+11	1	D	Du stiller store krav til dig selv
+11	2	A	Du er stærkt engageret i at opfylde dine mål
+11	3	H	Du er god til at vise vejen
+11	4	J	Du er en troværdig samarbejdspartner
+11	5	B	Du handler på det du siger og mener
+			
+12	1	K	Du motivere andre til at bidgrade til gruppen
+12	2	I	Du er god til at finde kompromisser i konflikter mellem mennesker
+12	3	D	Du handler i overensstemmelse med din overbevisning
+12	4	C	Du lære af dine fejl
+12	5	B	Du er en god rollemodel
+
+<QueryForm>
+    <QueryBlock>
+        <HeaderQueryBlock>
+            <Domain>
+                <Item key="name">Navn:</Item>
+                <Item key="phone">Tlf.:</Item>
+                <Item key="jobtitle">Jobtitel:</Item>
+                <Item key="date">Dato:</Item>
+                <Item key="jobdomain" block="clear">Beskriv kort dit arbejdsområde:</Item>
+            </Domain>
+        </HeaderQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid bruger du på kundepleje og afdækning af kundebehov?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvad kundepleje er for dig.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid bruger du på at, producere tilbud, kontrakter og ordrehåndtering.</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver der primært anvendes tid på ved tilbud, kontrakter og ordrehåndtering.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på ikke kundevendte aktiviteter (ugerapporter, statistisk, intern koordinering, fejl og mangler internt)</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv hvilke opgaver der primært anvendes tid på som ikke er kundevendte aktiviteter.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på aftersale (service, statusmøder, mersalg)</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver du anvender mest tid på i aftersale fasen</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg bruger meget tid på tilbud kontrakter og ordrehåndtering.</Label>
+            <Domain>
+                <Item key="1">Helt uenig</Item>
+                <Item key="2">Meget uenig</Item>
+                <Item key="3">Delvis uenig</Item>
+                <Item key="4">Hverken eller</Item>
+                <Item key="5">Delvis enig</Item>
+                <Item key="6">Meget enig</Item>
+                <Item key="7">Helt enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver der kræver mest tid i arbejdet med tilbud, kontrakter og ordrehåndtering.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg bruger meget tid på at klargøre projekt til leverance (forberede ordre i de administrative systemer)</Label>
+            <Domain>
+                <Item key="1">Helt uenig</Item>
+                <Item key="2">Meget uenig</Item>
+                <Item key="3">Delvis uenig</Item>
+                <Item key="4">Hverken eller</Item>
+                <Item key="5">Delvis enig</Item>
+                <Item key="6">Meget enig</Item>
+                <Item key="7">Helt enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver der kræver mest tid i forberedelse af ordre til de administrative systemer</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg bruger meget tid på at få priser godkendt.</Label>
+            <Domain>
+                <Item key="1">Helt uenig</Item>
+                <Item key="2">Meget uenig</Item>
+                <Item key="3">Delvis uenig</Item>
+                <Item key="4">Hverken eller</Item>
+                <Item key="5">Delvis enig</Item>
+                <Item key="6">Meget enig</Item>
+                <Item key="7">Helt enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvorfor det tager tid at få godkendte priser</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg bruger meget tid på at vente på andre som skal levere information eller materiale til mig.</Label>
+            <Domain>
+                <Item key="1">Helt uenig</Item>
+                <Item key="2">Meget uenig</Item>
+                <Item key="3">Delvis uenig</Item>
+                <Item key="4">Hverken eller</Item>
+                <Item key="5">Delvis enig</Item>
+                <Item key="6">Meget enig</Item>
+                <Item key="7">Helt enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv hvilke informationer og materialer der er svære at få adgang til.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg bruger meget tid på CRM-systemet</Label>
+            <Domain>
+                <Item key="1">Helt uenig</Item>
+                <Item key="2">Meget uenig</Item>
+                <Item key="3">Delvis uenig</Item>
+                <Item key="4">Hverken eller</Item>
+                <Item key="5">Delvis enig</Item>
+                <Item key="6">Meget enig</Item>
+                <Item key="7">Helt enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv hvilke opgaver du har i CRM og havd du bruger det til.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvordan du mener din hverdag kan gøres bedre.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver du udfører som du mener med fordel kunne løses af andre og hvilken funktion der kunne tage sig af den.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvilke opgaver du udfører som du mener med fordel kunne løses af andre og hvilken funktion der kunne tage sig af den.
+            </Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvordan din ledelse kan støtte dig i dit daglige arbejde.</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+</QueryForm>
