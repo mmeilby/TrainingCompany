@@ -25,6 +25,15 @@ class DefaultController extends Controller
     private $sessionPage = 'page';
     
     /**
+     * Test indgang til brugerundersøgelsen
+     * @Route("/", name="_home")
+     * @Method("GET")
+     */
+    public function homeAction() {
+        return $this->render('TrainingCompanyQueryBundle:Default:home.html.twig');
+    }
+
+    /**
      * Startpunkt for adgang til brugerundersøgelse via link
      * @Route("/survey/auth", name="_referred")
      * @Method("GET")
