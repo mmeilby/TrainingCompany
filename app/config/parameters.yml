@@ -3,8 +3,8 @@ parameters:
     database_host: localhost
     database_port: '3306'
     database_name: training_company
-    database_user: root
-    database_password: sVP32ld193
+    database_user: ttc
+    database_password: rPYHAdneqvEn5wrp
     database_path: training_company
     mailer_user: mmeilby@gmail.com
     mailer_password: bingoboy
