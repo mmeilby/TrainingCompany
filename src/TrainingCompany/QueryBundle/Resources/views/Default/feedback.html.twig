@@ -1,28 +1,12 @@
-{% extends "TrainingCompanyQueryBundle::layout.script.html.twig" %}
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% form_theme form _self %}
-
-{% block instruction %}
-Kommentar
-{% endblock instruction %}
+{% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
 {% block maincontent %}
-<div class="form_header">
-    <div class="form_header_inner">
-        Kommentar
-    </div>
-</div>
-
-<div class="form_content">
-    <form action="{{ path('_feedback') }}" method="POST">
-        <p>Du har her mulighed for at give dine kommentarer eller feedback.</p>
-        <p>Hvis du har haft problemer med en undersøgelse bedes du beskrive problemet så grundigt som muligt så vi har mulighed for at afprøve en løsning.</p>
-        {{ form_rest(form) }}
-        <div class="query_clear"></div>
-        <div style="float: right;">
-            <input type="submit" name="save" value="Send kommentar" class="form_button" />
-        </div>
-        <div class="query_clear"></div>
-    </form>
+<div class="container" role="main">
+    <h2 style="margin-bottom: 0;"><i class="fa fa-reply">&nbsp;</i>{% trans %}Kommentar{% endtrans %}</h2>
+    <p>Du har her mulighed for at give dine kommentarer eller feedback.</p>
+    <p>Hvis du har haft problemer med en undersøgelse bedes du beskrive problemet så grundigt som muligt så vi har mulighed for at afprøve en løsning.</p>
+    {{ form(form) }}
 </div>
 {% endblock %}

@@ -2,6 +2,7 @@
 namespace TrainingCompany\QueryBundle\Entity;
 
 use TrainingCompany\QueryBundle\Entity\Doctrine\QPersons;
+use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class HeaderQueryBlock extends QueryBlock {
 
@@ -15,14 +16,17 @@ class HeaderQueryBlock extends QueryBlock {
     public $jobtitle_label;
     public $jobdomain_label;
 
-    private $repositoryPath = 'TrainingCompany\QueryBundle\Entity\Doctrine\QPersons';
-
     public function __construct() {
+        $this->id = 0;
         $this->blocktype = 'HEADER';
     }
 
+    public function getBlockId() {
+        return 'head_'.$this->id;
+    }
+    
     public function get($em, $pid, $qid, $qno) {
-        $qpersons = $em->getRepository($this->repositoryPath)->find($pid);
+        $qpersons = $em->getRepository(Configuration::PersonRepo())->find($pid);
 
         if (!$qpersons) {
             $this->name = "Indtast navn";
@@ -39,14 +43,18 @@ class HeaderQueryBlock extends QueryBlock {
     }
 
     public function persist($em, $pid, $qid, $qno) {
-        $qpersons = $em->getRepository($this->repositoryPath)->find($pid);
+        $qpersons = $em->getRepository(Configuration::PersonRepo())->find($pid);
         $new = !$qpersons;
-        if ($new) $qpersons = new QPersons();
+        if ($new) {
+            $qpersons = new QPersons();
+        }
         $qpersons->setName($this->name);
         $qpersons->setPhone($this->phone);
         $qpersons->setJobtitle($this->jobtitle);
         $qpersons->setJobdomain($this->jobdomain);
-        if ($new) $em->persist($qpersons);
+        if ($new) {
+            $em->persist($qpersons);
+        }
     }
 
     public function readForm($formData) {

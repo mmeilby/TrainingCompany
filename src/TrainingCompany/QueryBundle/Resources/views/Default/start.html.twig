@@ -1,23 +1,17 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block instruction "Velkommen" %}
-
 {% block maincontent %}
-    <div class="form_header">
-        <div class="form_header_inner">
-            Startside
-        </div>
-    </div>
-
-    <div class="form_content">
-        <form action="{{ path('_survey') }}" method="POST">
-            <p>Kære {{ name }}</p>
-            <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.</p>
-            <p>Tryk på ''Start'' for at gå i gang med besvarelsen.</p>
-            <div style="float: right;">
-                <input type="button" name="start" value="Start" class="form_button" onClick="window.location='{{ path('_survey') }}'"/>
-            </div>
-            <div class="query_clear"></div>
-        </form>
-    </div>
+<div class="container" role="main">
+    <h2 style="margin-bottom: 0;"><i class="fa fa-arrow-circle-right">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
+    <p>Kære {{ name }}</p>
+    <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.</p>
+    <p>Tryk på ''Start'' for at gå i gang med besvarelsen.</p>
+    <nav>
+      <ul class="pager">
+        <li class="next">
+            <a href="{{ path('_survey') }}">Start <span aria-hidden="true">&rarr;</span></a>
+        </li>
+      </ul>
+    </nav>
+</div>
 {% endblock %}

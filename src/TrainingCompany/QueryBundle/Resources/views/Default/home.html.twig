@@ -1,16 +1,9 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block instruction "Velkommen" %}
-
 {% block maincontent %}
-    <div class="form_header">
-        <div class="form_header_inner">
-            Startside
-        </div>
-    </div>
-
-    <div class="form_content">
-        <p>Velkommen til ttc-test</p>
-        <p>Hvis du skal deltage i en undersøgelse skal du følge det link du har modtaget som e-mail.</p>
-    </div>
+<div class="container" role="main">
+    <h2 style="margin-bottom: 0;"><i class="fa fa-group">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
+    <p>Velkommen til ttc-test</p>
+    <p>Hvis du skal deltage i en undersøgelse skal du følge det link du har modtaget som e-mail.</p>
+</div>
 {% endblock %}

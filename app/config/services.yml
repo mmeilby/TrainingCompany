@@ -1,0 +1,10 @@
+services:    
+    form.type_extension.field:
+        class: TrainingCompany\QueryBundle\Form\Extension\FieldTypeExtension
+        tags:
+          - { name: "form.type_extension", alias: "form" }
+
+    form.type_extension.button:
+        class: TrainingCompany\QueryBundle\Form\Extension\ButtonTypeExtension
+        tags:
+          - { name: "form.type_extension", alias: "submit" }

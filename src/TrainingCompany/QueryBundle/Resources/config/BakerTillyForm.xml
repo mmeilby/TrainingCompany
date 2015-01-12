@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<QueryForm>
+    <QueryBlock>
+        <HeaderQueryBlock>
+            <Domain>
+                <Item key="jobtitle">Jobtitel:</Item>
+                <Item key="anciennitet">Antal år i virksomheden:</Item>
+            </Domain>
+        </HeaderQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg kan finde en god balance mellem arbejde og fritid</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg når det jeg planlægger i hverdagen</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg får god støtte fra min leder</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg får god støtte fra min nærmeste gruppe</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg får god støtte fra mine kolleger</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Vi er gode til at samarbejde i min organisation</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg føler mig velinformeret om tiltag i firmaet</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg er effektiv i mit arbejde</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg er fleksibel og tager gerne opgaver ind</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg siger nej til opgaver der belaster min arbejdsrytme</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på fakturerbar produktion?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på intern/ikke fakturerbar tid?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor timer arbejder du om ugen (inkl. overarbejde)?</Label>
+            <Domain>
+                <Item key="10">under 10</Item>
+                <Item key="20">20</Item>
+                <Item key="30">30</Item>
+                <Item key="40">40</Item>
+                <Item key="50">50</Item>
+                <Item key="60">60</Item>
+                <Item key="70">70</Item>
+                <Item key="80">80</Item>
+                <Item key="90">90</Item>
+                <Item key="100">over 100</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Jeg mener at mit arbejde kan gøres mere effektivt ved at</Label>
+        </CommentQueryBlock>
+        <CommentQueryBlock>
+            <Label>Nævn tre opgaver der unødigt forstyrrer dit daglige arbejde</Label>
+        </CommentQueryBlock>
+        <CommentQueryBlock>
+            <Label>Nævn tre initiativer der kunne styrke arbejdsglæden ved dit job</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+    <QueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg når mine opgaver indenfor den budgetlagte tidsramme</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg oplever ofte underbudgettering af tid på mine opgaver</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg føler mig presset af det fastlagte tidsbudget</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg tager ofte arbejde med hjem</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <SatisfactionQueryBlock>
+            <Label>Jeg beskæftiger mig mest med mit primære jobområde</Label>
+            <Domain>
+                <Item key="1">Meget uenig</Item>
+                <Item key="2">Mindre uenig</Item>
+                <Item key="3">Enig</Item>
+                <Item key="4">Mere enig</Item>
+                <Item key="5">Meget enig</Item>
+            </Domain>
+        </SatisfactionQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hver meget tid anvender du på mail hver dag?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på telefon hver dag?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på planlægning/administration hver dag?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på ikke faglige samtaler hver dag?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <ScaleQueryBlock>
+            <Label>Hvor meget tid anvender du på afbrydelser fra andre hver dag?</Label>
+            <Domain>
+                <Item key="10">10%</Item>
+                <Item key="20">20%</Item>
+                <Item key="30">30%</Item>
+                <Item key="40">40%</Item>
+                <Item key="50">50%</Item>
+                <Item key="60">60%</Item>
+                <Item key="70">70%</Item>
+                <Item key="80">80%</Item>
+                <Item key="90">90%</Item>
+                <Item key="100">100%</Item>
+            </Domain>
+        </ScaleQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort din arbejdsdag</Label>
+        </CommentQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvad der gør at din planlægning og prioritering af opgaver ikke overholdes</Label>
+        </CommentQueryBlock>
+        <CommentQueryBlock>
+            <Label>Beskriv kort hvordan du kunne ønske dig en arbejdsdag forløb</Label>
+        </CommentQueryBlock>
+    </QueryBlock>
+</QueryForm>

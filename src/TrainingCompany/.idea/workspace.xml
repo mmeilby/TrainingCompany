@@ -23,7 +23,7 @@
       <file leaf-file-name="DefaultController.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QueryBundle/Controller/DefaultController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="863" selection-end="863" vertical-scroll-proportion="0.0">
+            <state line="24" column="0" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -50,7 +50,7 @@
       <file leaf-file-name="QPersons.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QueryBundle/Entity/Doctrine/QPersons.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="136" column="27" selection-start="2367" selection-end="2367" vertical-scroll-proportion="0.0">
+            <state line="136" column="0" selection-start="2261" selection-end="2261" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -86,7 +86,7 @@
       <file leaf-file-name="start.html.twig" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/QueryBundle/Resources/views/Default/start.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="46" column="28" selection-start="1200" selection-end="1200" vertical-scroll-proportion="0.0">
+            <state line="23" column="0" selection-start="798" selection-end="798" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -177,6 +177,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -443,7 +444,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -452,8 +452,8 @@
     <property name="options.lastSelected" value="web-ide.project.structure" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../vendor/doctrine/dbal/lib/Doctrine/DBAL/Driver/PDOConnection.php" />
     <property name="FullScreen" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PublishConfig">
     <servers>
@@ -526,7 +526,7 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25251076" sideWeight="0.39700374" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25251076" sideWeight="0.58801496" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25609756" sideWeight="0.58801496" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25251076" sideWeight="0.40324596" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
@@ -650,7 +650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QueryBundle/Resources/views/Default/start.html.twig">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="46" column="28" selection-start="1200" selection-end="1200" vertical-scroll-proportion="0.0">
+        <state line="23" column="0" selection-start="798" selection-end="798" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -671,14 +671,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/QueryBundle/Entity/Doctrine/QPersons.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="136" column="27" selection-start="2367" selection-end="2367" vertical-scroll-proportion="0.0">
+        <state line="136" column="0" selection-start="2261" selection-end="2261" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/QueryBundle/Controller/DefaultController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="863" selection-end="863" vertical-scroll-proportion="0.0">
+        <state line="24" column="0" selection-start="951" selection-end="951" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>

@@ -1,23 +1,17 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block instruction "Tak" %}
-
 {% block maincontent %}
-    <div class="form_header">
-        <div class="form_header_inner">
-            Undersøgelsen er færdig
-        </div>
-    </div>
-
-    <div class="form_content">
-        <form action="{{ path('_feedback') }}" method="POST">
-            <p>Tak fordi du tog dig tid til at deltage i undersøgelsen.</p>
-            <p>Dine svar er registreret og du kan lukke din browser nu.</p>
-            <p>Hvis du ønsker at kommentere undersøgelsen skal du klikke dig videre...</p>
-            <div style="float: right;">
-                <input type="button" name="feedback" value="Kommenter" class="form_button" onClick="window.location='{{ path('_feedback') }}'"/>
-            </div>
-            <div class="query_clear"></div>
-        </form>
-    </div>
+<div class="container" role="main">
+    <h2 style="margin-bottom: 0;"><i class="fa fa-check-square-o">&nbsp;</i>{% trans %}Tak{% endtrans %}</h2>
+    <p>Tak fordi du tog dig tid til at deltage i undersøgelsen.</p>
+    <p>Dine svar er registreret og du kan lukke din browser nu.</p>
+    <p>Hvis du ønsker at kommentere undersøgelsen skal du klikke dig videre...</p>
+    <nav>
+      <ul class="pager">
+        <li class="next">
+            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+        </li>
+      </ul>
+    </nav>
+</div>
 {% endblock %}

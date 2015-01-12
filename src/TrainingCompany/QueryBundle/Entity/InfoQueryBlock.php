@@ -6,10 +6,16 @@ class InfoQueryBlock extends QueryBlock {
     public $label;
     public $info;
 
-    public function __construct() {
-            $this->blocktype = 'INFO';
+    public function __construct($id, $label) {
+        $this->id = $id;
+        $this->blocktype = 'INFO';
+        $this->label = $label;
     }
 
+    public function getBlockId() {
+        return 'info_'.$this->id;
+    }
+    
     public function get($em, $pid, $qid, $qno) {
         $this->info = 'TEST';
     }

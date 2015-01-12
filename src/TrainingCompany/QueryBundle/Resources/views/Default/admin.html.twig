@@ -1,35 +1,40 @@
-{% extends "TrainingCompanyQueryBundle::layout.script.html.twig" %}
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% form_theme form _self %}
+{% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
-{% block instruction "Administration" %}
+{% block menu %}
+    <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
 
 {% block maincontent %}
-<div class="form_header">
-    <div class="form_header_inner">
-        Inviter respondent til ny kampagne
+<div class="container" role="main">
+    {% if send_name is defined %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+        </button>
+        <p>Invitation blev sendt til {{ send_name }} med adressen {{ send_email }}</p>
+        <p>Ref.: <a href="{{ path('_referred') }}?id={{ send_token }}">{{ send_token }}</a></p>
     </div>
+    {% endif %}
+    <p>Indtast navn og e-mail adresse på respondenten.</p>
+    <p>Der sendes en invitation til kampagnen på e-mail adressen.
+       Nye respondenter oprettes desuden i personregisteret.</p>
+    <p>Respondenter kendes på e-mail adressen.</p>
+    {{ form(form) }}
 </div>
+{% endblock %}
 
-<div class="form_content">
-    <form action="{{ path('_admin') }}" method="POST">
-        {% if send_name is defined %}
-        <div style="border: 1px solid black; padding: 10px;">
-            <p>Invitation blev sendt til {{ send_name }} med adressen {{ send_email }}</p>
-            <p>Ref.: {{ send_token }}</p>
-        </div>
-        {% endif %}
-        <p>Indtast navn og e-mail adresse på respondenten.</p>
-        <p>Der sendes en invitation til kampagnen på e-mail adressen.
-           Nye respondenter oprettes desuden i personregisteret.</p>
-        <p>Respondenter kendes på e-mail adressen.</p>
-		{{ form_rest(form) }}
-        <div class="query_clear"></div>
-        
-		<div style="float: right;">
-	        <input type="submit" name="invite" value="Inviter" class="form_button" />
-        </div>
-        <div class="query_clear"></div>
-    </form>
-</div>
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function onLoad() {
+            
+        });
+    </script>
 {% endblock %}

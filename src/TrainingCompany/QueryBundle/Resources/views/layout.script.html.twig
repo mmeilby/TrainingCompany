@@ -1,32 +1,99 @@
-{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% extends "bootstrap_3_layout.html.twig" %}
 
 {% block choice_widget_expanded %}
 {% spaceless %}
     <div>
     {% for child in form %}
-    	<div {{ block('widget_container_attributes') }}>
-	        {{ form_label(child) }}<br/>
-	        {{ form_widget(child) }}
-        </div>
+        <label class="radio-inline">
+            {{ form_widget(child, { 'attr': {'class': 'form-control'} }) }} 
+            {{ form_label(child) }}
+        </label>
     {% endfor %}
     </div>
 {% endspaceless %}
 {% endblock choice_widget_expanded %}
 
-
-{% block field_row %}
+{% block form_row %}
 {% spaceless %}
-    <div class="query_row">
-        <div class="query_label">
-		    {{ form_label(form) }}
-        </div>
-        <div class="query_widget">
-            {{ form_widget(form) }}
-            <div class="form_error">
-                {{ form_errors(form) }}
+    {% if form.vars.errors|length > 0 %}
+    <div class="form-group has-error has-feedback">
+    {% else %}
+    <div class="form-group">
+    {% endif %}
+    {% set pholder = form.vars.help %}
+    {% if not form.vars.phonestyle %}
+        {{ form_label(form) }}
+    {% else %}
+        {% set pholder = form.vars.label %}
+    {% endif %}
+        {{ form_errors(form) }}
+        {% if form.vars.icon is not null %}
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="{{ form.vars.icon }}"></i>
+                </span>
+                {{ form_widget(form, { 'attr': {'class': 'form-control', 'placeholder': pholder|trans({}, translation_domain)}}) }}
             </div>
-        </div>
-        <div style="clear:both"></div>
+        {% else %}
+            {{ form_widget(form, { 'attr': {'class': 'form-control', 'placeholder': pholder|trans({}, translation_domain)}}) }}
+        {% endif %}
     </div>
 {% endspaceless %}
-{% endblock field_row %}
+{% endblock form_row %}
+
+{% block form_errors %}
+{% spaceless %}
+    {% if errors|length > 0 %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        <ul>
+            {% for error in errors %}
+                <li>{{ error.message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endspaceless %}
+{% endblock form_errors %}
+
+{% block button_widget -%}
+    {% if label is empty -%}
+        {% set label = name|humanize %}
+    {%- endif -%}
+    <button type="{{ type|default('button') }}" {{ block('button_attributes') }}>
+        {% if icon is not null %}
+            <i class="{{ icon }}"></i>
+        {% endif %}
+        {{ label|trans({}, translation_domain) }}
+    </button>
+{%- endblock button_widget %}
+
+{% block button_row %}
+{% spaceless %}
+    {% if form.vars.buttontype is not null %}
+        {{ form_widget(form, { 'attr': {'class': [form.vars.buttontype,'btn-lg']|join(' ') }}) }}
+    {% else %}
+        {{ form_widget(form) }}
+    {% endif %}
+{% endspaceless %}
+{% endblock button_row %}
+
+{% block form_rows %}
+{% spaceless %}
+    {% for child in form %}
+        {% if child.vars.block_prefixes[0] == 'form' %}
+        {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
+    <div class="btn-group btn-group-lg" role="group">
+    {% for child in form %}
+        {% if child.vars.block_prefixes[0] == 'button' %}
+        {{ form_row(child) }}
+        {% endif %}
+    {% endfor %}
+    </div>
+{% endspaceless %}
+{% endblock form_rows %}

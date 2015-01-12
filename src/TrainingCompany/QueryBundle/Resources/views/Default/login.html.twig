@@ -1,15 +1,9 @@
-{% extends "TrainingCompanyQueryBundle::layout.script.html.twig" %}
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% block instruction "Administration" %}
+{% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
 {% block maincontent %}
-<div class="form_header">
-    <div class="form_header_inner">
-        Login
-    </div>
-</div>
-
-<div class="form_content">
+<div class="container" role="main">
     {% if error %}
         <div class="form_error">{{ error.message }}</div>
     {% endif %}

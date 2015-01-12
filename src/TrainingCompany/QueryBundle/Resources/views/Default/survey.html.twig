@@ -1,34 +1,80 @@
-{% extends "TrainingCompanyQueryBundle::layout.script.html.twig" %}
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{% form_theme form _self %}
+{% form_theme form "bootstrap_3_layout.html.twig" %}
+{# form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' #}
 
-{% block instruction %}
-Side {{ page }}
-{% endblock instruction %}
+{% block menu %}
+    <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
 
 {% block maincontent %}
-<div class="form_header">
-    <div class="form_header_inner">
+<div class="container" role="main">
+    {{ form(form) }}
+    <div class="progress hidden-xs">
+      <div class="progress-bar" role="progressbar" aria-valuenow="{{ page }}" aria-valuemin="1" aria-valuemax="{{ pages }}" style="width: {{ page/pages*100 }}%;">
         Side {{ page }} af {{ pages }}
+      </div>
     </div>
-</div>
-
-<div class="form_content">
-    <form action="{{ path('_survey') }}" method="POST">
-        {{ form_rest(form) }}
-        <div class="query_clear"></div>
-        <div style="float: right;">
-            {% if page > 1 %}
-                <input type="button" name="back" value="Tilbage" class="form_button" onClick="window.location='{{ path('_back') }}'"/>
-            {% endif %}
-            <input type="button" name="suspend" value="Pause" class="form_button" onClick="window.location='{{ path('_suspend') }}'"/>
-            {% if page == pages %}
-                <input type="submit" name="complete" value="Afslut" class="form_button" />
+    <nav>
+      <ul class="pager">
+        <li class="previous {{ page==1?'disabled':'' }}">
+            <a href="#" page="{{ page-1 }}"><span aria-hidden="true">&larr;</span> Tilbage</a>
+        </li>
+        <li class="next">
+            {% if page < pages %}
+            <a id="focus" href="#" page="{{ page+1 }}">Videre <span aria-hidden="true">&rarr;</span></a>
             {% else %}
-                <input type="submit" name="next" value="Videre" class="form_button" />
+            <a id="focus" href="#" page="{{ page+1 }}">Afslut <span aria-hidden="true">&rarr;</span></a>
             {% endif %}
-        </div>
-        <div class="query_clear"></div>
-    </form>
+        </li>
+      </ul>
+    </nav>
+{#        
+    <nav>
+        <center>
+            <ul class="pagination">
+                <li class="{{ page==1?'disabled':'' }}">
+                    <a href="#" page="1" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                </li>
+                {% for i in page-2..page+2 %}
+                    {% if i > 0 and i <= pages %}
+                <li {{ i == page ? 'class="active"' : '' }}>
+                    <a href="#" page="{{ i }}">{{ i }} <span class="sr-only">(current)</span></a>
+                </li>
+                    {% endif %}
+                {% endfor %}
+                <li class="{{ page >= pages?'disabled':'' }}">
+                    <a href="#" page="{{ pages }}" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+            </ul>
+        </center>
+    </nav>
+#}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript">
+        $(function onLoad() {
+            $('a#focus').focus();
+            $('a').click(function() {
+                $('#form_direction').val($(this).attr('page'));
+                $('#form').parent().submit();
+                return false;
+            });
+            $('#form').keypress(function(e) {
+                if (e.which == 13) {
+                    $('#form_direction').val("{{ page+1 }}");
+                    $('#form').parent().submit();
+                    return false;
+                }
+            });
+        });
+    </script>
 {% endblock %}

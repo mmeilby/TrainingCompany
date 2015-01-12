@@ -2,46 +2,56 @@
 namespace TrainingCompany\QueryBundle\Entity;
 
 use TrainingCompany\QueryBundle\Entity\Doctrine\QComments;
+use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class CommentQueryBlock extends QueryBlock {
 
     public $label;
     public $comment;
 
-    private $repositoryPath = 'TrainingCompany\QueryBundle\Entity\Doctrine\QComments';
-
-    public function __construct() {
-            $this->blocktype = 'COMMENT';
+    public function __construct($id, $label) {
+        $this->id = $id;
+        $this->blocktype = 'COMMENT';
+        $this->label = $label;
     }
 
+    public function getBlockId() {
+        return 'comment_'.$this->id;
+    }
+    
     public function get($em, $pid, $qid, $qno) {
-        $qcomments = $em->getRepository($this->repositoryPath)->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $qno));
-        if (!$qcomments)
+        $qcomments = $em->getRepository(Configuration::CommentRepo())
+                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+        if (!$qcomments) {
             $this->comment = '';
-        else
+        }
+        else {
             $this->comment = $qcomments->getComment();
+        }
     }
 
     public function persist($em, $pid, $qid, $qno) {
-        $qcomments = $em->getRepository($this->repositoryPath)->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $qno));
+        $qcomments = $em->getRepository(Configuration::CommentRepo())
+                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
         $new = !$qcomments;
         if ($new) {
             $qcomments = new QComments();
             $qcomments->setPid($pid);
             $qcomments->setQid($qid);
-            $qcomments->setQno($qno);
+            $qcomments->setQno($this->id);
         }
         $qcomments->setComment($this->comment);
-        if ($new) $em->persist($qcomments);
+        if ($new) {
+            $em->persist($qcomments);
+        }
     }
 
     public function readForm($formData) {
-        $this->comment = $formData->comment;
+        $this->comment = $formData->{$this->getBlockId()};
     }
 
     public function populateForm($formData, $formDef) {
-        $formData->comment = $this->comment;
-
-        $formDef->add('comment', 'textarea', array('label' => html_entity_decode($this->label, ENT_NOQUOTES, 'UTF-8'), 'required' => false));
+        $formData->{$this->getBlockId()} = $this->comment;
+        $formDef->add($this->getBlockId(), 'textarea', array('label' => html_entity_decode($this->label, ENT_NOQUOTES, 'UTF-8'), 'required' => false));
     }
 }

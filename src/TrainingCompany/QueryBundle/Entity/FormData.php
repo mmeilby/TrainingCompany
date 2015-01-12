@@ -9,5 +9,5 @@ namespace TrainingCompany\QueryBundle\Entity;
  */
 class FormData
 {
-
+    public $direction;
 }

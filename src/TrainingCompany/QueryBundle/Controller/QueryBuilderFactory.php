@@ -11,13 +11,10 @@ use TrainingCompany\QueryBundle\Entity\Survey;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSchema;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QQueryBlock;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QQueryDomain;
+use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class QueryBuilderFactory {
 
-    private $repositoryPathSchema = 'TrainingCompany\QueryBundle\Entity\Doctrine\QSchema';
-    private $repositoryPathBlock = 'TrainingCompany\QueryBundle\Entity\Doctrine\QQueryBlock';
-    private $repositoryPathDomain = 'TrainingCompany\QueryBundle\Entity\Doctrine\QQueryDomain';
-    
     public function getTemplateId($surveyId) {
         return 1;
     }
@@ -37,7 +34,7 @@ class QueryBuilderFactory {
 */
 
     public function getSurveys($em) {
-        $qschema = $em->getRepository($this->repositoryPathSchema)->findAll();
+        $qschema = $em->getRepository(Configuration::SchemaRepo())->findAll();
         if (!$qschema) {
             return array();
         }
@@ -108,7 +105,7 @@ class QueryBuilderFactory {
     }
 
     public function loadTemplate($em, $templateId) {
-        $qschema = $em->getRepository($this->repositoryPathSchema)->find($templateId);
+        $qschema = $em->getRepository(Configuration::SchemaRepo())->find($templateId);
         if (!$qschema) {
             return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
         }
@@ -121,7 +118,7 @@ class QueryBuilderFactory {
         
         $qno = 1;
         $parsedBlock = array();
-        $qblocks = $em->getRepository($this->repositoryPathBlock)->findBy(array('qid' => $templateId));
+        $qblocks = $em->getRepository(Configuration::BlockRepo())->findBy(array('qid' => $templateId));
         foreach ($qblocks as $queryBlock) {
             if ($queryBlock->getQno() != $qno) {
                 $survey->queryblocks[] = $parsedBlock;
@@ -135,11 +132,9 @@ class QueryBuilderFactory {
             }
             // ScaleQueryBlock
             else if ($queryBlock->getQtype() == 2) {
-                $qdomains = $em->getRepository($this->repositoryPathDomain)->findBy(array('qbid' => $queryBlock->getId()));
+                $qdomains = $em->getRepository(Configuration::DomainRepo())->findBy(array('qbid' => $queryBlock->getId()));
 
-                $newBlock = new ScaleQueryBlock();
-                $newBlock->id = $queryBlock->getId();
-                $newBlock->label = $queryBlock->getLabel();
+                $newBlock = new ScaleQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
                 $newBlock->valueset = array();
                 foreach ($qdomains as $domain) {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
@@ -148,10 +143,9 @@ class QueryBuilderFactory {
             }
             // SatisfactionQueryBlock
             else if ($queryBlock->getQtype() == 3) {
-                $qdomains = $em->getRepository($this->repositoryPathDomain)->findBy(array('qbid' => $queryBlock->getId()));
+                $qdomains = $em->getRepository(Configuration::DomainRepo())->findBy(array('qbid' => $queryBlock->getId()));
                 
-                $newBlock = new SatisfactionQueryBlock();
-                $newBlock->label = $queryBlock->getLabel();
+                $newBlock = new SatisfactionQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
                 $newBlock->valueset = array();
                 foreach ($qdomains as $domain) {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
@@ -160,14 +154,12 @@ class QueryBuilderFactory {
             }
             // CommentQueryBlock
             else if ($queryBlock->getQtype() == 4) {
-                $newBlock = new CommentQueryBlock();
-                $newBlock->label = $queryBlock->getLabel();
+                $newBlock = new CommentQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
                 $parsedBlock[] = $newBlock;
             }
             // InfoQueryBlock
             else if ($queryBlock->getQtype() == 5) {
-                $newBlock = new InfoQueryBlock();
-                $newBlock->label = $queryBlock->getLabel();
+                $newBlock = new InfoQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
                 $parsedBlock[] = $newBlock;
             }
         }
@@ -179,7 +171,7 @@ class QueryBuilderFactory {
 
     public function getTemplate($templateId) {
         try {
-            $dbConfig = file_get_contents(dirname(__DIR__) . '/Resources/config/QueryForm.xml');
+            $dbConfig = file_get_contents(dirname(__DIR__) . '/Resources/config/'.$templateId);
         } catch (ParseException $e) {
             throw new ParseException('Could not parse the query form config file: ' . $e->getMessage());
         }
@@ -210,8 +202,7 @@ class QueryBuilderFactory {
             return $newBlock;
         }
         else if ($block->getName() == 'ScaleQueryBlock') {
-            $newBlock = new ScaleQueryBlock();
-            $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
+            $newBlock = new ScaleQueryBlock(0, htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8'));
             $newBlock->valueset = array();
             foreach ($block->Domain->Item as $item) {
                 $newBlock->valueset[(String)$item->attributes()->key] = htmlentities((String)$item, ENT_NOQUOTES, 'UTF-8');
@@ -219,8 +210,7 @@ class QueryBuilderFactory {
             return $newBlock;
         }
         else if ($block->getName() == 'SatisfactionQueryBlock') {
-            $newBlock = new SatisfactionQueryBlock();
-            $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
+            $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8'));
             $newBlock->valueset = array();
             foreach ($block->Domain->Item as $item) {
                 $newBlock->valueset[(String)$item->attributes()->key] = htmlentities((String)$item, ENT_NOQUOTES, 'UTF-8');
@@ -228,13 +218,11 @@ class QueryBuilderFactory {
             return $newBlock;
         }
         else if ($block->getName() == 'CommentQueryBlock') {
-            $newBlock = new CommentQueryBlock();
-            $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
+            $newBlock = new CommentQueryBlock(0, htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8'));
             return $newBlock;
         }
         else if ($block->getName() == 'InfoQueryBlock') {
-            $newBlock = new InfoQueryBlock();
-            $newBlock->label = htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8');
+            $newBlock = new InfoQueryBlock(0, htmlentities((String)$block->Label, ENT_NOQUOTES, 'UTF-8'));
             return $newBlock;
         }
 
