@@ -4,30 +4,6 @@
 
 {% block maincontent %}
 <div class="container" role="main">
-    {% if error %}
-        <div class="form_error">{{ error.message }}</div>
-    {% endif %}
-
-    <form action="{{ path("_security_check") }}" method="post" id="login">
-        <div class="query_row">
-            <div class="query_label">
-                <label for="username">Brugernavn:</label>
-            </div>
-            <div class="query_widget">
-                <input type="text" id="username" name="_username" value="{{ last_username }}" />
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <div class="query_row">
-            <div class="query_label">
-                <label for="password">Kodeord:</label>
-            </div>
-            <div class="query_widget">
-                <input type="password" id="password" name="_password" />
-            </div>
-            <div style="clear:both"></div>
-        </div>
-        <input type="submit" class="symfony-button-grey" value="LOGIN" />
-    </form>
+    {{ form(form) }}
 </div>
 {% endblock %}
