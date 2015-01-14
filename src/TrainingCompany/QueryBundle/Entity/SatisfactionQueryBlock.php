@@ -6,6 +6,7 @@ use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class SatisfactionQueryBlock extends QueryBlock {
 
+    public $show_value_labels = true;
     public $label;
     public $valueset;
     // Satisfaction: 1-7 - completely disagree/completely agree
@@ -55,7 +56,16 @@ class SatisfactionQueryBlock extends QueryBlock {
     public function populateForm($formData, $formDef) {
         $formData->{$this->getBlockId()} = $this->satisfaction;
 
-        $options = array('label' => html_entity_decode($this->label, ENT_NOQUOTES, 'UTF-8'), 'choices' => $this->valueset, 'required' => false, 'expanded' => true, 'placeholder' => false, 'label_attr' => array('class' => 'radio-inline') );
+        $options = array('label' => html_entity_decode($this->label, ENT_NOQUOTES, 'UTF-8'),
+                         'choices' => $this->valueset,
+                         'required' => false,
+                         'expanded' => true,
+                         'placeholder' => false,
+                         'phonestyle' => true,
+                         'title' => $this->show_value_labels,
+                         'show_values' => false,
+                         'label_attr' => array('class' => 'radio-inline')
+                        );
         $formDef->add($this->getBlockId(), 'choice', $options);
     }
 }

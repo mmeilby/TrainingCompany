@@ -1,25 +1,67 @@
 {% extends "bootstrap_3_layout.html.twig" %}
 
-{% block choice_widget_expanded %}
-{% spaceless %}
-    <div>
-    {% for child in form %}
-        <label class="radio-inline">
-            {{ form_widget(child, { 'attr': {'class': 'form-control'} }) }} 
-            {{ form_label(child) }}
-        </label>
-    {% endfor %}
-    </div>
-{% endspaceless %}
-{% endblock choice_widget_expanded %}
-
-{% block form_row %}
-{% spaceless %}
-    {% if form.vars.errors|length > 0 %}
-    <div class="form-group has-error has-feedback">
+{% block choice_widget_expanded -%}
+    {% if '-inline' in label_attr.class|default('') %}
+        {% if title %}
+            <div class="row">
+            {% if phonestyle %}
+                <div class="col-xs-2 hidden-xs"></div>
+            {% endif %}
+            {% for child in form %}
+                <div class="col-xs-2"><center>{{ child.vars.label }}</center></div>
+            {% endfor %}
+            </div>
+            <hr />
+        {% endif %}
+        {% if phonestyle %}
+            <div class="row visible-xs-inline">{{ label }}</div>
+        {% endif %}
+            <div class="row control-group">
+        {% if phonestyle %}
+                <div class="col-xs-2 hidden-xs">{{ label }}</div>
+        {% endif %}
+            {% for child in form %}
+                <div class="col-xs-2">
+                    <center>
+                        {{ form_widget(child, {
+                            parent_label_class: label_attr.class|default(''),
+                            show_label: show_values,
+                        }) }}
+                    </center>
+                </div>
+            {% endfor %}
+            </div>
     {% else %}
-    <div class="form-group">
+        <div {{ block('widget_container_attributes') }}>
+            {% for child in form %}
+                {{ form_widget(child, {
+                    parent_label_class: label_attr.class|default(''),
+                }) }}
+            {% endfor %}
+        </div>
     {% endif %}
+{%- endblock choice_widget_expanded %}
+
+{% block checkbox_radio_label -%}
+    {% if required %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' required')|trim}) %}
+    {% endif %}
+    {% if parent_label_class is defined %}
+        {% set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ parent_label_class)|trim}) %}
+    {% endif %}
+    {% if label is empty %}
+        {% set label = name|humanize %}
+    {% endif %}
+    <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>
+        {{ widget|raw }}
+        {% if show_label is not defined or show_label %}
+        {{ label|trans({}, translation_domain) }}
+        {% endif %}
+    </label>
+{%- endblock checkbox_radio_label %}
+
+{% block form_row -%}
+    <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error has-feedback{% endif %}">
     {% set pholder = form.vars.help %}
     {% if not form.vars.phonestyle %}
         {{ form_label(form) }}
@@ -38,9 +80,9 @@
             {{ form_widget(form, { 'attr': {'class': 'form-control', 'placeholder': pholder|trans({}, translation_domain)}}) }}
         {% endif %}
     </div>
-{% endspaceless %}
-{% endblock form_row %}
+{%- endblock form_row %}
 
+{#
 {% block form_errors %}
 {% spaceless %}
     {% if errors|length > 0 %}
@@ -58,6 +100,9 @@
     {% endif %}
 {% endspaceless %}
 {% endblock form_errors %}
+#}
+
+{# button widgets #}
 
 {% block button_widget -%}
     {% if label is empty -%}
@@ -71,18 +116,15 @@
     </button>
 {%- endblock button_widget %}
 
-{% block button_row %}
-{% spaceless %}
+{% block button_row -%}
     {% if form.vars.buttontype is not null %}
         {{ form_widget(form, { 'attr': {'class': [form.vars.buttontype,'btn-lg']|join(' ') }}) }}
     {% else %}
         {{ form_widget(form) }}
     {% endif %}
-{% endspaceless %}
-{% endblock button_row %}
+{%- endblock button_row %}
 
-{% block form_rows %}
-{% spaceless %}
+{% block form_rows -%}
     {% for child in form %}
         {% if child.vars.block_prefixes[0] == 'form' %}
         {{ form_row(child) }}
@@ -95,5 +137,4 @@
         {% endif %}
     {% endfor %}
     </div>
-{% endspaceless %}
-{% endblock form_rows %}
+{%- endblock form_rows %}

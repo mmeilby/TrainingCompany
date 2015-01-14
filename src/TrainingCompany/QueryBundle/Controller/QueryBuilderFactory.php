@@ -1,10 +1,13 @@
 <?php
 namespace TrainingCompany\QueryBundle\Controller;
 
+use Symfony\Component\Yaml\Yaml;
+
 use TrainingCompany\QueryBundle\Entity\HeaderQueryBlock;
 use TrainingCompany\QueryBundle\Entity\ScaleQueryBlock;
 use TrainingCompany\QueryBundle\Entity\SatisfactionQueryBlock;
 use TrainingCompany\QueryBundle\Entity\CommentQueryBlock;
+use TrainingCompany\QueryBundle\Entity\TextQueryBlock;
 use TrainingCompany\QueryBundle\Entity\InfoQueryBlock;
 use TrainingCompany\QueryBundle\Entity\Survey;
 
@@ -18,20 +21,6 @@ class QueryBuilderFactory {
     public function getTemplateId($surveyId) {
         return 1;
     }
-
-/*
-    public function getSurveys() {
-        $survey = new Survey();
-        $survey->id = 1;
-        $survey->ref = 'GdwMiD8zdpFD8Ldm';
-        $survey->name = 'YouSee';
-        $survey->signer = 'Henrik Vrangbæk Thomsen';
-        $survey->email = 'mmeilby@gmail.com';
-        $survey->sender = 'The Training Company';
-        $survey->invitation = 'The Training Company har brug for din mening';
-        return array($survey->name => $survey);
-    }
-*/
 
     public function getSurveys($em) {
         $qschema = $em->getRepository(Configuration::SchemaRepo())->findAll();
@@ -52,8 +41,7 @@ class QueryBuilderFactory {
         }
         return $surveys;
     }
-        
-    
+
     public function saveTemplate($em, $survey) {
         $qschema = new QSchema();
         $qschema->setName($survey->name);
@@ -84,6 +72,10 @@ class QueryBuilderFactory {
                 }
                 else if ($qb->blocktype == 'INFO') {
                     $queryBlock->setQtype(5);
+                    $queryBlock->setLabel($qb->label);
+                }
+                else if ($qb->blocktype == 'TEXT') {
+                    $queryBlock->setQtype(6);
                     $queryBlock->setLabel($qb->label);
                 }
                 $em->persist($queryBlock);
@@ -150,6 +142,7 @@ class QueryBuilderFactory {
                 foreach ($qdomains as $domain) {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
                 }
+                $newBlock->show_value_labels = (count($parsedBlock) == 0);
                 $parsedBlock[] = $newBlock;
             }
             // CommentQueryBlock
@@ -162,6 +155,11 @@ class QueryBuilderFactory {
                 $newBlock = new InfoQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
                 $parsedBlock[] = $newBlock;
             }
+            // TextQueryBlock
+            else if ($queryBlock->getQtype() == 6) {
+                $newBlock = new TextQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $parsedBlock[] = $newBlock;
+            }
         }
         $survey->queryblocks[] = $parsedBlock;
 
@@ -170,6 +168,78 @@ class QueryBuilderFactory {
 
 
     public function getTemplate($templateId) {
+        try {
+            $dbConfig = Yaml::parse(dirname(__DIR__) . '/Resources/config/'.$templateId);
+        } catch (ParseException $e) {
+            throw new ParseException('Could not parse the query form config file: ' . $e->getMessage());
+        }
+        $form = $dbConfig['form'];
+        $survey = new Survey();
+        $survey->name = $form['template'];
+        $survey->signer = $form['signer'];
+        $survey->email = $form['email'];
+        $survey->sender = $form['company'];
+        $survey->invitation = $form['invitation'];
+
+        $parsedBlock = array();
+        foreach ($form['pages'] as $queryBlock) {
+            $parsedBlock[] = $this->parseBlock($queryBlock);
+        }
+        $survey->queryblocks = $parsedBlock;
+        return $survey;
+    }
+
+    private function parseBlock($queryBlock) {
+        $title = $queryBlock['title'];
+        $description = $queryBlock['description'];
+        $blocks = array();
+        foreach ($queryBlock['blocks'] as $block) {
+            $type = $block['type'];
+            if ($type == "field") {
+                $newBlock = new TextQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $blocks[] = $newBlock;
+            }
+            elseif ($type == "comment") {
+                $newBlock = new CommentQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $blocks[] = $newBlock;
+            }
+            elseif ($type == "info") {
+                $newBlock = new InfoQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $blocks[] = $newBlock;
+            }
+            elseif ($type == "scale") {
+                $newBlock = new ScaleQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $newBlock->valueset = array();
+                foreach ($block['valuelist'] as $key => $value) {
+                    $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');
+                }
+                $blocks[] = $newBlock;
+            }
+            elseif ($type == "satisfaction") {
+                if (array_key_exists('labels', $block)) {
+                    foreach ($block['labels'] as $label) {
+                        $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'));
+                        $newBlock->valueset = array();
+                        foreach ($block['valuelist'] as $key => $value) {
+                            $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');
+                        }
+                        $blocks[] = $newBlock;
+                    }
+                }
+                else {
+                    $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'));
+                    $newBlock->valueset = array();
+                    foreach ($block['valuelist'] as $key => $value) {
+                        $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');
+                    }
+                    $blocks[] = $newBlock;
+                }
+            }
+        }
+        return $blocks;
+    }
+    
+/*
         try {
             $dbConfig = file_get_contents(dirname(__DIR__) . '/Resources/config/'.$templateId);
         } catch (ParseException $e) {
@@ -180,9 +250,8 @@ class QueryBuilderFactory {
         foreach ($xml as $queryBlock) {
             $parsedBlock[] = $this->drillDownXml($queryBlock);
         }
-        return $parsedBlock;
-    }
-
+*/
+/*    
     private function drillDownXml($block) {
         $parsedBlock = array();
         if ($block->getName() == 'QueryBlock') {
@@ -228,4 +297,6 @@ class QueryBuilderFactory {
 
         return new Object();
     }
+ * 
+ */
 }

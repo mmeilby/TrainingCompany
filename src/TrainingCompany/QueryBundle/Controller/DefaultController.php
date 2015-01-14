@@ -35,14 +35,21 @@ class DefaultController extends Controller
      * @Method("GET")
      */
     public function loadAction() {
-        $em = $this->getDoctrine()->getManager();
         $queryBuilder = new QueryBuilderFactory();
-        $template = $queryBuilder->getTemplate('BakerTillyForm.xml');
-        $survey = new Survey();
-        $survey->name = 'Baker Tilly 2';
-        $survey->signer = 'Henrik Vrangbæk Thomsen';
-        $survey->queryblocks = $template;
+        $survey = $queryBuilder->getTemplate('QueryForm.yml');
+        $em = $this->getDoctrine()->getManager();
         $queryBuilder->saveTemplate($em, $survey);
-        return $this->render('TrainingCompanyQueryBundle:Default:optout.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Default:home.html.twig');
+    }
+    
+    /**
+     * Test indgang til brugerundersøgelsen
+     * @Route("/survey/test", name="_test")
+     * @Method("GET")
+     */
+    public function testAction() {
+        $queryBuilder = new QueryBuilderFactory();
+        $survey = $queryBuilder->getTemplate('QueryForm.yml');
+        return $this->render('TrainingCompanyQueryBundle:Default:home.html.twig');
     }
 }
