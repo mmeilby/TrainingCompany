@@ -2,26 +2,30 @@
 
 {% block choice_widget_expanded -%}
     {% if '-inline' in label_attr.class|default('') %}
+        {% set col_attr = "col-xs-1" %}
+        {% set col_label_attr = ["col-xs-",(12-form|length)]|join('') %}
         {% if title %}
             <div class="row">
             {% if phonestyle %}
-                <div class="col-xs-2 hidden-xs"></div>
+                <div class="{{ col_label_attr }} hidden-xs"></div>
             {% endif %}
             {% for child in form %}
-                <div class="col-xs-2"><center>{{ child.vars.label }}</center></div>
+                <div class="{{ col_attr }}">
+                    <center><label class="control-label small">{{ child.vars.label }}</label></center>
+                </div>
             {% endfor %}
             </div>
             <hr />
         {% endif %}
         {% if phonestyle %}
-            <div class="row visible-xs-inline">{{ label }}</div>
+            <div class="row visible-xs-inline"><label class="control-label">{{ label }}</label></div>
         {% endif %}
             <div class="row control-group">
         {% if phonestyle %}
-                <div class="col-xs-2 hidden-xs">{{ label }}</div>
+                <div class="{{ col_label_attr }} hidden-xs"><label class="control-label">{{ label }}</label></div>
         {% endif %}
             {% for child in form %}
-                <div class="col-xs-2">
+                <div class="{{ col_attr }}">
                     <center>
                         {{ form_widget(child, {
                             parent_label_class: label_attr.class|default(''),

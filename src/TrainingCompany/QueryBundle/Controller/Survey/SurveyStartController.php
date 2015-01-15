@@ -97,4 +97,16 @@ class SurveyStartController extends Controller
             return $this->redirect($this->generateUrl('_error'));
         }
     }
+    
+    /**
+     * Startside i brugerundersøgelse
+     * Forudsætning: spørgeskema skal være defineret i session
+     * @Route("/survey/restart", name="_restart")
+     * @Template("TrainingCompanyQueryBundle:Default:start.html.twig")
+     */
+    public function restartAction(Request $request) {
+        $session = $request->getSession();
+        $session->set(SurveyController::$sessionPage, 0);
+        return $this->redirect($this->generateUrl('_start'));
+    }
 }

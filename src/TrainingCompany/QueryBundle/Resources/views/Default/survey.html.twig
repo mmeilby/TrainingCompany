@@ -1,19 +1,19 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
-{# form_theme form "bootstrap_3_layout.html.twig" #}
 {% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
 {% block menu %}
     <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+                <a id="topofpage" href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
             </li>
         </ul>
     </div>
 {% endblock %}
 
 {% block maincontent %}
+<div>&nbsp;</div>
 <div class="container" role="main">
     {{ form(form) }}
     <div class="progress hidden-xs">
@@ -24,7 +24,7 @@
     <nav>
       <ul class="pager">
         <li class="previous {{ page==1?'disabled':'' }}">
-            <a href="#" page="{{ page-1 }}"><span aria-hidden="true">&larr;</span> Tilbage</a>
+            <a href="#" page="{{ page==1?1:page-1 }}"><span aria-hidden="true">&larr;</span> Tilbage</a>
         </li>
         <li class="next">
             {% if page < pages %}
@@ -62,7 +62,7 @@
 {% block javascripts %}
     <script type="text/javascript">
         $(function onLoad() {
-            $('a#focus').focus();
+            $('input').first().focus();
             $('a').click(function() {
                 $('#form_direction').val($(this).attr('page'));
                 $('#form').parent().submit();
