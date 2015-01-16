@@ -6,14 +6,16 @@
     <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a id="topofpage" href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
             </li>
         </ul>
     </div>
 {% endblock %}
 
 {% block maincontent %}
-<div>&nbsp;</div>
+<div class="container hidden-xs" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
     {{ form(form) }}
     <div class="progress hidden-xs">
@@ -21,6 +23,7 @@
         Side {{ page }} af {{ pages }}
       </div>
     </div>
+    <hr class="visible-xs-block" />
     <nav>
       <ul class="pager">
         <li class="previous {{ page==1?'disabled':'' }}">
@@ -62,7 +65,12 @@
 {% block javascripts %}
     <script type="text/javascript">
         $(function onLoad() {
-            $('input').first().focus();
+            if ($('input').length > 2) {
+                $('input').first().focus();
+            }
+            else {
+                $('textarea').first().focus();
+            }
             $('a').click(function() {
                 $('#form_direction').val($(this).attr('page'));
                 $('#form').parent().submit();

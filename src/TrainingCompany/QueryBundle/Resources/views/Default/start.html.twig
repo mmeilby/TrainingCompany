@@ -1,17 +1,31 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
+<!--    
+<div style="background-image: url('{{ asset( 'bundles/trainingcompanyquery/images/trncmp_bckg.png' ) }}');
+            background-size: cover;
+            background-repeat: no-repeat;">
+</div>
+-->
 <div class="container" role="main">
     <h2 style="margin-bottom: 0;"><i class="fa fa-arrow-circle-right">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
+    <p>The Training Company undersøgelse - {{ company }}</p>
+    <hr />
     <p>Kære {{ name }}</p>
-    <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.</p>
-    <p>Tryk på ''Start'' for at gå i gang med besvarelsen.</p>
+    <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.<br />
+       Tryk på ''Start'' når du er klar til at gå i gang med besvarelsen.</p>
+    <p>Med venlig hilsen<br />
+        {{ signer }}</p>
+    <hr />
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_survey') }}">Start <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_survey') }}">Start <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {% endblock %}

@@ -88,9 +88,17 @@ class SurveyStartController extends Controller
                 return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig', array('survey' => $qsurveys));
             }
 
+            $qschema = $em->getRepository(Configuration::SchemaRepo())->find($qsurveys->getSid());
+            if (!$qschema) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+            }
+
             $formDef = $this->createFormBuilder();
             $form = $formDef->getForm();
-            return array('form' => $form->createView(), 'name' => $qpersons->getName());
+            return array('form' => $form->createView(),
+                         'name' => $qpersons->getName(),
+                         'company' => $qschema->getName(),
+                         'signer' => $qschema->getSigner());
         }
         catch (\PDOException $e) {
             $session->set('error', $e->getMessage());
