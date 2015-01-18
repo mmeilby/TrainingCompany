@@ -1,17 +1,32 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-check-square-o">&nbsp;</i>{% trans %}Tak{% endtrans %}</h2>
-    <p>Tak fordi du tog dig tid til at deltage i undersøgelsen.</p>
-    <p>Dine svar er registreret og du kan lukke din browser nu.</p>
-    <p>Hvis du ønsker at kommentere undersøgelsen skal du klikke dig videre...</p>
+    <div class="jumbotron">
+        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-check-square-o">&nbsp;</i>{% trans %}Undersøgelsen er færdig{% endtrans %}</h2>
+        The Training Company undersøgelse
+        <span class="hidden-xs"> - </span> 
+        <span class="visible-xs-inline"><br /></span> 
+        {{ company }}
+    </div>
+    <p>
+        Tak fordi du tog dig tid til at deltage i undersøgelsen.
+    </p>
+    <p>
+        Dine svar er registreret og du kan lukke din browser nu.
+    </p>
+    <p>
+        Hvis du ønsker at kommentere undersøgelsen skal du klikke dig videre...
+    </p>
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_feedback_with_id', { 'id': survey.token }) }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {% endblock %}

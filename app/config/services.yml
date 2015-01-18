@@ -8,3 +8,10 @@ services:
         class: TrainingCompany\QueryBundle\Form\Extension\ButtonTypeExtension
         tags:
           - { name: "form.type_extension", alias: "submit" }
+
+    ttc.authentication_failure_event_listener:
+        class: TrainingCompany\QueryBundle\EventListener\AuthenticationFailureListener
+        arguments:
+            - "@logger"
+        tags:
+          - { name: kernel.event_subscriber }

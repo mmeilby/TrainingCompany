@@ -8,42 +8,80 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\Request;
 
-use TrainingCompany\QueryBundle\Controller\Survey\SurveyController;
 use TrainingCompany\QueryBundle\Entity\Configuration;
+use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
+use TrainingCompany\QueryBundle\Entity\FormData;
 
 class FeedbackController extends Controller
 {
     /**
      * Test indgang til brugerundersøgelsen
-     * @Route("/survey/feedback", name="_feedback")
+     * @Route("/feedback/{id}", name="_feedback_with_id")
      * @Template("TrainingCompanyQueryBundle:Default:feedback.html.twig")
      */
-    public function feedbackAction(Request $request) {
-        $session = $request->getSession();
-        if ($request->getMethod() != 'POST') {
-            $id = $request->query->get('id');
-            if (isset($id)) {
-                try {
-                    $em = $this->getDoctrine()->getManager();
-                    $qsurveys = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('token' => $id));
-                    if (!$qsurveys) {
-                        return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-                    }
-
-                    $session->set(SurveyController::$sessionPersonId, $qsurveys->getPid());
-                    $session->set(SurveyController::$sessionSurveyId, $qsurveys->getId());
-                    $session->set(SurveyController::$sessionTemplateId, $qsurveys->getSid());
-                }
-                catch (\PDOException $e) {
-                    $session->set('error', $e->getMessage());
-                    return $this->redirect($this->generateUrl('_error'));
-                }
+    public function feedbackWithIDAction(Request $request, $id) {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            /* @var $qsurveys QSurveys */
+            $qsurveys = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('token' => $id));
+            if (!$qsurveys) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+            }
+            $qpersons = $em->getRepository(Configuration::PersonRepo())->find($qsurveys->getPid());
+            if (!$qpersons) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+            }
+            $qschema = $em->getRepository(Configuration::SchemaRepo())->find($qsurveys->getSid());
+            if (!$qschema) {
+                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
             }
         }
-        $pid = $session->get(SurveyController::$sessionPersonId);
+        catch (\PDOException $e) {
+            $session = $request->getSession();
+            $session->set('error', $e->getMessage());
+            return $this->redirect($this->generateUrl('_error'));
+        }
 
+        $form = $this->makeForm($qpersons);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->sendMail($form, $request, $qpersons, $qschema);
+            return $this->render('TrainingCompanyQueryBundle:Default:feedback_ty.html.twig');
+        }
+
+        return array(
+            'form' => $form->createView(),
+            'name' => $qpersons->getName(),
+            'company' => $qschema->getName(),
+            'signer' => $qschema->getSigner()
+        );
+    }
+    
+    /**
+     * Test indgang til brugerundersøgelsen
+     * @Route("/feedback", name="_feedback")
+     * @Template("TrainingCompanyQueryBundle:Default:feedback.html.twig")
+     */
+    public function feedbackAction(Request $request, $id) {
+        $form = $this->makeForm();
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $this->sendMail($form, $request);
+            return $this->render('TrainingCompanyQueryBundle:Default:feedback_ty.html.twig');
+        }
+
+        return array('form' => $form->createView());
+    }
+    
+    /**
+     * Dan formular med elementer for den valgte side
+     * @param $user user record
+     * @param $pages antal spørgsmål
+     * @return mixed den genererede formular
+     */
+    private function makeForm($user = null) {
         $formDef = $this->createFormBuilder();
-        if (!isset($pid)) {
+        if (!isset($user)) {
             $formDef->add('name', 'text', array('label' => 'Navn', 'required' => false));
             $formDef->add('email', 'text', array('label' => 'E-mail', 'required' => false));
         }
@@ -51,49 +89,33 @@ class FeedbackController extends Controller
         $formDef->add('send', 'submit', array('label' => 'Send kommentar',
                                                 'translation_domain' => 'admin',
                                                 'icon' => 'fa fa-envelope-o'));
-        $form = $formDef->getForm();
-        if ($request->getMethod() != 'POST') {
-           return array('form' => $form->createView());
+        return $formDef->getForm();
+    }
+    
+    private function sendMail($form, $request, $user = null, $qschema = null) {
+        $formData = $form->getData();
+        $feedback = $formData['feedback'];
+        $from = '';
+        $sender = '';
+        if (!isset($user)) {
+            $from = $formData['email'];
+            $sender = $formData['name'];
         }
         else {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $formData = $form->getData();
-                $feedback = $formData['feedback'];
-                $from = '';
-                $sender = '';
-                if (!isset($pid)) {
-                    $from = $formData['email'];
-                    $sender = $formData['name'];
-                }
-                else {
-                    try {
-                       $em = $this->getDoctrine()->getManager();
-                       $qpersons = $em->getRepository(Configuration::PersonRepo())->find($pid);
-                       if ($qpersons) {
-                           $from = $qpersons->getEmail();
-                           $sender = $qpersons->getName();
-                       }
-                   }
-                   catch (\PDOException $e) {
-                       $session->set('error', $e->getMessage());
-                       return $this->redirect($this->generateUrl('_error'));
-                   }
-                }
-                $parms = array(
-                    'name' => $sender,
-                    'email' => $from,
-                    'feedback' => $feedback,
-                    'host' => $request->getHost());
-                $message = Swift_Message::newInstance()
-                    ->setSubject('TTC-TEST Feedback')
-                    ->setFrom(array($this->container->getParameter('mailuser') => $this->container->getParameter('admin-name')))
-                    ->setTo(array($this->container->getParameter('feedback-mail') => $this->container->getParameter('feedback-name')))
-                    ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:feedbackmail.html.twig', $parms), 'text/html');
-                $this->get('mailer')->send($message);
-                
-            }
-            return $this->render('TrainingCompanyQueryBundle:Default:feedback_ty.html.twig');
+            $from = $user->getEmail();
+            $sender = $user->getName();
         }
+        $parms = array(
+            'name' => $sender,
+            'email' => $from,
+            'feedback' => $feedback,
+            'host' => $request->getHost(),
+            'survey' => isset($qschema) ? $qschema->getName() : '');
+        $message = Swift_Message::newInstance()
+            ->setSubject('TTC-TEST Feedback')
+            ->setFrom(array($this->container->getParameter('mailuser') => $this->container->getParameter('admin-name')))
+            ->setTo(array($this->container->getParameter('feedback-mail') => $this->container->getParameter('feedback-name')))
+            ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:feedbackmail.html.twig', $parms), 'text/html');
+        $this->get('mailer')->send($message);
     }
 }

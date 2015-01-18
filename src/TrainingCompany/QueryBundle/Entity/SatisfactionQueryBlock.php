@@ -6,6 +6,7 @@ use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class SatisfactionQueryBlock extends QueryBlock {
 
+    public $mobileDevice = false;
     public $show_value_labels = true;
     public $label;
     public $valueset;
@@ -61,10 +62,10 @@ class SatisfactionQueryBlock extends QueryBlock {
                          'required' => false,
                          'expanded' => true,
                          'placeholder' => false,
-                         'phonestyle' => true,
+                         'phonestyle' => !$this->mobileDevice,
                          'title' => $this->show_value_labels,
                          'show_values' => false,
-                         'label_attr' => array('class' => 'radio-inline')
+                         'label_attr' => array('class' => $this->mobileDevice ? 'radio' : 'radio-inline')
                         );
         $formDef->add($this->getBlockId(), 'choice', $options);
     }

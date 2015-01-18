@@ -1,17 +1,27 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
     <h2 style="margin-bottom: 0;"><i class="fa fa-bomb">&nbsp;</i>{% trans %}Respondentoplysninger mangler{% endtrans %}</h2>
-    <p>Det er ikke muligt at fastslå din identitet i undersøgelsen på baggrund af de givne oplysninger.</p>
-    <p>Start igen ved at klikke på det link der er tilsendt per e-mail. Vi beklager ulejligheden!</p>
-    <p>Hvis du ønsker at kommentere undersøgelsen eller angive en årsag til os skal du klikke dig videre...</p>
+    <p>
+        Det er ikke muligt at fastslå din identitet i undersøgelsen på baggrund af de givne oplysninger.
+    </p>
+    <p>
+        Start igen ved at klikke på det link der er tilsendt per e-mail. Vi beklager ulejligheden!
+    </p>
+    <p>
+        Hvis du ønsker at kommentere undersøgelsen eller angive en årsag til os skal du klikke dig videre...
+    </p>
+    <hr />
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {% endblock %}

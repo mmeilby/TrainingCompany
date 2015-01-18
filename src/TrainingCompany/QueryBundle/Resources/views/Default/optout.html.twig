@@ -1,18 +1,39 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-trash-o">&nbsp;</i>{% trans %}Fravalg af undersøgelsen{% endtrans %}</h2>
-    <p>Du har valgt ikke at gennemføre undersøgelsen.</p>
-    <p>Vi sætter stor pris på at du bruger et øjeblik på at give din kommentarer til undersøgelsen.
-       Det er vigtigt for os at høre din mening og især hvorfor du ikke fik lejlighed til at gennemføre
-       undersøgelsen.</p>
+    <div class="jumbotron">
+        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-trash-o">&nbsp;</i>{% trans %}Fravalg af undersøgelsen{% endtrans %}</h2>
+        The Training Company undersøgelse
+        <span class="hidden-xs"> - </span> 
+        <span class="visible-xs-inline"><br /></span> 
+        {{ company }}
+    </div>
+    <p>
+        Kære {{ name }}
+    </p>
+    <p>
+        Du har valgt ikke at gennemføre undersøgelsen.
+    </p>
+    <p>
+        Vi sætter stor pris på, at du bruger et øjeblik på at give din kommentarer til undersøgelsen.
+        Det er vigtigt for os at høre din mening og især hvorfor du ikke fik lejlighed til at gennemføre
+        undersøgelsen.
+    </p>
+    <p>
+        Med venlig hilsen<br />
+        {{ signer }}
+    </p>
+    <hr />
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_feedback_with_id', { 'id': id }) }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {% endblock %}

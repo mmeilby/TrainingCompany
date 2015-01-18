@@ -5,12 +5,25 @@ jms_security_extra:
 security:
     encoders:
         Symfony\Component\Security\Core\User\User: plaintext
-
+#        Symfony\Component\Security\Core\User\User:
+#            algorithm: sha1
+#            iterations: 1
+#            encode_as_base64: false          
+        TrainingCompany\QueryBundle\Entity\Doctrine\QPersons:
+            algorithm:  bcrypt
+            iterations: 13
+            encode_as_base64: true          
+        
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
+        chain_provider:
+            chain:
+                providers: [user_db, in_memory]
+        user_db:
+            entity: { class: TrainingCompany\QueryBundle\Entity\Doctrine\QPersons, property: username }
         in_memory:
             memory:
                 users:
@@ -26,17 +39,6 @@ security:
             security: false
 
         secured_area:
-            pattern:    ^/admin
-            form_login:
-                check_path: _security_check
-                login_path: _admin_login
-                username_parameter: 'form[username]'
-                password_parameter: 'form[password]'
-            logout:
-                path:   _admin_logout
-                target: _home
-
-        secured_area:
             pattern:    ^/
             anonymous: ~
             switch_user: true
@@ -47,8 +49,9 @@ security:
                 password_parameter: 'form[password]'
             logout:
                 path:   _admin_logout
-                target: _icup
+                target: _home
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/survey, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         #- { path: ^/_internal/secure, roles: IS_AUTHENTICATED_ANONYMOUSLY, ip: 127.0.0.1 }

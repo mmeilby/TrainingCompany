@@ -1,18 +1,28 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
     <h2 style="margin-bottom: 0;"><i class="fa fa-bomb">&nbsp;</i>{% trans %}Undersøgelsen kan ikke gennemføres{% endtrans %}</h2>
-    <p>Der er opstået et problem som forhindrer at undersøgelsen kan gennemføres.</p>
+    <p>
+        Der er opstået et problem som forhindrer at undersøgelsen kan gennemføres.
+    </p>
     <pre>{{ error }}</pre>
-    <p>Start igen ved at klikke på det link der er tilsendt per e-mail. Vi undskylder ulejligheden!</p>
-    <p>Hvis du ønsker at kommentere undersøgelsen eller angive yderligere information skal du klikke dig videre...</p>
+    <p>
+        Start igen ved at klikke på det link der er tilsendt i en e-mail. Vi undskylder ulejligheden!
+    </p>
+    <p>
+        Hvis du ønsker at kommentere undersøgelsen eller angive yderligere information skal du klikke dig videre...
+    </p>
+    <hr />
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {% endblock %}

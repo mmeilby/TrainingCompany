@@ -1,20 +1,36 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-check-square-o">&nbsp;</i>{% trans %}Undersøgelsen er færdig{% endtrans %}</h2>
-    {% if survey.state == 2 %}
-    <p>Denne undersøgelse er afsluttet og vi takker fordi du tog dig tid til at deltage i undersøgelsen.</p>
-    {% elseif survey.state == 3 %}
-    <p>Denne undersøgelse er udløbet. Du har angivet at du ikke ønskede at deltage i undersøgelsen.</p>
-    {% endif %}
-    <p>Hvis du ønsker at tilføje kommentarer til undersøgelsen skal du klikke dig videre...</p>
+    <div class="jumbotron">
+        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-check-square-o">&nbsp;</i>{% trans %}Undersøgelsen er færdig{% endtrans %}</h2>
+        The Training Company undersøgelse
+        <span class="hidden-xs"> - </span> 
+        <span class="visible-xs-inline"><br /></span> 
+        {{ company }}
+    </div>
+{% if survey.state == 2 %}
+    <p>
+        Denne undersøgelse er afsluttet og vi takker fordi du tog dig tid til at deltage i undersøgelsen.
+    </p>
+{% elseif survey.state == 3 %}
+    <p>
+        Denne undersøgelse er udløbet. Du har angivet at du ikke ønskede at deltage i undersøgelsen.
+    </p>
+{% endif %}
+    <p>
+        Hvis du ønsker at tilføje kommentarer til undersøgelsen skal du klikke dig videre...
+    </p>
+    <hr />
     <nav>
-      <ul class="pager">
-        <li class="next">
-            <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-        </li>
-      </ul>
+        <ul class="pager">
+            <li class="next">
+                <a href="{{ path('_feedback_with_id', { 'id': survey.token }) }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        </ul>
     </nav>
 </div>
 {#

@@ -96,7 +96,7 @@ class QueryBuilderFactory {
         $em->flush();
     }
 
-    public function loadTemplate($em, $templateId) {
+    public function loadTemplate($em, $templateId, $mobileDevice = false) {
         $qschema = $em->getRepository(Configuration::SchemaRepo())->find($templateId);
         if (!$qschema) {
             return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
@@ -112,7 +112,7 @@ class QueryBuilderFactory {
         $parsedBlock = array();
         $qblocks = $em->getRepository(Configuration::BlockRepo())->findBy(array('qid' => $templateId));
         foreach ($qblocks as $queryBlock) {
-            if ($queryBlock->getQno() != $qno) {
+            if (count($parsedBlock) > 0 && ($mobileDevice || $queryBlock->getQno() != $qno)) {
                 $survey->queryblocks[] = $parsedBlock;
                 $parsedBlock = array();
                 $qno = $queryBlock->getQno();
@@ -143,6 +143,7 @@ class QueryBuilderFactory {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
                 }
                 $newBlock->show_value_labels = (count($parsedBlock) == 0);
+                $newBlock->mobileDevice = $mobileDevice;
                 $parsedBlock[] = $newBlock;
             }
             // CommentQueryBlock

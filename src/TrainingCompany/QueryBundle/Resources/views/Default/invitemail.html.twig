@@ -12,7 +12,7 @@
     Vi håber meget, at du har tid og lyst til at være med i undersøgelsen ved at besvare dette spørgeskema –
     dine svar er nemlig meget vigtige for undersøgelsens resultater.<br/>
     <br/>
-    <a href="http://{{ host }}{{ path('_referred') }}?id={{ token }}" target="_blank">
+    <a href="http://{{ host }}{{ path('_referred', { 'id': token }) }}" target="_blank">
     Klik her for at starte undersøgelsen</a><br/>
     <br/>
     På forhånd tak for hjælpen og rigtig god fornøjelse med besvarelsen.<br/>
@@ -22,7 +22,7 @@
     The Training Company<br/>
     <br/>
     PS:<br/>
-    <a href="http://{{ host }}{{ path('_optout') }}?id={{ token }}" target="_blank">
+    <a href="http://{{ host }}{{ path('_optout', { 'id': token }) }}" target="_blank">
     Har du ikke tid til at deltage i denne undersøgelse, så brug dette link.</a><br/>
     ---<br/>
     <br/>
@@ -30,7 +30,7 @@
     <br/>
     Har du kommentarer til undersøgelsen? Opdaget en fejl?
     Eller er der dele af spørgeskemaet som kunne være bedre?<br/>
-    <a href="http://{{ host }}{{ path('_feedback') }}?id={{ token }}" target="_blank">
+    <a href="http://{{ host }}{{ path('_feedback_with_id', { 'id': token }) }}" target="_blank">
     Så klik her og giv os dit input til denne undersøgelse.</a><br/>
     <br/>
     Denne mail er sendt til adressen {{ email }} som vi har fået oplyst.

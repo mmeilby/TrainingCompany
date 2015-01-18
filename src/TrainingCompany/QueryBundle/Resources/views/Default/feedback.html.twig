@@ -3,10 +3,31 @@
 {% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
 {% block maincontent %}
+<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
+    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
+</div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-reply">&nbsp;</i>{% trans %}Kommentar{% endtrans %}</h2>
-    <p>Du har her mulighed for at give dine kommentarer eller feedback.</p>
-    <p>Hvis du har haft problemer med en undersøgelse bedes du beskrive problemet så grundigt som muligt så vi har mulighed for at afprøve en løsning.</p>
+    <div class="jumbotron">
+        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-reply">&nbsp;</i>{% trans %}Kommentar{% endtrans %}</h2>
+        The Training Company undersøgelse
+{% if company is defined %}
+        <span class="hidden-xs"> - </span> 
+        <span class="visible-xs-inline"><br /></span> 
+        {{ company }}
+{% endif %}        
+    </div>
+{% if name is defined %}    
+    <p>
+        Kære {{ name }}
+    </p>
+{% endif %}    
+    <p>
+        Du har her mulighed for at give dine kommentarer eller feedback.
+    </p>
+    <p>
+        Hvis du har haft problemer med en undersøgelse, bedes du beskrive problemet
+        så grundigt som muligt, så vi har mulighed for at afprøve en løsning.
+    </p>
     {{ form(form) }}
 </div>
 {% endblock %}

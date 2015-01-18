@@ -11,18 +11,32 @@
 </div>
 -->
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-arrow-circle-right">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
-    <p>The Training Company undersøgelse - {{ company }}</p>
-    <hr />
-    <p>Kære {{ name }}</p>
-    <p>Tak fordi du tager dig tid til at deltage i undersøgelsen.<br />
-       Tryk på ''Start'' når du er klar til at gå i gang med besvarelsen.</p>
-    <p>Med venlig hilsen<br />
-        {{ signer }}</p>
+    <div class="jumbotron">
+        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-arrow-circle-right">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
+        The Training Company undersøgelse
+        <span class="hidden-xs"> - </span> 
+        <span class="visible-xs-inline"><br /></span> 
+        {{ company }}
+    </div>
+    <p>
+        Kære {{ name }}
+    </p>
+    <p>
+        Tak fordi du tager dig tid til at deltage i undersøgelsen.
+        <span class="hidden-xs"><br /></span> 
+        Tryk på ''Start'' når du er klar til at gå i gang med besvarelsen.
+    </p>
+    <p>
+        Med venlig hilsen<br />
+        {{ signer }}
+    </p>
     <hr />
     <nav>
         <ul class="pager">
-            <li class="next">
+            <li class="next visible-xs-block">
+                <a href="{{ path('_survey_xs') }}">Start XS <span aria-hidden="true">&rarr;</span></a>
+            </li>
+            <li class="next hidden-xs">
                 <a href="{{ path('_survey') }}">Start <span aria-hidden="true">&rarr;</span></a>
             </li>
         </ul>

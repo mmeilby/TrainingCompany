@@ -20,7 +20,7 @@
             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
         </button>
         <p>Invitation blev sendt til {{ send_name }} med adressen {{ send_email }}</p>
-        <p>Ref.: <a href="{{ path('_referred') }}?id={{ send_token }}">{{ send_token }}</a></p>
+        <p>Ref.: <a href="{{ path('_referred', { 'id': send_token }) }}">{{ send_token }}</a></p>
     </div>
     {% endif %}
     <p>Indtast navn og e-mail adresse på respondenten.</p>
