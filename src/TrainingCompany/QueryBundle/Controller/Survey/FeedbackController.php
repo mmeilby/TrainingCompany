@@ -62,7 +62,7 @@ class FeedbackController extends Controller
      * @Route("/feedback", name="_feedback")
      * @Template("TrainingCompanyQueryBundle:Default:feedback.html.twig")
      */
-    public function feedbackAction(Request $request, $id) {
+    public function feedbackAction(Request $request) {
         $form = $this->makeForm();
         $form->handleRequest($request);
         if ($form->isValid()) {
