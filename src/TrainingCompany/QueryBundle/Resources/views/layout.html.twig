@@ -20,7 +20,14 @@
             <link rel="stylesheet" href="{{ asset_url }}" />
         {% endstylesheets %}
     </head>
-    <body role="document">
+    <body role="document"
+          style="
+            background-image: url({{ asset( 'bundles/trainingcompanyquery/images/puslehoved.jpg' ) }});
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 50px;
+            background-color: #f6f6f6;
+          ">
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container">
                 <!-- Brand and toggle get grouped for better mobile display -->

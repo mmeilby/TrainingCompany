@@ -1,0 +1,54 @@
+{% macro header(title, iconclass, company) %}
+    <div style="margin-bottom: 30px;">
+    {% if title is not null %}
+        <h2 class="hidden-xs" style="margin-bottom: 0;">
+            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title }}
+        </h2>
+        <h4 class="visible-xs-block" style="margin-bottom: 0;">
+            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title }}
+        </h4>
+    {% endif %}
+        <small>
+            The Training Company undersøgelse
+    {% if company is not null %}
+            <span class="hidden-xs"> - </span> 
+            <span class="visible-xs-inline"><br /></span> 
+            {{ company }}
+        {% if app.user != null %}
+            - {{ app.user.name }}
+        {% endif %}
+    {% endif %}
+        </small>
+    </div>
+{% endmacro %}
+
+{% macro title(text) %}
+    <h4 class="hidden-xs">{{ text }}</h4>
+    <h5 class="visible-xs-block">{{ text }}</h5>
+{% endmacro %}
+
+{% macro footer(leftbutton, rightbutton) %}
+    {% if leftbutton is not null or rightbutton is not null %}
+    <hr style="border-color: darkgray" />
+    <nav>
+        <ul class="pager">
+        {% if leftbutton is not null %}
+            <li class="prev">
+                <a href="{{ leftbutton.path }}"><span aria-hidden="true">&larr;</span> {{ leftbutton.label }}</a>
+            </li>
+        {% endif %}
+        {% if rightbutton is not null %}
+            <li class="next">
+                <a href="{{ rightbutton.path }}">{{ rightbutton.label }} <span aria-hidden="true">&rarr;</span></a>
+            </li>
+        {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+    <hr style="border-color: darkgray" />
+    <div class="row hidden-xs">
+        <div class="col-sm-4"><i class="fa fa-home">&nbsp;</i>{% trans %}Rolighedsvej 20A, 3500 Værløse{% endtrans %}</div>
+        <div class="col-sm-4 text-center"><i class="fa fa-phone">&nbsp;</i>{% trans %}(+45) 20 10 03 27{% endtrans %}</div>
+        <div class="col-sm-4 text-right"><i class="fa fa-envelope">&nbsp;</i>{% trans %}info@training-comp.dk{% endtrans %}</div>
+    </div>
+{% endmacro %}

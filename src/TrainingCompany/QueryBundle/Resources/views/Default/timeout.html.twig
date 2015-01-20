@@ -1,27 +1,22 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
 
 {% block maincontent %}
-<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
-    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
-</div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-coffee">&nbsp;</i>{% trans %}Undersøgelsen er udløbet{% endtrans %}</h2>
+    {{ formatter.header('Undersøgelsen er udløbet', 'fa fa-coffee') }}
+    {{ formatter.title('Det er ikke muligt at fastslå din identitet i undersøgelsen') }}
     <p>
-        Det er ikke muligt at fastslå din identitet i undersøgelsen da de givne oplysninger er udløbet.
+        The Training Company undersøgelse benytter sig af cookies til at huske din identitet
+        under hele undersøgelsen. Hvis der går for lang tid mellem dine svar kan disse cookies
+        forældes og undersøgelsen betragtes som udløbet.
     </p>
     <p>
-        Start igen ved at klikke på det link der er tilsendt per e-mail. Vi beklager ulejligheden!
+        De spørgsmål du allerede har besvaret er gemt.
+        Du kan blot fortsætte ved at klikke på det link der er tilsendt i en e-mail. Vi beklager ulejligheden!
     </p>
     <p>
         Hvis du ønsker at kommentere undersøgelsen eller angive en årsag til os skal du klikke dig videre...
     </p>
-    <hr />
-    <nav>
-        <ul class="pager">
-            <li class="next">
-                <a href="{{ path('_feedback') }}">Kommenter <span aria-hidden="true">&rarr;</span></a>
-            </li>
-        </ul>
-    </nav>
+    {{ formatter.footer(null, { 'path': path('_feedback'), 'label': 'Kommenter' }) }}
 </div>
 {% endblock %}

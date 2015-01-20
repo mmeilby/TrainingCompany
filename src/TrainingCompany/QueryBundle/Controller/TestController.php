@@ -29,7 +29,9 @@ class TestController extends Controller
      * @Route("/test/end")
      */
     public function endAction() {
-        return $this->render('TrainingCompanyQueryBundle:Default:end.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Default:end.html.twig',
+                array('company' => 'A test company',
+                      'survey' => array('token' => '1234567890')));
     }
 
     /**
@@ -37,7 +39,9 @@ class TestController extends Controller
      * @Route("/test/finish")
      */
     public function finishAction() {
-        return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Default:finished_survey.html.twig',
+                array('company' => 'A test company',
+                      'survey' => array('token' => '1234567890', 'state' => '3')));
     }
 
     /**
@@ -45,7 +49,19 @@ class TestController extends Controller
      * @Route("/test/optout")
      */
     public function optAction() {
-        return $this->render('TrainingCompanyQueryBundle:Default:optout.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Default:optout.html.twig',
+                array('company' => 'A test company',
+                      'signer' => 'John Doe',
+                      'id' => '1234567890'));
+    }
+
+    /**
+     * Test indgang til brugerundersøgelsen
+     * @Route("/test/suspend")
+     */
+    public function suspendAction() {
+        return $this->render('TrainingCompanyQueryBundle:Default:suspend.html.twig',
+                array('company' => 'A test company'));
     }
 
     /**
@@ -70,6 +86,18 @@ class TestController extends Controller
      */
     public function fbtyAction() {
         return $this->render('TrainingCompanyQueryBundle:Default:feedback_ty.html.twig');
+    }
+
+    /**
+     * Test indgang til brugerundersøgelsen
+     * @Route("/test/start")
+     */
+    public function startAction() {
+        return $this->render('TrainingCompanyQueryBundle:Default:start.html.twig',
+                array('company' => 'A test company',
+                      'name' => 'Clint Eastwood',
+                      'signer' => 'John Doe',
+                      'id' => '1234567890'));
     }
 
 }

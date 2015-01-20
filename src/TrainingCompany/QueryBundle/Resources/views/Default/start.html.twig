@@ -1,45 +1,35 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
 
 {% block maincontent %}
-<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
-    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
-</div>
-<!--    
-<div style="background-image: url('{{ asset( 'bundles/trainingcompanyquery/images/trncmp_bckg.png' ) }}');
-            background-size: cover;
-            background-repeat: no-repeat;">
-</div>
--->
 <div class="container" role="main">
-    <div class="jumbotron">
-        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-arrow-circle-right">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
-        The Training Company undersøgelse
-        <span class="hidden-xs"> - </span> 
-        <span class="visible-xs-inline"><br /></span> 
-        {{ company }}
-    </div>
+    {{ formatter.header('Start undersøgelsen her', 'fa fa-arrow-circle-right', company) }}
+    {{ formatter.title(['Kære ', name]|join()) }}
     <p>
-        Kære {{ name }}
+        Tak fordi du tager dig tid til at deltage i undersøgelsen '{{ company }}'.
     </p>
     <p>
-        Tak fordi du tager dig tid til at deltage i undersøgelsen.
-        <span class="hidden-xs"><br /></span> 
-        Tryk på ''Start'' når du er klar til at gå i gang med besvarelsen.
+        På de følgende sider vil du blive stillet et antal spørgsmål, som du bedes svare på.
+        Når du har besvaret alle spørgsmål på en side trykker du på knappen 'Videre'.
+        Du kan altid vende tilbage til tidligere spørgsmål ved at trykke på knappen 'Tilbage'.
+    </p>
+    <p>
+        Tryk nu på ''Start'' når du er klar til at gå i gang med besvarelsen.
     </p>
     <p>
         Med venlig hilsen<br />
         {{ signer }}
     </p>
-    <hr />
-    <nav>
-        <ul class="pager">
-            <li class="next visible-xs-block">
-                <a href="{{ path('_survey_xs') }}">Start XS <span aria-hidden="true">&rarr;</span></a>
-            </li>
-            <li class="next hidden-xs">
-                <a href="{{ path('_survey') }}">Start <span aria-hidden="true">&rarr;</span></a>
-            </li>
-        </ul>
-    </nav>
+    <div class="visible-xs-block">
+        {{ formatter.footer(null, { 'path': path('_survey_xs'), 'label': 'Start [mobile]' }) }}
+    </div>
+    <div class="hidden-xs">
+        {{ formatter.footer(null, { 'path': path('_survey'), 'label': 'Start' }) }}
+    </div>
+    <p></p>
+    <p class="small">
+        The Training Company anvender cookies til at huske din identitet mens du besvarer undersøgelsen.
+        De benyttede cookies fjernes når du lukker din browser og anvendes ikke til andre formål.
+    </p>
 </div>
 {% endblock %}

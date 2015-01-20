@@ -1,16 +1,16 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
 
 {% block maincontent %}
 <div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
     <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
 </div>
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-group">&nbsp;</i>{% trans %}Velkommen{% endtrans %}</h2>
-    <p>
-        Velkommen til The Training Company - website for online undersøgelser.
-    </p>
+    {{ formatter.header('Velkommen', 'fa fa-group') }}
+    {{ formatter.title('Velkommen til The Training Company - website for online undersøgelser') }}
     <p>
         Hvis du skal deltage i en undersøgelse skal du følge det link du har modtaget i en e-mail.
     </p>
+    {{ formatter.footer(null, { 'path': path('_feedback'), 'label': 'Kommenter' }) }}
 </div>
 {% endblock %}

@@ -1,11 +1,16 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
 
 {% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
 {% block maincontent %}
 <div class="container" role="main">
-    <h2 style="margin-bottom: 0;"><i class="fa fa-sign-in">&nbsp;</i>{% trans %}Log ind{% endtrans %}</h2>
-    <p>Adgang til dette område kræver authorisation. Log venligst ind med dit brugernavn og kodeord.</p>
+    {{ formatter.header('Log ind', 'fa fa-sign-in') }}
+    {{ formatter.title('Adgang til dette område kræver authorisation') }}
+    <p>
+        Log venligst ind med dit brugernavn og kodeord.
+    </p>
     {{ form(form) }}
+    {{ formatter.footer() }}
 </div>
 {% endblock %}

@@ -1,37 +1,18 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
 
 {% block maincontent %}
-<div class="container" style="padding-top: 10px; padding-bottom: 10px; width: 300px;">
-    <img src="{{ asset( 'bundles/trainingcompanyquery/images/trncmp_logo.jpg' ) }}" alt="logo" class="img-responsive" />
-</div>
 <div class="container" role="main">
-    <div class="jumbotron">
-        <h2 style="margin-top: 0; margin-bottom: 0;"><i class="fa fa-paperclip">&nbsp;</i>{% trans %}Udsæt undersøgelsen{% endtrans %}</h2>
-        The Training Company undersøgelse
-        <span class="hidden-xs"> - </span> 
-        <span class="visible-xs-inline"><br /></span> 
-        {{ company }}
-    </div>
+    {{ formatter.header('Udsæt undersøgelsen', 'fa fa-paperclip', company) }}
+    {{ formatter.title('Du har valgt at udsætte undersøgelsen') }}
     <p>
-        Du har valgt at udsætte undersøgelsen.
-        <span class="hidden-xs"><br /></span> 
         Dine svar indtil nu er registreret og du kan lukke din browser nu.
         <span class="hidden-xs"><br /></span> 
-        Når du er klar til at fortsætte undersøgelsen skal du klikke på det link der er tilsendt per e-mail...
+        Når du er klar til at fortsætte undersøgelsen skal du klikke på det link der er tilsendt i en e-mail...
     </p>
     <p>
         Hvis du allerede nu ønsker at fortsætte undersøgelsen kan du klikke dig tilbage....
     </p>
-    <hr />
-    <nav>
-        <ul class="pager">
-            <li class="next visible-xs-block">
-                <a href="{{ path('_survey_xs') }}">Genoptag undersøgelse <span aria-hidden="true">&rarr;</span></a>
-            </li>
-            <li class="next hidden-xs">
-                <a href="{{ path('_survey') }}">Genoptag undersøgelse <span aria-hidden="true">&rarr;</span></a>
-            </li>
-        </ul>
-    </nav>
+    {{ formatter.footer(null, { 'path': path('_survey'), 'label': 'Genoptag undersøgelse' }) }}
 </div>
 {% endblock %}
