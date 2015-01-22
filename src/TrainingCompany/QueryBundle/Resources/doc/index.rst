@@ -1,13 +1,14 @@
 Opgaveliste
-1. Logo på alle sider
-1a. Tekst farve på brødtekst
-2. Reminder knap til at gensende invitation som rykker til ikke færdiggjorte besvarelser
-3. Skift mellem kanaler - ved pause angives login til anden kanal
-4. Sprog variant på engelsk
-4a. Faste tekster
-4b. Spørgeskema
-5. Valg af sprog i brugerprofil
+Kontrolpanel for en undersøgelse med status for gennemførsel
+Reminder knap til at gensende invitation som rykker til ikke færdiggjorte besvarelser
+Skift mellem kanaler - ved pause angives login til anden kanal
+Sprog variant på engelsk
+    Faste tekster
+    Spørgeskema
+Valg af sprog i brugerprofil
 
 Løste opgaver
-1. Mobil løsning af spørgeskema
-2. Login ind til brugerprofil
+Mobil løsning af spørgeskema
+Login ind til brugerprofil
+Logo på alle sider
+Tekst farve på brødtekst
