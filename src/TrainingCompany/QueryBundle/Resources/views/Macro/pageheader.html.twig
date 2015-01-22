@@ -14,7 +14,7 @@
             <span class="hidden-xs"> - </span> 
             <span class="visible-xs-inline"><br /></span> 
             {{ company }}
-        {% if app.user != null %}
+        {% if app.user != null and app.user.name is defined %}
             - {{ app.user.name }}
         {% endif %}
     {% endif %}

@@ -8,11 +8,17 @@
     <p>
         Dine svar indtil nu er registreret og du kan lukke din browser nu.
         <span class="hidden-xs"><br /></span> 
-        Når du er klar til at fortsætte undersøgelsen skal du klikke på det link der er tilsendt i en e-mail...
+        Når du er klar til at fortsætte undersøgelsen har du også mulighed for at benytte din mobil eller tablet.
+        Du skal blot klikke på det link der er tilsendt i en e-mail...
     </p>
     <p>
         Hvis du allerede nu ønsker at fortsætte undersøgelsen kan du klikke dig tilbage....
     </p>
-    {{ formatter.footer(null, { 'path': path('_survey'), 'label': 'Genoptag undersøgelse' }) }}
+    <div class="visible-xs-block">
+        {{ formatter.footer(null, { 'path': path('_survey_xs'), 'label': 'Genoptag undersøgelse [mobile]' }) }}
+    </div>
+    <div class="hidden-xs">
+        {{ formatter.footer(null, { 'path': path('_survey'), 'label': 'Genoptag undersøgelse' }) }}
+    </div>
 </div>
 {% endblock %}

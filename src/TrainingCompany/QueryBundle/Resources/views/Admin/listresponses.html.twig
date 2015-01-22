@@ -1,0 +1,44 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% trans_default_domain "admin" %}
+
+{% block menu %}
+    <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>{{ 'LIST.RESPONSES.TITLE'|trans|upper }}</b></div>
+        <div class="panel-body lead">
+            {{ 'LIST.RESPONSES.CAPTION'|trans({'%SUBJECT%': subject}) }}
+        </div>
+        <table class="table table-striped">
+            <tbody>
+    {% if responses|length > 0 %}
+        {% for response in responses %}
+                <tr>
+                    <td class="user">
+                        {{ response.qno }}. {{ response.label|raw }}
+                    </td>
+                    <td>{{ response.answer }}</td>
+                </tr>
+        {% endfor %}
+    {% else %}
+                <tr>
+                    <td class="user">
+                        {{'LIST.RESPONSES.NOITEMS'|trans|upper}}
+                    </td>
+                    <td></td>
+                </tr>
+    {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

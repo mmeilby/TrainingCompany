@@ -22,11 +22,11 @@ class QQueryBlock
     private $id;
 
     /**
-     * @var integer $qid
+     * @var integer $sid
      *
-     * @ORM\Column(name="qid", type="integer", nullable=false)
+     * @ORM\Column(name="sid", type="integer", nullable=false)
      */
-    private $qid;
+    private $sid;
 
     /**
      * @var integer $qno
@@ -34,6 +34,13 @@ class QQueryBlock
      * @ORM\Column(name="qno", type="integer", nullable=false)
      */
     private $qno;
+
+    /**
+     * @var integer $qpage
+     *
+     * @ORM\Column(name="qpage", type="integer", nullable=false)
+     */
+    private $qpage;
 
     /**
      * @var string $label
@@ -60,26 +67,26 @@ class QQueryBlock
     }
 
     /**
-     * Set qid
+     * Set sid
      *
-     * @param integer $qid
+     * @param integer $sid
      * @return QQueryBlock
      */
-    public function setQid($qid)
+    public function setSid($sid)
     {
-        $this->qid = $qid;
+        $this->sid = $sid;
     
         return $this;
     }
 
     /**
-     * Get qid
+     * Get sid
      *
      * @return integer 
      */
-    public function getQid()
+    public function getSid()
     {
-        return $this->qid;
+        return $this->sid;
     }
 
     /**
@@ -103,6 +110,29 @@ class QQueryBlock
     public function getQno()
     {
         return $this->qno;
+    }
+
+    /**
+     * Set qpage
+     *
+     * @param integer $qpage
+     * @return QQueryBlock
+     */
+    public function setQpage($qpage)
+    {
+        $this->qpage = $qpage;
+    
+        return $this;
+    }
+
+    /**
+     * Get qpage
+     *
+     * @return integer 
+     */
+    public function getQpage()
+    {
+        return $this->qpage;
     }
 
     /**

@@ -18,6 +18,7 @@ class HeaderQueryBlock extends QueryBlock {
 
     public function __construct() {
         $this->id = 0;
+        $this->qno = 0;
         $this->blocktype = 'HEADER';
     }
 

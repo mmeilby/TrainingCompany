@@ -1,0 +1,27 @@
+WEEK:
+  MON: mandag
+  TUE: tirsdag
+  WED: onsdag
+  THU: torsdag
+  FRI: fredag
+  SAT: lørdag
+  SUN: søndag
+
+MONTH:
+  JAN: januar
+  FEB: februar
+  MAR: marts
+  APR: april
+  MAY: maj
+  JUN: juni
+  JUL: juli
+  AUG: august
+  SEP: september
+  OCT: oktober
+  NOV: november
+  DEC: december
+
+FORMAT:
+  DATE: j-n-Y
+  TIME: G.i
+  LONGDATE: "[1,Inf[ %week% den %day%. %month% %year%"

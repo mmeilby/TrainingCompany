@@ -4,6 +4,7 @@ namespace TrainingCompany\QueryBundle\Entity;
 abstract class QueryBlock {
 
     protected $id;
+    protected $qno;
     // Indicate type of block: HEADER, SCALE, SATISFACTION, COMMENT
     public $blocktype;
 
@@ -15,5 +16,9 @@ abstract class QueryBlock {
     
     public function getId() {
         return $this->id;
+    }
+    
+    public function getQno() {
+        return $this->qno;
     }
 }

@@ -49,6 +49,7 @@ class QueryBuilderFactory {
         $em->persist($qschema);
         $em->flush();
         
+        $qpage = 1;
         $qno = 1;
         foreach ($survey->queryblocks as $qp) {
             foreach ($qp as $qb) {
@@ -90,8 +91,9 @@ class QueryBuilderFactory {
                         $em->persist($queryDomain);
                     }
                 }
+                $qno++;
             }
-            $qno++;
+            $qpage++;
         }
         $em->flush();
     }
@@ -108,14 +110,14 @@ class QueryBuilderFactory {
         $survey->signer = $qschema->getSigner();
         $survey->queryblocks = array();
         
-        $qno = 1;
+        $qpage = 1;
         $parsedBlock = array();
         $qblocks = $em->getRepository(Configuration::BlockRepo())->findBy(array('qid' => $templateId));
         foreach ($qblocks as $queryBlock) {
-            if (count($parsedBlock) > 0 && ($mobileDevice || $queryBlock->getQno() != $qno)) {
+            if (count($parsedBlock) > 0 && ($mobileDevice || $queryBlock->getQpage() != $qpage)) {
                 $survey->queryblocks[] = $parsedBlock;
                 $parsedBlock = array();
-                $qno = $queryBlock->getQno();
+                $qpage = $queryBlock->getQpage();
             }
             // HeaderQueryBlock
             if ($queryBlock->getQtype() == 1) {
@@ -126,7 +128,7 @@ class QueryBuilderFactory {
             else if ($queryBlock->getQtype() == 2) {
                 $qdomains = $em->getRepository(Configuration::DomainRepo())->findBy(array('qbid' => $queryBlock->getId()));
 
-                $newBlock = new ScaleQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $newBlock = new ScaleQueryBlock($queryBlock->getId(), $queryBlock->getLabel(), $queryBlock->getQno());
                 $newBlock->valueset = array();
                 foreach ($qdomains as $domain) {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
@@ -137,7 +139,7 @@ class QueryBuilderFactory {
             else if ($queryBlock->getQtype() == 3) {
                 $qdomains = $em->getRepository(Configuration::DomainRepo())->findBy(array('qbid' => $queryBlock->getId()));
                 
-                $newBlock = new SatisfactionQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $newBlock = new SatisfactionQueryBlock($queryBlock->getId(), $queryBlock->getLabel(), $queryBlock->getQno());
                 $newBlock->valueset = array();
                 foreach ($qdomains as $domain) {
                     $newBlock->valueset[$domain->getDomain()] = $domain->getValue();
@@ -148,17 +150,17 @@ class QueryBuilderFactory {
             }
             // CommentQueryBlock
             else if ($queryBlock->getQtype() == 4) {
-                $newBlock = new CommentQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $newBlock = new CommentQueryBlock($queryBlock->getId(), $queryBlock->getLabel(), $queryBlock->getQno());
                 $parsedBlock[] = $newBlock;
             }
             // InfoQueryBlock
             else if ($queryBlock->getQtype() == 5) {
-                $newBlock = new InfoQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $newBlock = new InfoQueryBlock($queryBlock->getId(), $queryBlock->getLabel(), $queryBlock->getQno());
                 $parsedBlock[] = $newBlock;
             }
             // TextQueryBlock
             else if ($queryBlock->getQtype() == 6) {
-                $newBlock = new TextQueryBlock($queryBlock->getId(), $queryBlock->getLabel());
+                $newBlock = new TextQueryBlock($queryBlock->getId(), $queryBlock->getLabel(), $queryBlock->getQno());
                 $parsedBlock[] = $newBlock;
             }
         }

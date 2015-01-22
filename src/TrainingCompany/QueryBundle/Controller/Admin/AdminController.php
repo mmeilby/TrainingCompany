@@ -49,13 +49,18 @@ class AdminController extends Controller
             if ($form->isValid()) {
                 $formData = $form->getData();
                 $qpersons = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('email' => $formData->email));
-                $new = !$qpersons;
-                if ($new) $qpersons = new QPersons();
-                $qpersons->setName($formData->name);
-                $qpersons->setEmail($formData->email);
-                if ($new) $em->persist($qpersons);
-                $em->flush();
-
+                if (!$qpersons) {
+                    $qpersons = new QPersons();
+                    $qpersons->setName($formData->name);
+                    $qpersons->setEmail($formData->email);
+                    $qpersons->setUsername($formData->email);
+                    $factory = $this->get('security.encoder_factory');
+                    $encoder = $factory->getEncoder($qpersons);
+                    $password = $encoder->encodePassword($formData->email, $qpersons->getSalt());
+                    $qpersons->setPassword($password);
+                    $em->persist($qpersons);
+                    $em->flush();
+                }
                 $qsurvey = new QSurveys();
                 $qsurvey->setPid($qpersons->getId());
                 $qsurvey->setSid($formData->survey);

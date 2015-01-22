@@ -23,21 +23,21 @@ class QResponses
 
     /**
      * @var integer $pid
-     *
+     * Reference to Person related to this response
      * @ORM\Column(name="pid", type="integer", nullable=false)
      */
     private $pid;
 
     /**
      * @var integer $qid
-     *
+     * Reference to Survey related to this response
      * @ORM\Column(name="qid", type="integer", nullable=false)
      */
     private $qid;
 
     /**
      * @var integer $qno
-     *
+     * Reference to Question Block related to this response
      * @ORM\Column(name="qno", type="integer", nullable=false)
      */
     private $qno;

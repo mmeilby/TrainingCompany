@@ -13,8 +13,9 @@ class SatisfactionQueryBlock extends QueryBlock {
     // Satisfaction: 1-7 - completely disagree/completely agree
     public $satisfaction;
 
-    public function __construct($id, $label) {
+    public function __construct($id, $label, $qno) {
         $this->id = $id;
+        $this->qno = $qno;
         $this->blocktype = 'SATISFACTION';
         $this->label = $label;
     }
@@ -25,7 +26,7 @@ class SatisfactionQueryBlock extends QueryBlock {
 
     public function get($em, $pid, $qid, $qno) {
         $qresponses = $em->getRepository(Configuration::ResponseRepo())
-                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         if (!$qresponses) {
             $this->satisfaction = 0;
         }
@@ -36,13 +37,13 @@ class SatisfactionQueryBlock extends QueryBlock {
 
     public function persist($em, $pid, $qid, $qno) {
         $qresponses = $em->getRepository(Configuration::ResponseRepo())
-                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         $new = !$qresponses;
         if ($new) {
             $qresponses = new QResponses();
             $qresponses->setPid($pid);
             $qresponses->setQid($qid);
-            $qresponses->setQno($this->id);
+            $qresponses->setQno($this->qno);
         }
         $qresponses->setAnswer($this->satisfaction);
         if ($new) {

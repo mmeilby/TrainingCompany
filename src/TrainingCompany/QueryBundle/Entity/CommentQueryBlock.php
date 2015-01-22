@@ -9,8 +9,9 @@ class CommentQueryBlock extends QueryBlock {
     public $label;
     public $comment;
 
-    public function __construct($id, $label) {
+    public function __construct($id, $label, $qno) {
         $this->id = $id;
+        $this->qno = $qno;
         $this->blocktype = 'COMMENT';
         $this->label = $label;
     }
@@ -21,7 +22,7 @@ class CommentQueryBlock extends QueryBlock {
     
     public function get($em, $pid, $qid, $qno) {
         $qcomments = $em->getRepository(Configuration::CommentRepo())
-                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         if (!$qcomments) {
             $this->comment = '';
         }
@@ -32,13 +33,13 @@ class CommentQueryBlock extends QueryBlock {
 
     public function persist($em, $pid, $qid, $qno) {
         $qcomments = $em->getRepository(Configuration::CommentRepo())
-                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                        ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         $new = !$qcomments;
         if ($new) {
             $qcomments = new QComments();
             $qcomments->setPid($pid);
             $qcomments->setQid($qid);
-            $qcomments->setQno($this->id);
+            $qcomments->setQno($this->qno);
         }
         $qcomments->setComment($this->comment);
         if ($new) {

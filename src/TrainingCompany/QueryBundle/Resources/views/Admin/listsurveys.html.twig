@@ -1,0 +1,84 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% trans_default_domain "admin" %}
+
+{% block menu %}
+    <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+            <li>
+                <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>{{ 'LIST.SURVEYS.TITLE'|trans|upper }}</b></div>
+        <div class="panel-body lead">
+            {{ 'LIST.SURVEYS.CAPTION'|trans({'%SUBJECT%': subject}) }}
+        </div>
+        <table class="table table-striped">
+            <tbody>
+    {% if surveys|length > 0 %}
+        {% for survey in surveys %}
+                <tr>
+                    <td class="user">
+            {% if not is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('_referred', {'id': 'XXX' }) }}">
+                        {{ survey.token|upper }}
+                        </a>    
+            {% else %}
+                        {{ survey.token|upper }}
+            {% endif %}
+                    </td>
+                    <td>{{ ['FORM.SURVEY.CHOICE.STATUS.',survey.state]|join()|trans([],'admin') }}</td>
+                    <td>{{ survey.date|date('j-M-Y') }}</td>
+                    <td>{{ survey.qno }}</td>
+                    <td class="narrow-col">
+                        <a href="{{ path('_admin_survey_add') }}">
+                            <span class="glyphicon glyphicon-file"></span>
+                        </a>    
+                    </td>
+                    <td class="narrow-col">
+                        <a href="{{ path('_admin_survey_chg', { 'id': survey.id }) }}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>    
+                    </td>
+                    <td class="narrow-col">
+                        <a href="{{ path('_admin_survey_del', { 'id': survey.id }) }}">
+                            <span class="glyphicon glyphicon-remove"></span>
+                        </a>    
+                    </td>
+                    <td class="narrow-col">
+                        <a href="{{ path('_admin_response_list', { 'surveyid': survey.id }) }}">
+                            <span class="glyphicon glyphicon-briefcase"></span>
+                        </a>    
+                    </td>
+                </tr>
+        {% endfor %}
+    {% else %}
+                <tr>
+                    <td class="user">
+                        <a href="{{ path('_admin_survey_add') }}">
+                        {{'LIST.SURVEYS.NOITEMS'|trans|upper}}
+                        </a>    
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="narrow-col">
+                        <a href="{{ path('_admin_survey_add') }}">
+                            <span class="glyphicon glyphicon-file"></span>
+                        </a>    
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+    {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

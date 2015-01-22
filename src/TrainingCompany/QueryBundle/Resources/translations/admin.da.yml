@@ -1,0 +1,26 @@
+FORM:
+    SURVEY:
+        CHOICE:
+            STATUS:
+                0: Inviteret
+                1: I gang
+                2: Afsluttet
+                3: Fravalgt
+LIST:
+    SURVEYS:
+        TITLE: Undersøgelser
+        CAPTION: Undersøgelser tilknyttet %SUBJECT%
+        NOITEMS: Der er ingen undersøgelser
+    TEMPLATES:
+        TITLE: Skabeloner
+        CAPTION: Skabeloner til brug for undersøgelser
+        NOITEMS: Der er ingen skabeloner
+    USERS:
+        TITLE: Respondenter
+        CAPTION: Oprettede eller inviterede respondenter
+        NOITEMS: Der er ingen respondenter
+    RESPONSES:
+        TITLE: Undersøgelsessvar
+        CAPTION: Svar på undersøgelsen %SUBJECT%
+        NOITEMS: Der er ikke afgivet svar
+        

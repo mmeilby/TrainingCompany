@@ -11,8 +11,9 @@ class ScaleQueryBlock extends QueryBlock {
     // Scale: 0-100 (percent)
     public $scale;
 
-    public function __construct($id, $label) {
+    public function __construct($id, $label, $qno) {
         $this->id = $id;
+        $this->qno = $qno;
         $this->blocktype = 'SCALE';
         $this->label = $label;
     }
@@ -23,7 +24,7 @@ class ScaleQueryBlock extends QueryBlock {
     
     public function get($em, $pid, $qid, $qno) {
         $qresponses = $em->getRepository(Configuration::ResponseRepo())
-                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         if (!$qresponses) {
             $this->scale = 0;
         }
@@ -34,13 +35,13 @@ class ScaleQueryBlock extends QueryBlock {
 
     public function persist($em, $pid, $qid, $qno) {
         $qresponses = $em->getRepository(Configuration::ResponseRepo())
-                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->id));
+                         ->findOneBy(array('pid' => $pid, 'qid' => $qid, 'qno' => $this->qno));
         $new = !$qresponses;
         if ($new) {
             $qresponses = new QResponses();
             $qresponses->setPid($pid);
             $qresponses->setQid($qid);
-            $qresponses->setQno($this->id);
+            $qresponses->setQno($this->qno);
         }
         $qresponses->setAnswer($this->scale);
         if ($new) {
