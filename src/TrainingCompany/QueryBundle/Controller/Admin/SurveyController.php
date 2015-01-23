@@ -74,8 +74,7 @@ class SurveyController extends Controller
             return $this->redirect($returnUrl);
         }
         if ($form->isValid()) {
-            $em->remove($survey);
-            $em->flush();
+            $this->removeSurvey($survey);
             return $this->redirect($returnUrl);
         }
         return array('form' => $form->createView(), 'action' => 'del', 'survey' => $survey);
@@ -111,7 +110,23 @@ class SurveyController extends Controller
         return false;
     }
 
-    public function getReferer(Request $request) {
+     private function removeSurvey(QSurveys $survey) {
+        $em = $this->getDoctrine()->getManager();
+        $em->createQuery(
+            "delete from ".Configuration::ResponseRepo()." r ".
+            "where r.qid=:survey")
+                ->setParameter('survey', $survey->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::CommentRepo()." c ".
+            "where c.qid=:survey")
+                ->setParameter('survey', $survey->getId())
+                ->getResult();
+        $em->remove($survey);
+        $em->flush();
+    }
+    
+   public function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');
             $session = $request->getSession();

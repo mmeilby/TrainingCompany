@@ -50,6 +50,13 @@ class QSchema
     private $sender;
 
     /**
+     * @var string $invitation
+     *
+     * @ORM\Column(name="invitation", type="string", length=100, nullable=true)
+     */
+    private $invitation;
+
+    /**
      * Get id
      *
      * @return integer 
@@ -149,5 +156,28 @@ class QSchema
     public function getSender()
     {
         return $this->sender;
+    }
+    
+    /**
+     * Set invitation
+     *
+     * @param string $invitation
+     * @return QSchema
+     */
+    public function setInvitation($invitation)
+    {
+        $this->invitation = $invitation;
+
+        return $this;
+    }
+
+    /**
+     * Get invitation
+     *
+     * @return string
+     */
+    public function getInvitation()
+    {
+        return $this->invitation;
     }
 }

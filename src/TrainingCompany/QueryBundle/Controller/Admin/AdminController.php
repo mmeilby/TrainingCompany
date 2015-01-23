@@ -21,104 +21,38 @@ class AdminController extends Controller
      * Administrationsside
      * @Route("/admin", name="_admin")
      * @Secure(roles="ROLE_ADMIN")
-     * @Template("TrainingCompanyQueryBundle:Default:admin.html.twig")
+     * @Template("TrainingCompanyQueryBundle:Admin:dashboard.html.twig")
      */
-    public function startAction() {
+    public function adminAction(Request $request) {
+        $choices = array();
+        $em = $this->getDoctrine()->getManager();
+        $qschema = $em->getRepository(Configuration::SchemaRepo())->findAll();
+        if ($qschema) {
+            foreach ($qschema as $schema) {
+                $choices[$schema->getId()] = $schema->getName();
+            }
+        }
         $formData = new NewPerson();
         $formDef = $this->createFormBuilder($formData);
-        $formDef->add('name', 'text', array('label' => 'Navn', 'required' => false));
-        $formDef->add('email', 'text', array('label' => 'E-mail', 'required' => false));
-
-        $em = $this->getDoctrine()->getManager();
-
-        $queryBuilder = new QueryBuilderFactory();
-        $surveys = $queryBuilder->getSurveys($em);
-        $choices = array();
-        foreach ($surveys as $survey) {
-            $choices[$survey->id] = $survey->name;
-        }
         $formDef->add('survey', 'choice', array('label' => 'Spørgeskema', 'required' => false, 'choices' => $choices, 'empty_value' => 'Vælg...'));
-        $formDef->add('invite', 'submit', array('label' => 'Inviter',
+        $formDef->add('view', 'submit', array('label' => 'Vis',
                                                 'translation_domain' => 'admin',
                                                 'icon' => 'fa fa-envelope-o'));
         $form = $formDef->getForm();
 
-        $request = $this->getRequest();
+        $session = $request->getSession();
+        $schemaid = $session->get('dashboard_schema', 0);
+
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             if ($form->isValid()) {
                 $formData = $form->getData();
-                $qpersons = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('email' => $formData->email));
-                if (!$qpersons) {
-                    $qpersons = new QPersons();
-                    $qpersons->setName($formData->name);
-                    $qpersons->setEmail($formData->email);
-                    $qpersons->setUsername($formData->email);
-                    $factory = $this->get('security.encoder_factory');
-                    $encoder = $factory->getEncoder($qpersons);
-                    $password = $encoder->encodePassword($formData->email, $qpersons->getSalt());
-                    $qpersons->setPassword($password);
-                    $em->persist($qpersons);
-                    $em->flush();
-                }
-                $qsurvey = new QSurveys();
-                $qsurvey->setPid($qpersons->getId());
-                $qsurvey->setSid($formData->survey);
-                $qsurvey->setQno(0);
-                $qsurvey->setDate(time());
-                $qsurvey->setState(0);
-                $qsurvey->setToken($this->generateToken($formData->email));
-                $em->persist($qsurvey);
-                $em->flush();
-                
-                foreach ($surveys as $survey) {
-                    if ($survey->id == $formData->survey) {
-                        $parms = array(
-                            'from' => $survey->email,
-                            'sender' => $survey->signer,
-                            'name' => $qpersons->getName(),
-                            'email' => $qpersons->getEmail(),
-                            'token' => $qsurvey->getToken(),
-//                            'survey' => $survey->ref,
-                            'host' => $request->getHost());
-                        $message = Swift_Message::newInstance()
-                            ->setSubject($survey->invitation)
-                            ->setFrom(array($survey->email => $survey->sender))
-                            ->setTo(array($qpersons->getEmail() => $qpersons->getName()))
-                            ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms), 'text/html');
-        //                    ->addPart($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms));
-                        $this->get('mailer')->send($message);
-                        return array('form' => $form->createView(),
-                            'send_name' => $qpersons->getName(),
-                            'send_email' => $qpersons->getEmail(),
-                            'send_token' => $qsurvey->getToken());
-                   }
-                }
+                $schemaid = $formData->survey;
+                $session->set('dashboard_schema', $schemaid);
             }
         }
 
-        return array('form' => $form->createView());
-    }
-
-    private function generateToken($name) {
-        $str = dechex(time()).'-'.
-               dechex(rand(4096, 65535)).'-'.
-               dechex(rand(4096, 65535)).'-'.
-               dechex(rand(4096, 65535)).'-'.
-               substr(bin2hex(str_shuffle(str_pad($name, 6))), 0, 12);
-        return $str;
-    }
-    
-    /**
-     * Fejlside til præsentation af tekniske fejl
-     * @Route("/admin/error", name="_admin_error")
-     * @Template("TrainingCompanyQueryBundle:Default:error.html.twig")
-     */
-    public function errorAction(Request $request) {
-        $formDef = $this->createFormBuilder();
-        $form = $formDef->getForm();
-        $session = $request->getSession();
-        $error = $session->get('error');
-        return array('form' => $form->createView(), 'error' => $error);
+        $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $schemaid));
+        return array('form' => $form->createView(), 'schema' => $schema);
     }
 }

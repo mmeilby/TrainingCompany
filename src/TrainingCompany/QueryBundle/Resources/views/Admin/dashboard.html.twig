@@ -1,0 +1,27 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+
+{% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
+
+{% block menu %}
+    <li>
+        <a href="{{ path('_admin_user_list') }}">{% trans %}Respondenter{% endtrans %}</a>
+    </li>
+    <li>
+        <a href="{{ path('_admin_schema_list') }}">{% trans %}Skemaer{% endtrans %}</a>
+    </li>
+{% endblock %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    {{ form(form) }}
+{% if schema is not null %}
+    <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
+        {% trans %}Undersøgelser{% endtrans %} - {{ schema.name }}
+    </a>
+    <br />
+    <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
+        {% trans %}Inviter respondenter{% endtrans %} - {{ schema.name }}
+    </a>
+{% endif %}
+</div>
+{% endblock %}

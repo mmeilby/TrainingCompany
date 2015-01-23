@@ -14,13 +14,9 @@
         {% for survey in surveys %}
                 <tr>
                     <td class="user">
-            {% if not is_granted('ROLE_ADMIN') %}
-                        <a href="{{ path('_referred', {'id': 'XXX' }) }}">
-                        {{ survey.token|upper }}
+                        <a href="{{ path('_referred', {'id': survey.token }) }}">
+                        {{ survey.name|upper }}
                         </a>    
-            {% else %}
-                        {{ survey.token|upper }}
-            {% endif %}
                     </td>
                     <td>{{ ['FORM.SURVEY.CHOICE.STATUS.',survey.state]|join()|trans([],'admin') }}</td>
                     <td>{{ survey.date|date('j-M-Y') }}</td>

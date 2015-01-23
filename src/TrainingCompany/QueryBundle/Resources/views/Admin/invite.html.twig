@@ -4,7 +4,10 @@
 
 {% block menu %}
     <li>
-        <a href="#" page="suspend">{% trans %}Pause{% endtrans %}</a>
+        <a href="{{ path('_admin_user_list') }}">{% trans %}Respondenter{% endtrans %}</a>
+    </li>
+    <li>
+        <a href="{{ path('_admin_schema_list') }}">{% trans %}Skemaer{% endtrans %}</a>
     </li>
 {% endblock %}
 

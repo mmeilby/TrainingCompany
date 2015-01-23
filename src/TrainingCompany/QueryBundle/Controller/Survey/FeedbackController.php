@@ -115,7 +115,7 @@ class FeedbackController extends Controller
             ->setSubject('TTC-TEST Feedback')
             ->setFrom(array($this->container->getParameter('mailuser') => $this->container->getParameter('admin-name')))
             ->setTo(array($this->container->getParameter('feedback-mail') => $this->container->getParameter('feedback-name')))
-            ->setBody($this->renderView('TrainingCompanyQueryBundle:Default:feedbackmail.html.twig', $parms), 'text/html');
+            ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:feedbackmail.html.twig', $parms), 'text/html');
         $this->get('mailer')->send($message);
     }
 }

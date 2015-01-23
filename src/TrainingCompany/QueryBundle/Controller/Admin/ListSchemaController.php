@@ -8,19 +8,19 @@ use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TrainingCompany\QueryBundle\Entity\Configuration;
 
-class ListTemplateController extends Controller
+class ListSchemaController extends Controller
 {
     /**
-     * List the available templates
-     * @Route("/admin/list/templates", name="_admin_template_list")
+     * List the available schemas
+     * @Route("/admin/list/schemas", name="_admin_schema_list")
      * @Method("GET")
      * @Secure(roles="ROLE_ADMIN")
-     * @Template("TrainingCompanyQueryBundle:Admin:listtemplates.html.twig")
+     * @Template("TrainingCompanyQueryBundle:Admin:listschemas.html.twig")
      */
-    public function listTemplatesAction()
+    public function listSchemasAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $qschemas = $em->getRepository(Configuration::SchemaRepo())->findAll();
-        return array('templates' => $qschemas);
+        $schemas = $em->getRepository(Configuration::SchemaRepo())->findAll();
+        return array('schemas' => $schemas);
     }
 }

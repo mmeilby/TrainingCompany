@@ -34,9 +34,9 @@ class QueryBuilderFactory {
             $survey->id = $schema->getId();
             $survey->name = $schema->getName();
             $survey->signer = $schema->getSigner();
-            $survey->email = 'mmeilby@gmail.com';
-            $survey->sender = 'The Training Company';
-            $survey->invitation = 'The Training Company har brug for din mening';
+            $survey->email = $schema->getEmail();
+            $survey->sender = $schema->getSender();
+            $survey->invitation = $schema->getInvitation();
             $surveys[] = $survey;
         }
         return $surveys;
@@ -46,6 +46,9 @@ class QueryBuilderFactory {
         $qschema = new QSchema();
         $qschema->setName($survey->name);
         $qschema->setSigner($survey->signer);
+        $qschema->setEmail($survey->email);
+        $qschema->setSender($survey->sender);
+        $qschema->setInvitation($survey->invitation);
         $em->persist($qschema);
         $em->flush();
         
@@ -54,7 +57,8 @@ class QueryBuilderFactory {
         foreach ($survey->queryblocks as $qp) {
             foreach ($qp as $qb) {
                 $queryBlock = new QQueryBlock();
-                $queryBlock->setQid($qschema->getId());
+                $queryBlock->setSid($qschema->getId());
+                $queryBlock->setQpage($qpage);
                 $queryBlock->setQno($qno);
                 if ($qb->blocktype == 'HEADER') {
                     $queryBlock->setQtype(1);
@@ -108,11 +112,14 @@ class QueryBuilderFactory {
         $survey->id = $qschema->getId();
         $survey->name = $qschema->getName();
         $survey->signer = $qschema->getSigner();
+        $survey->email = $qschema->getEmail();
+        $survey->sender = $qschema->getSender();
+        $survey->invitation = $qschema->getInvitation();
         $survey->queryblocks = array();
         
         $qpage = 1;
         $parsedBlock = array();
-        $qblocks = $em->getRepository(Configuration::BlockRepo())->findBy(array('qid' => $templateId));
+        $qblocks = $em->getRepository(Configuration::BlockRepo())->findBy(array('sid' => $templateId));
         foreach ($qblocks as $queryBlock) {
             if (count($parsedBlock) > 0 && ($mobileDevice || $queryBlock->getQpage() != $qpage)) {
                 $survey->queryblocks[] = $parsedBlock;
@@ -182,7 +189,7 @@ class QueryBuilderFactory {
         $survey->signer = $form['signer'];
         $survey->email = $form['email'];
         $survey->sender = $form['company'];
-        $survey->invitation = $form['invitation'];
+        $survey->invitation = $form['invitation']['title'];
 
         $parsedBlock = array();
         foreach ($form['pages'] as $queryBlock) {
@@ -199,19 +206,19 @@ class QueryBuilderFactory {
         foreach ($queryBlock['blocks'] as $block) {
             $type = $block['type'];
             if ($type == "field") {
-                $newBlock = new TextQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $newBlock = new TextQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'), 0);
                 $blocks[] = $newBlock;
             }
             elseif ($type == "comment") {
-                $newBlock = new CommentQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $newBlock = new CommentQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'), 0);
                 $blocks[] = $newBlock;
             }
             elseif ($type == "info") {
-                $newBlock = new InfoQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $newBlock = new InfoQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'), 0);
                 $blocks[] = $newBlock;
             }
             elseif ($type == "scale") {
-                $newBlock = new ScaleQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'));
+                $newBlock = new ScaleQueryBlock(0, htmlentities((String)$block['label'], ENT_NOQUOTES, 'UTF-8'), 0);
                 $newBlock->valueset = array();
                 foreach ($block['valuelist'] as $key => $value) {
                     $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');
@@ -221,7 +228,7 @@ class QueryBuilderFactory {
             elseif ($type == "satisfaction") {
                 if (array_key_exists('labels', $block)) {
                     foreach ($block['labels'] as $label) {
-                        $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'));
+                        $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'), 0);
                         $newBlock->valueset = array();
                         foreach ($block['valuelist'] as $key => $value) {
                             $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');
@@ -230,7 +237,7 @@ class QueryBuilderFactory {
                     }
                 }
                 else {
-                    $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'));
+                    $newBlock = new SatisfactionQueryBlock(0, htmlentities((String)$label, ENT_NOQUOTES, 'UTF-8'), 0);
                     $newBlock->valueset = array();
                     foreach ($block['valuelist'] as $key => $value) {
                         $newBlock->valueset[(String)$key] = htmlentities((String)$value, ENT_NOQUOTES, 'UTF-8');

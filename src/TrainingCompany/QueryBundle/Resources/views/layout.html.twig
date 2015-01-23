@@ -38,9 +38,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+            {% if not is_granted('ROLE_ADMIN') %}
                     <a class="navbar-brand" href="{{ path('_home') }}">
                         The Training Company
                     </a>
+            {% else %}
+                    <a class="navbar-brand" href="{{ path('_admin') }}">
+                        The Training Company <i class="fa fa-university" style="margin-left: 8px"></i>
+                    </a>
+            {% endif %}
                 </div>
                 <div class="collapse navbar-collapse" id="icup-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">

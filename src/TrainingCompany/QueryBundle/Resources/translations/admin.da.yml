@@ -11,10 +11,10 @@ LIST:
         TITLE: Undersøgelser
         CAPTION: Undersøgelser tilknyttet %SUBJECT%
         NOITEMS: Der er ingen undersøgelser
-    TEMPLATES:
-        TITLE: Skabeloner
-        CAPTION: Skabeloner til brug for undersøgelser
-        NOITEMS: Der er ingen skabeloner
+    SCHEMAS:
+        TITLE: Skemaer
+        CAPTION: Skemaer til brug for undersøgelser
+        NOITEMS: Der er ingen skemaer
     USERS:
         TITLE: Respondenter
         CAPTION: Oprettede eller inviterede respondenter

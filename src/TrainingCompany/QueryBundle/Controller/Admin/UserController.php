@@ -99,9 +99,7 @@ class UserController extends Controller
                 return $this->redirect($returnUrl);
             }
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->remove($user);
-                $em->flush();
+                $this->removeUser($user);
                 return $this->redirect($returnUrl);
             }
         }
@@ -138,6 +136,27 @@ class UserController extends Controller
         return false;
     }
 
+    private function removeUser(QPersons $user) {
+        $em = $this->getDoctrine()->getManager();
+        $em->createQuery(
+            "delete from ".Configuration::ResponseRepo()." r ".
+            "where r.pid=:person")
+                ->setParameter('person', $user->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::CommentRepo()." c ".
+            "where c.pid=:person")
+                ->setParameter('person', $user->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::SurveyRepo()." s ".
+            "where s.pid=:person")
+                ->setParameter('person', $user->getId())
+                ->getResult();
+        $em->remove($user);
+        $em->flush();
+    }
+    
     public function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');

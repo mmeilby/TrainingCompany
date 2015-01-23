@@ -5,6 +5,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
+use TrainingCompany\QueryBundle\Controller\QueryBuilderFactory;
+
 class LoadSchemaController extends Controller
 {
     /**
@@ -17,7 +19,7 @@ class LoadSchemaController extends Controller
         $survey = $queryBuilder->getTemplate('QueryForm.yml');
         $em = $this->getDoctrine()->getManager();
         $queryBuilder->saveTemplate($em, $survey);
-        return $this->render('TrainingCompanyQueryBundle:Default:home.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Admin:dashboard.html.twig');
     }
     
     /**
@@ -28,6 +30,6 @@ class LoadSchemaController extends Controller
     public function testAction() {
         $queryBuilder = new QueryBuilderFactory();
         $queryBuilder->getTemplate('QueryForm.yml');
-        return $this->render('TrainingCompanyQueryBundle:Default:home.html.twig');
+        return $this->render('TrainingCompanyQueryBundle:Admin:dashboard.html.twig');
     }
 }

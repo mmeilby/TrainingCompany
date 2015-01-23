@@ -22,6 +22,7 @@ class ListResponseController extends Controller
         $em = $this->getDoctrine()->getManager();
         $survey = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('id' => $surveyid));
         $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $survey->getSid()));
+        $person = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('id' => $survey->getPid()));
         $qb = $em->createQuery(
          "select r.qno,r.answer,b.label ".
          "from ".Configuration::ResponseRepo()." r, ".
@@ -29,6 +30,6 @@ class ListResponseController extends Controller
          "where r.qid=:survey and b.qno=r.qno order by r.qno asc");
         $qb->setParameter('survey', $surveyid);
         $responses = $qb->getResult();
-        return array('responses' => $responses, 'subject' => $schema->getName());
+        return array('responses' => $responses, 'subject' => $schema->getName()."/".$person->getName());
     }
 }

@@ -4,44 +4,44 @@
 {% block maincontent %}
 <div class="container" role="main">
     <div class="panel panel-success">
-        <div class="panel-heading"><b>{{ 'LIST.TEMPLATES.TITLE'|trans|upper }}</b></div>
+        <div class="panel-heading"><b>{{ 'LIST.SCHEMAS.TITLE'|trans|upper }}</b></div>
         <div class="panel-body lead">
-            {% trans %}LIST.TEMPLATES.CAPTION{% endtrans %}
+            {% trans %}LIST.SCHEMAS.CAPTION{% endtrans %}
         </div>
         <table class="table table-striped">
             <tbody>
-    {% if templates|length > 0 %}
-        {% for template in templates %}
+    {% if schemas|length > 0 %}
+        {% for schema in schemas %}
                 <tr>
                     <td class="user">
             {% if not is_granted('ROLE_ADMIN') %}
                         <a href="{{ path('_referred', {'id': 'XXX' }) }}">
-                        {{ template.name|upper }}
+                        {{ schema.name|upper }}
                         </a>    
             {% else %}
-                        {{ template.name|upper }}
+                        {{ schema.name|upper }}
             {% endif %}
                     </td>
-                    <td>{{ template.email }}</td>
-                    <td>{{ template.signer }}</td>
-                    <td>{{ template.sender }}</td>
+                    <td>{{ schema.email }}</td>
+                    <td>{{ schema.signer }}</td>
+                    <td>{{ schema.sender }}</td>
                     <td class="narrow-col">
-                        <a href="{{ path('_admin_template_add') }}">
+                        <a href="{{ path('_admin_schema_add') }}">
                             <span class="glyphicon glyphicon-file"></span>
                         </a>    
                     </td>
                     <td class="narrow-col">
-                        <a href="{{ path('_admin_template_chg', { 'id': template.id }) }}">
+                        <a href="{{ path('_admin_schema_chg', { 'id': schema.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>    
                     </td>
                     <td class="narrow-col">
-                        <a href="{{ path('_admin_template_del', { 'id': template.id }) }}">
+                        <a href="{{ path('_admin_schema_del', { 'id': schema.id }) }}">
                             <span class="glyphicon glyphicon-remove"></span>
                         </a>    
                     </td>
                     <td class="narrow-col">
-                        <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': template.id }) }}">
+                        <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
                             <span class="glyphicon glyphicon-briefcase"></span>
                         </a>    
                     </td>
@@ -50,15 +50,15 @@
     {% else %}
                 <tr>
                     <td class="user">
-                        <a href="{{ path('_admin_template_add') }}">
-                        {{'LIST.TEMPLATES.NOITEMS'|trans|upper}}
+                        <a href="{{ path('_admin_schema_add') }}">
+                        {{'LIST.SCHEMAS.NOITEMS'|trans|upper}}
                         </a>    
                     </td>
                     <td></td>
                     <td></td>
                     <td></td>
                     <td class="narrow-col">
-                        <a href="{{ path('_admin_template_add') }}">
+                        <a href="{{ path('_admin_schema_add') }}">
                             <span class="glyphicon glyphicon-file"></span>
                         </a>    
                     </td>

@@ -9,12 +9,12 @@ use Symfony\Component\HttpFoundation\Request;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSchema;
 use TrainingCompany\QueryBundle\Entity\Configuration;
 
-class TemplateController extends Controller
+class SchemaController extends Controller
 {
     /**
-     * Add new template
-     * @Route("/admin/add/template", name="_admin_template_add")
-     * @Template("TrainingCompanyQueryBundle:Admin:edittemplate.html.twig")
+     * Add new schema
+     * @Route("/admin/add/schema", name="_admin_schema_add")
+     * @Template("TrainingCompanyQueryBundle:Admin:editschema.html.twig")
      */
     public function addAction(Request $request) {
         $returnUrl = $this->getReferer($request);
@@ -29,7 +29,7 @@ class TemplateController extends Controller
         if ($form->isValid()) {
             $qschemas = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
             if ($qschemas) {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NAMEEXIST', array(), 'admin')));
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NAMEEXIST', array(), 'admin')));
             }
             else {
                 $em->persist($schema);
@@ -41,9 +41,9 @@ class TemplateController extends Controller
     }
     
    /**
-     * Change template information
-     * @Route("/admin/chg/template/{id}", name="_admin_template_chg")
-     * @Template("TrainingCompanyQueryBundle:Admin:edittemplate.html.twig")
+     * Change schema information
+     * @Route("/admin/chg/schema/{id}", name="_admin_schema_chg")
+     * @Template("TrainingCompanyQueryBundle:Admin:editschema.html.twig")
      */
     public function chgAction($id, Request $request) {
         $returnUrl = $this->getReferer($request);
@@ -59,7 +59,7 @@ class TemplateController extends Controller
         if ($this->checkForm($form, $schema)) {
             $qschemas = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
             if ($qschemas && $qschemas->getId() != $schema->getId()) {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NAMEEXIST', array(), 'admin')));
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NAMEEXIST', array(), 'admin')));
             }
             else {
                 $em->flush();
@@ -70,9 +70,9 @@ class TemplateController extends Controller
     }
     
    /**
-     * Delete template information
-     * @Route("/admin/del/template/{id}", name="_admin_template_del")
-     * @Template("TrainingCompanyQueryBundle:Admin:edittemplate.html.twig")
+     * Delete schema information
+     * @Route("/admin/del/schema/{id}", name="_admin_schema_del")
+     * @Template("TrainingCompanyQueryBundle:Admin:editschema.html.twig")
      */
     public function delAction($id, Request $request) {
         $returnUrl = $this->getReferer($request);
@@ -86,8 +86,7 @@ class TemplateController extends Controller
             return $this->redirect($returnUrl);
         }
         if ($form->isValid()) {
-            $em->remove($schema);
-            $em->flush();
+            $this->removeSchema($schema);
             return $this->redirect($returnUrl);
         }
         return array('form' => $form->createView(), 'action' => 'del', 'schema' => $schema);
@@ -95,15 +94,15 @@ class TemplateController extends Controller
 
     private function makeForm(QSchema $schema, $action) {
         $formDef = $this->createFormBuilder($schema);
-        $formDef->add('name', 'text', array('label' => 'FORM.USER.NAME', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('email', 'text', array('label' => 'FORM.USER.EMAIL', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('signer', 'text', array('label' => 'FORM.USER.SIGNER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('sender', 'text', array('label' => 'FORM.USER.SENDER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('cancel', 'submit', array('label' => 'FORM.USER.CANCEL.'.strtoupper($action),
+        $formDef->add('name', 'text', array('label' => 'FORM.SCHEMA.NAME', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('email', 'text', array('label' => 'FORM.SCHEMA.EMAIL', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('signer', 'text', array('label' => 'FORM.SCHEMA.SIGNER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('sender', 'text', array('label' => 'FORM.SCHEMA.SENDER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('cancel', 'submit', array('label' => 'FORM.SCHEMA.CANCEL.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'buttontype' => 'btn btn-default',
                                                 'icon' => 'fa fa-times'));
-        $formDef->add('save', 'submit', array('label' => 'FORM.USER.SUBMIT.'.strtoupper($action),
+        $formDef->add('save', 'submit', array('label' => 'FORM.SCHEMA.SUBMIT.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'icon' => 'fa fa-check'));
         return $formDef->getForm();
@@ -112,11 +111,11 @@ class TemplateController extends Controller
     private function checkForm($form, QSchema $schema) {
         if ($form->isValid()) {
             if ($schema->getName() == null || trim($schema->getName()) == '') {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NONAME', array(), 'admin')));
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NONAME', array(), 'admin')));
                 return false;
             }
             if ($schema->getEmail() == null || trim($schema->getEmail()) == '') {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NOUSERNAME', array(), 'admin')));
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NOUSERNAME', array(), 'admin')));
                 return false;
             }
             return true;
@@ -124,6 +123,37 @@ class TemplateController extends Controller
         return false;
     }
 
+    private function removeSchema(QSchema $schema) {
+        $em = $this->getDoctrine()->getManager();
+        $em->createQuery(
+            "delete from ".Configuration::ResponseRepo()." r ".
+            "where r.qid in (select s.id from ".Configuration::SurveyRepo()." s where s.sid=:schema)")
+                ->setParameter('schema', $schema->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::CommentRepo()." c ".
+            "where c.qid in (select s.id from ".Configuration::SurveyRepo()." s where s.sid=:schema)")
+                ->setParameter('schema', $schema->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::SurveyRepo()." s ".
+            "where s.sid=:schema")
+                ->setParameter('schema', $schema->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::DomainRepo()." d ".
+            "where d.qbid in (select b.id from ".Configuration::BlockRepo()." b where b.sid=:schema)")
+                ->setParameter('schema', $schema->getId())
+                ->getResult();
+        $em->createQuery(
+            "delete from ".Configuration::BlockRepo()." b ".
+            "where b.sid=:schema")
+                ->setParameter('schema', $schema->getId())
+                ->getResult();
+        $em->remove($schema);
+        $em->flush();
+    }
+    
     public function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');

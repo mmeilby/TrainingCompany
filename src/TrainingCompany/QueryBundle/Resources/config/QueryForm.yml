@@ -3,7 +3,25 @@ form:
     company: The Training Company
     signer: Henrik Vrangbæk Thomsen
     email: info@training-comp.dk
-    invitation: The Training Company har brug for din mening
+    invitation:
+        title: The Training Company har brug for din mening
+        body: >
+            Kære %receiver%<br />
+            <br />
+            I forbindelse med det kommende kursusforløb har vi behov for dit input via et spørgeskema.<br />
+            <br />
+            Din besvarelsen af spørgeskemaet tager ca. 5 min. og gennemføres via nedenstående link.<br />
+            <br />
+            <a href="%link%" target="_blank">Klik her for at starte undersøgelsen</a><br/>
+            <br />
+            Besvarelsen bedes gennemført senest den 30. januar.<br />
+            <br />
+            På forhånd tak for din besvarelse.<br />
+            <br />
+            Med venlig hilsen<br/>
+            %sender%<br/>
+            The Training Company<br/>
+            <br/>
     pages:
         personal:
             title: Personligt
