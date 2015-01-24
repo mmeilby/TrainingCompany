@@ -38,13 +38,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-            {% if not is_granted('ROLE_ADMIN') %}
-                    <a class="navbar-brand" href="{{ path('_home') }}">
-                        The Training Company
+            {% if app.user and is_granted('ROLE_ADMIN') %}
+                    <a class="navbar-brand" href="{{ path('_admin') }}">
+                        The Training Company <i class="fa fa-lock" style="margin-left: 8px; position: relative; top: 2px"></i>
                     </a>
             {% else %}
-                    <a class="navbar-brand" href="{{ path('_admin') }}">
-                        The Training Company <i class="fa fa-university" style="margin-left: 8px"></i>
+                    <a class="navbar-brand" href="{{ path('_home') }}">
+                        The Training Company
                     </a>
             {% endif %}
                 </div>
@@ -52,7 +52,7 @@
                     <ul class="nav navbar-nav navbar-right">
         {% block menu %}{% endblock %}
                         <li class="hidden-xs">
-                            <img src="{{ asset( 'bundles/trainingcompanyquery/images/ttc-logo.png' ) }}" class="img-responsive" style="height: 30px; margin-top: 10px" />
+                            <img src="{{ asset( 'bundles/trainingcompanyquery/images/ttc-logo.png' ) }}" style="height: 30px; margin-top: 10px; position: relative; left: -15px" />
                         </li>
                     </ul>
                 </div>
