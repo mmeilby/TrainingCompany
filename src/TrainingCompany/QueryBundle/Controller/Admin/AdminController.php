@@ -32,27 +32,36 @@ class AdminController extends Controller
                 $choices[$schema->getId()] = $schema->getName();
             }
         }
+        
+        $session = $request->getSession();
+        $schemaid = $session->get('dashboard_schema', 0);
+
         $formData = new NewPerson();
+        $formData->survey = $schemaid;
+        
         $formDef = $this->createFormBuilder($formData);
         $formDef->add('survey', 'choice', array('label' => 'Spørgeskema', 'required' => false, 'choices' => $choices, 'empty_value' => 'Vælg...'));
         $formDef->add('view', 'submit', array('label' => 'Vis',
                                                 'translation_domain' => 'admin',
-                                                'icon' => 'fa fa-envelope-o'));
+                                                'icon' => 'fa fa-search'));
         $form = $formDef->getForm();
-
-        $session = $request->getSession();
-        $schemaid = $session->get('dashboard_schema', 0);
-
-        if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $formData = $form->getData();
-                $schemaid = $formData->survey;
-                $session->set('dashboard_schema', $schemaid);
-            }
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $schemaid = $formData->survey;
+            $session->set('dashboard_schema', $schemaid);
         }
 
         $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $schemaid));
-        return array('form' => $form->createView(), 'schema' => $schema);
+        if ($schema) {
+            $surveys =
+                $em->createQuery(
+                        "select s.state,count(s.state) as cnt ".
+                        "from ".Configuration::SurveyRepo()." s ".
+                        "where s.sid=:schema ".
+                        "group by s.state")
+                    ->setParameter('schema', $schemaid)
+                    ->getResult();
+        }
+        return array('form' => $form->createView(), 'schema' => $schema, 'surveys' => $surveys);
     }
 }

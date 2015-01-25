@@ -26,4 +26,8 @@ LIST:
         TITLE: Undersøgelsessvar
         CAPTION: Svar på undersøgelsen %SUBJECT%
         NOITEMS: Der er ikke afgivet svar
+    DOWNLOADRESP:
+        TITLE: Resultat af undersøgelse
+        CAPTION: Afsluttede svar på undersøgelsen %SUBJECT%
+        NOITEMS: Ingen respondenter har færdiggjort deres svar endnu
         

@@ -7,6 +7,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use TrainingCompany\QueryBundle\Entity\Configuration;
+use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
+use DateTime;
 
 class DownloadResponseController extends Controller
 {
@@ -23,18 +25,21 @@ class DownloadResponseController extends Controller
         $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $schemaid));
         $surveys =
             $em->createQuery(
-                    "select s.id,s.state,s.date,p.name,p.email ".
+                    "select s.id,s.date,p.name,p.email ".
                     "from ".Configuration::SurveyRepo()." s ".
                     "inner join ".
                             Configuration::PersonRepo()." p ".
                     "with s.pid=p.id ".
-                    "where s.sid=:schema ".
+                    "where s.sid=:schema and s.state=:completed ".
                     "order by s.state asc, s.date asc")
                 ->setParameter('schema', $schemaid)
+                ->setParameter('completed', QSurveys::$STATE_FINISHED)
                 ->getResult();
         $outputar = array();
         foreach ($surveys as $survey) {
-            $outputstr = $survey['id'].";".$survey['state'].";".$survey['date'].";".$survey['name'].";".$survey['email'];
+//            $state = $this->get('translator')->trans("FORM.SURVEY.CHOICE.STATUS.".$survey['state'], array(), 'admin');
+            $date = date("j-M-Y", $survey['date']);
+            $outputstr = $survey['id'].';'.$date.';"'.$survey['name'].'";"'.$survey['email'].'"';
             $answers =
                 $em->createQuery(
                         "select r.qno,b.qpage,b.qtype,r.answer,d.value,b.label ".
@@ -76,10 +81,10 @@ class DownloadResponseController extends Controller
             ksort($responses);
             foreach ($responses as $response) {
                 if (array_key_exists('answer', $response)) {
-                    $outputstr = $outputstr.";".$response['answer'];
+                    $outputstr = $outputstr.';'.$response['answer'];
                 }
                 else {
-                    $outputstr = $outputstr.";".$response['comment'];
+                    $outputstr = $outputstr.';"'.$response['comment'].'"';
                 }
             }
             $outputar[$survey['id']] = $outputstr;

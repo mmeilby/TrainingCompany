@@ -14,21 +14,47 @@
 {% block maincontent %}
 <div class="container" role="main">
     <div class="row">
-        <div class="col-sm-8">
+        <div class="col-sm-4">
 {% if schema is not null %}
             <h2>{{ schema.name }}</h2>
-            <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
-                {% trans %}Besvarelser{% endtrans %}
-            </a>
-            <br />
-            <a href="{{ path('_admin_response_download', { 'schemaid': schema.id }) }}">
-                {% trans %}Hent besvarelser{% endtrans %}
-            </a>
-            <br />
-            <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
-                {% trans %}Inviter respondenter{% endtrans %}
-            </a>
+            <div class="list-group">
+                <a class="list-group-item" href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
+                    <h3 class="list-group-item-heading">{% trans %}Inviter respondenter{% endtrans %}</h3>
+                    <p class="list-group-item-text">Send invitation til deltagelse i denne undersøgelse.</p>
+                </a>
+                <br />
+                <a class="list-group-item" href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
+                    <h3 class="list-group-item-heading">{% trans %}Status på besvarelser{% endtrans %}</h3>
+                    <p class="list-group-item-text">Vis tilstanden for alle besvarelser til denne undersøgelse.</p>
+                </a>
+                <br />
+                <a class="list-group-item" href="{{ path('_admin_response_download', { 'schemaid': schema.id }) }}">
+                    <h3 class="list-group-item-heading">{% trans %}Hent færdige besvarelser{% endtrans %}</h3>
+                    <p class="list-group-item-text">Hent alle de afsluttede besvarelser for denne undersøgelse.</p>
+                </a>
+            </div>
 {% else %}            
+{% endif %}
+        </div>
+        <div class="col-sm-4">
+{% if schema is not null %}
+            <h2>Status for inviterede respondenter</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <td>Status</td>
+                        <td>Antal</td>
+                    </tr>
+                </thead>
+                <tbody>
+        {% for survey in surveys %}
+                    <tr>
+                        <td>{{ ['FORM.SURVEY.CHOICE.STATUS.',survey.state]|join()|trans([],'admin') }}</td>
+                        <td>{{ survey.cnt }}</td>
+                    </tr>
+        {% endfor %}
+                </tbody>
+            </table>
 {% endif %}
         </div>
         <div class="col-sm-4">
