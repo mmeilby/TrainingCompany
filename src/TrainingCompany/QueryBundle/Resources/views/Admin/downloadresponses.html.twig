@@ -1,0 +1,20 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% trans_default_domain "admin" %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>{{ 'LIST.RESPONSES.TITLE'|trans|upper }}</b></div>
+        <div class="panel-body">
+            <h2>{{ 'LIST.RESPONSES.CAPTION'|trans({'%SUBJECT%': subject}) }}</h2>
+    {% if output|length > 0 %}
+        {% for survey in output %}
+            {{ survey }}<br />
+        {% endfor %}
+    {% else %}
+            {{'LIST.RESPONSES.NOITEMS'|trans|upper}}
+    {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

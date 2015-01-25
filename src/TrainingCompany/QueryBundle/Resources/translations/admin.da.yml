@@ -6,6 +6,9 @@ FORM:
                 1: I gang
                 2: Afsluttet
                 3: Fravalgt
+    INVITE:
+        TITLE: Inviter respondent
+        CAPTION: Inviter til undersøgelsen %SUBJECT%
 LIST:
     SURVEYS:
         TITLE: Undersøgelser

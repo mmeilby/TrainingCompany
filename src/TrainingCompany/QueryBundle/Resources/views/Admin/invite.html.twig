@@ -1,4 +1,5 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% trans_default_domain "admin" %}
 
 {% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
 
@@ -22,11 +23,22 @@
         <p>Ref.: <a href="{{ path('_referred', { 'id': send_token }) }}">{{ send_token }}</a></p>
     </div>
     {% endif %}
-    <p>Indtast navn og e-mail adresse på respondenten.</p>
-    <p>Der sendes en invitation til kampagnen på e-mail adressen.
-       Nye respondenter oprettes desuden i personregisteret.</p>
-    <p>Respondenter kendes på e-mail adressen.</p>
-    {{ form(form) }}
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>{{ 'FORM.INVITE.TITLE'|trans|upper }}</b></div>
+        <div class="panel-body lead">
+            {{ 'FORM.INVITE.CAPTION'|trans({'%SUBJECT%': schema.name}) }}
+        </div>
+        <div class="panel-body">
+            <p>
+                Der sendes en invitation til kampagnen på e-mail adressen.
+                Nye respondenter oprettes desuden i personregisteret.
+            </p>
+            <p>
+                Respondenter kendes på e-mail adressen.
+            </p>
+            {{ form(form) }}
+        </div>
+    </div>
 </div>
 {% endblock %}
 

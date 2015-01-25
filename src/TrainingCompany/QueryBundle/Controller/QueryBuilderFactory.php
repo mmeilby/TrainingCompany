@@ -18,30 +18,6 @@ use TrainingCompany\QueryBundle\Entity\Configuration;
 
 class QueryBuilderFactory {
 
-    public function getTemplateId($surveyId) {
-        return 1;
-    }
-
-    public function getSurveys($em) {
-        $qschema = $em->getRepository(Configuration::SchemaRepo())->findAll();
-        if (!$qschema) {
-            return array();
-        }
-        
-        $surveys = array();
-        foreach ($qschema as $schema) {
-            $survey = new Survey();
-            $survey->id = $schema->getId();
-            $survey->name = $schema->getName();
-            $survey->signer = $schema->getSigner();
-            $survey->email = $schema->getEmail();
-            $survey->sender = $schema->getSender();
-            $survey->invitation = $schema->getInvitation();
-            $surveys[] = $survey;
-        }
-        return $surveys;
-    }
-
     public function saveTemplate($em, $survey) {
         $qschema = new QSchema();
         $qschema->setName($survey->name);

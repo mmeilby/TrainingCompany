@@ -7,6 +7,12 @@
         <div class="panel-heading"><b>{{ 'LIST.SURVEYS.TITLE'|trans|upper }}</b></div>
         <div class="panel-body lead">
             {{ 'LIST.SURVEYS.CAPTION'|trans({'%SUBJECT%': subject}) }}
+{% if schema is defined %}
+            <br />
+            <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
+                {% trans %}Inviter respondenter{% endtrans %}
+            </a>
+{% endif %}
         </div>
         <table class="table table-striped">
             <tbody>

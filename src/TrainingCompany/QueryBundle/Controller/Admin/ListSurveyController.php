@@ -22,7 +22,7 @@ class ListSurveyController extends Controller
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('id' => $userid));
         $qsurveys = $em->getRepository(Configuration::SurveyRepo())->findBy(array('pid' => $userid));
-        return array('surveys' => $qsurveys, 'subject' => $user->getName());
+        return array('surveys' => $qsurveys, 'subject' => $user->getName(), 'user' => $user);
     }
     
     /**
@@ -43,6 +43,6 @@ class ListSurveyController extends Controller
          "where s.sid=:schema and s.pid=p.id order by p.name asc,s.state desc");
         $qb->setParameter('schema', $schemaid);
         $surveys = $qb->getResult();
-        return array('surveys' => $surveys, 'subject' => $schema->getName());
+        return array('surveys' => $surveys, 'subject' => $schema->getName(), 'schema' => $schema);
     }
 }

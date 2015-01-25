@@ -23,13 +23,48 @@ class ListResponseController extends Controller
         $survey = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('id' => $surveyid));
         $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $survey->getSid()));
         $person = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('id' => $survey->getPid()));
-        $qb = $em->createQuery(
-         "select r.qno,r.answer,b.label ".
-         "from ".Configuration::ResponseRepo()." r, ".
-                 Configuration::BlockRepo()." b ".
-         "where r.qid=:survey and b.qno=r.qno order by r.qno asc");
-        $qb->setParameter('survey', $surveyid);
-        $responses = $qb->getResult();
+        $answers =
+            $em->createQuery(
+                    "select r.qno,b.qpage,b.qtype,r.answer,d.value,b.label ".
+                    "from ".Configuration::ResponseRepo()." r ".
+                    "inner join ".
+                            Configuration::SurveyRepo()." s ".
+                    "with r.qid=s.id ".
+                    "inner join ".
+                            Configuration::BlockRepo()." b ".
+                    "with b.qno=r.qno and b.sid=s.sid ".
+                    "left join ".
+                            Configuration::DomainRepo()." d ".
+                    "with d.qbid=b.id and d.domain=r.answer ".
+                    "where r.qid=:survey ".
+                    "order by r.qno asc")
+                ->setParameter('survey', $surveyid)
+                ->getResult();
+        $comments =
+            $em->createQuery(
+                    "select c.qno,b.qpage,b.qtype,c.comment,b.label ".
+                    "from ".Configuration::CommentRepo()." c ".
+                    "inner join ".
+                            Configuration::SurveyRepo()." s ".
+                    "with c.qid=s.id ".
+                    "inner join ".
+                            Configuration::BlockRepo()." b ".
+                    "with b.qno=c.qno and b.sid=s.sid ".
+                    "where c.qid=:survey ".
+                    "order by c.qno asc")
+                ->setParameter('survey', $surveyid)
+                ->getResult();
+        $responses = array();
+        foreach ($answers as $answer) {
+            $responses[$answer['qpage']][$answer['qno']] = $answer;
+        }
+        foreach ($comments as $comment) {
+            $responses[$comment['qpage']][$comment['qno']] = $comment;
+        }
+        ksort($responses);
+        foreach ($responses as $response) {
+            ksort($response);
+        }
         return array('responses' => $responses, 'subject' => $schema->getName()."/".$person->getName());
     }
 }

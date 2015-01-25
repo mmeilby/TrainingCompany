@@ -13,15 +13,28 @@
 
 {% block maincontent %}
 <div class="container" role="main">
-    {{ form(form) }}
+    <div class="row">
+        <div class="col-sm-8">
 {% if schema is not null %}
-    <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
-        {% trans %}Undersøgelser{% endtrans %} - {{ schema.name }}
-    </a>
-    <br />
-    <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
-        {% trans %}Inviter respondenter{% endtrans %} - {{ schema.name }}
-    </a>
+            <h2>{{ schema.name }}</h2>
+            <a href="{{ path('_admin_survey_list_byschema', { 'schemaid': schema.id }) }}">
+                {% trans %}Besvarelser{% endtrans %}
+            </a>
+            <br />
+            <a href="{{ path('_admin_response_download', { 'schemaid': schema.id }) }}">
+                {% trans %}Hent besvarelser{% endtrans %}
+            </a>
+            <br />
+            <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
+                {% trans %}Inviter respondenter{% endtrans %}
+            </a>
+{% else %}            
 {% endif %}
+        </div>
+        <div class="col-sm-4">
+            <h2>Vælg undersøgelse</h2>
+            {{ form(form) }}
+        </div>
+    </div>
 </div>
 {% endblock %}

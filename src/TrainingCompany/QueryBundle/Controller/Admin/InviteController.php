@@ -81,10 +81,13 @@ class InviteController extends Controller
                 'form' => $form->createView(),
                 'send_name' => $qpersons->getName(),
                 'send_email' => $qpersons->getEmail(),
-                'send_token' => $qsurvey->getToken());
+                'send_token' => $qsurvey->getToken(),
+                'schema' => $schema);
         }
 
-        return array('form' => $form->createView());
+        return array(
+            'form' => $form->createView(),
+            'schema' => $schema);
     }
 
     private function generateToken($name) {

@@ -19,7 +19,7 @@ class LoadSchemaController extends Controller
         $survey = $queryBuilder->getTemplate('QueryForm.yml');
         $em = $this->getDoctrine()->getManager();
         $queryBuilder->saveTemplate($em, $survey);
-        return $this->render('TrainingCompanyQueryBundle:Admin:dashboard.html.twig');
+        return $this->redirect($this->generateUrl('_admin'));
     }
     
     /**
@@ -30,6 +30,7 @@ class LoadSchemaController extends Controller
     public function testAction() {
         $queryBuilder = new QueryBuilderFactory();
         $queryBuilder->getTemplate('QueryForm.yml');
-        return $this->render('TrainingCompanyQueryBundle:Admin:dashboard.html.twig');
+        return $this->redirect($this->generateUrl('_admin'));
+//        return $this->render('TrainingCompanyQueryBundle:Admin:dashboard.html.twig');
     }
 }

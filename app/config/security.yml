@@ -28,6 +28,8 @@ security:
             memory:
                 users:
                     adm: { password: %security_password%, roles: [ 'ROLE_ADMIN' ] }
+                    jit: { password: DumaXu7u, roles: [ 'ROLE_ADMIN' ] }
+                    hvt: { password: jekEfuc2, roles: [ 'ROLE_ADMIN' ] }
 
     firewalls:
         dev:

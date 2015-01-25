@@ -11,13 +11,31 @@
         <table class="table table-striped">
             <tbody>
     {% if responses|length > 0 %}
-        {% for response in responses %}
+        {% for pageno,page in responses %}
                 <tr>
+                    <td colspan="3">
+                        Side {{ pageno }}
+                    </td>
+                </tr>
+            {% for response in page %}
+                <tr>
+                    <td>&nbsp;</td>
                     <td class="user">
                         {{ response.qno }}. {{ response.label|raw }}
                     </td>
-                    <td>{{ response.answer }}</td>
+                    <td>
+{% if response.answer is defined %}                        
+    {% if response.value is not null %}
+                        {{ response.value }} ({{ response.answer }})
+    {% else %}
+                        {{ response.answer }}
+    {% endif %}
+{% else %}
+                        {{ response.comment }}
+{% endif %}
+                    </td>
                 </tr>
+            {% endfor %}
         {% endfor %}
     {% else %}
                 <tr>
