@@ -26,7 +26,7 @@ class SchemaController extends Controller
         if ($form->get('cancel')->isClicked()) {
             return $this->redirect($returnUrl);
         }
-        if ($form->isValid()) {
+        if ($this->checkForm($form, $schema)) {
             $qschemas = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
             if ($qschemas) {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NAMEEXIST', array(), 'admin')));
@@ -94,10 +94,10 @@ class SchemaController extends Controller
 
     private function makeForm(QSchema $schema, $action) {
         $formDef = $this->createFormBuilder($schema);
-        $formDef->add('name', 'text', array('label' => 'FORM.SCHEMA.NAME', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('email', 'text', array('label' => 'FORM.SCHEMA.EMAIL', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('signer', 'text', array('label' => 'FORM.SCHEMA.SIGNER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('sender', 'text', array('label' => 'FORM.SCHEMA.SENDER', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('name', 'text', array('label' => 'FORM.SCHEMA.NAME.LABEL', 'help' => 'FORM.SCHEMA.NAME.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('signer', 'text', array('label' => 'FORM.SCHEMA.SIGNER.LABEL', 'help' => 'FORM.SCHEMA.SIGNER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('sender', 'text', array('label' => 'FORM.SCHEMA.SENDER.LABEL', 'help' => 'FORM.SCHEMA.SENDER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('email', 'text', array('label' => 'FORM.SCHEMA.EMAIL.LABEL', 'help' => 'FORM.SCHEMA.EMAIL.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('cancel', 'submit', array('label' => 'FORM.SCHEMA.CANCEL.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'buttontype' => 'btn btn-default',
@@ -115,7 +115,7 @@ class SchemaController extends Controller
                 return false;
             }
             if ($schema->getEmail() == null || trim($schema->getEmail()) == '') {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NOUSERNAME', array(), 'admin')));
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NOEMAIL', array(), 'admin')));
                 return false;
             }
             return true;

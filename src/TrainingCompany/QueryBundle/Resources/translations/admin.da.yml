@@ -1,4 +1,36 @@
 FORM:
+    SCHEMA:
+        TITLE:
+            ADD: Tilføj nyt skema
+            CHG: Tilpas skema
+            DEL: FJERN SKEMA
+        PROMPT:
+            ADD: Et nyt skema danner grundlag for undersøgelser
+            CHG: Et skema der ændres får konsekvens for undersøgelser der bygger på dette skema
+            DEL: Når skema fjernes slettes alle tilknyttede undersøgelser og svar. Det er ikke muligt at fortryde denne handling!
+        NAME:
+            LABEL: Beskrivelse
+            HELP: Et passende navn på skemaet som kan anvendes ved valg af undersøgelser
+        SIGNER:
+            LABEL: Ansvarlig for undersøgelsen
+            HELP: Navn på den ansvarlige - bl.a. underskriver af invitationer
+        SENDER:
+            LABEL: Afsender navn
+            HELP: Navn på afsenderen af invitationer
+        EMAIL:
+            LABEL: Afsender e-mail
+            HELP: E-mail adresse på afsenderen af invitationer
+        CANCEL:
+            ADD: Fortryd
+            CHG: Fortryd ændringer
+            DEL: Behold skema
+        SUBMIT:
+            ADD: Tilføj skema
+            CHG: Gem ændringer
+            DEL: FJERN SKEMA
+        NONAME: Beskrivelse mangler - et skema skal have en beskrivelse
+        NOEMAIL: Afsender e-mail mangler - afsender er nødvendig til invitationer
+        NAMEEXIST: Beskrivelsen er allerede anvendt - find en variant af beskrivelsen
     SURVEY:
         CHOICE:
             STATUS:
