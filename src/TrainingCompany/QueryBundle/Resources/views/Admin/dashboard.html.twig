@@ -28,9 +28,17 @@
                     <p class="list-group-item-text">Vis tilstanden for alle besvarelser til denne undersøgelse.</p>
                 </a>
                 <br />
-                <a class="list-group-item" href="{{ path('_admin_response_download', { 'schemaid': schema.id }) }}">
+                <a class="list-group-item" href="{{ path('_admin_followup', { 'schemaid': schema.id }) }}">
+                    <h3 class="list-group-item-heading">{% trans %}Ryk respondenter med uafsluttede undersøgelser{% endtrans %}</h3>
+                    <p class="list-group-item-text">Respondenter der ikke har afsluttet sin undersøgelse tilsendes en notifikation på e-mail.</p>
+                </a>
+                <br />
+                <a class="list-group-item" href="{{ path('_admin_response_download_file', { 'schemaid': schema.id }) }}">
                     <h3 class="list-group-item-heading">{% trans %}Hent færdige besvarelser{% endtrans %}</h3>
-                    <p class="list-group-item-text">Hent alle de afsluttede besvarelser for denne undersøgelse.</p>
+                    <p class="list-group-item-text">
+                        Hent alle de afsluttede besvarelser for denne undersøgelse som en tekst fil.
+                        Filen kan importeres i Excel.
+                    </p>
                 </a>
             </div>
 {% else %}            

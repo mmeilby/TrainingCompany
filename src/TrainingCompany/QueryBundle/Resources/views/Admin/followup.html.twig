@@ -1,0 +1,55 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% trans_default_domain "admin" %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>{{ 'FORM.FOLLOWUP.TITLE'|trans|upper }}</b></div>
+        <div class="panel-body">
+            <h2>{{ 'FORM.FOLLOWUP.CAPTION'|trans({'%SUBJECT%': schema.name}) }}</h2>
+            <p>
+    {% if show %}
+                <a href="{{ path('_admin_send_followup', {'schemaid': schema.id }) }}">
+                    {% trans %}FORM.FOLLOWUP.LINK{% endtrans %}
+                </a>
+    {% else %}
+                <b>{% trans %}FORM.FOLLOWUP.DONE{% endtrans %}</b>
+    {% endif %}
+            </p>
+        </div>
+        <table class="table table-striped">
+            <tbody>
+    {% if surveys|length > 0 %}
+        {% for survey in surveys %}
+                <tr>
+                    <td class="user">
+                        <a href="{{ path('_referred', {'id': survey.token }) }}">
+                        {{ survey.name|upper }}
+                        </a>    
+                    </td>
+                    <td>{{ ['FORM.SURVEY.CHOICE.STATUS.',survey.state]|join()|trans([],'admin') }}</td>
+                    <td>{{ survey.date|date('j-M-Y') }}</td>
+                    <td class="narrow-col">
+            {% if survey.state > 0 %}
+                        <a href="{{ path('_admin_response_list', { 'surveyid': survey.id }) }}">
+                            <span class="glyphicon glyphicon-briefcase"></span>
+                        </a>
+            {% endif %}
+                    </td>
+                </tr>
+        {% endfor %}
+    {% else %}
+                <tr>
+                    <td class="user">
+                        {{'FORM.FOLLOWUP.NOITEMS'|trans|upper}}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+    {% endif %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

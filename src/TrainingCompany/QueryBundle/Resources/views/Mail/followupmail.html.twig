@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>{% block title "Training Company" %}</title>
+</head>
+<body>
+    Kære {{ name }}<br/>
+    <br />
+    I forbindelse med det kommende kursusforløb har vi behov for dit input via et spørgeskema.<br />
+    <br />
+    Din besvarelse af spørgeskemaet tager ca. 5 min. og gennemføres via nedenstående link.<br />
+    <br />
+    <a href="{{ host }}{{ path('_referred', { 'id': token }) }}" target="_blank">
+    Klik her for at starte undersøgelsen</a><br/>
+    <br />
+    Vi har tidligere sendt dig en invitation og håber at du har mulighed for at gennemføre besvarelsen
+    senest den 30. januar.<br />
+    <br />
+    På forhånd tak for din besvarelse.<br />
+    <br />
+    Med venlig hilsen<br/>
+    {{ sender }}<br/>
+    The Training Company<br/>
+    <br/>
+    PS:<br/>
+    <a href="{{ host }}{{ path('_optout', { 'id': token }) }}" target="_blank">
+    Har du ikke tid til at deltage i denne undersøgelse, så brug dette link.</a><br/>
+    ---<br/>
+    <br/>
+    Hjælp os med at gøre undersøgelserne bedre!<br/>
+    <br/>
+    Har du kommentarer til undersøgelsen? Opdaget en fejl?
+    Eller er der dele af spørgeskemaet som kunne være bedre?<br/>
+    <a href="{{ host }}{{ path('_feedback_with_id', { 'id': token }) }}" target="_blank">
+    Så klik her og giv os dit input til denne undersøgelse.</a><br/>
+    <br/>
+    Denne mail er sendt til adressen {{ email }} som vi har fået oplyst.
+</body>
+</html>

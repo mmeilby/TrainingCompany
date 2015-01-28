@@ -9,6 +9,12 @@ FORM:
     INVITE:
         TITLE: Inviter respondent
         CAPTION: Inviter til undersøgelsen %SUBJECT%
+    FOLLOWUP:
+        TITLE: Ryk respondenter for svar
+        CAPTION: Følgende respondenter har ikke afsluttet undersøgelsen %SUBJECT%
+        LINK: Send notifikationer til følgende respondenter
+        DONE: Notifikationer er sendt til følgende respondenter
+        NOITEMS: Alle respondenter har færdiggjort deres svar - der er ingen at rykke
 LIST:
     SURVEYS:
         TITLE: Undersøgelser

@@ -15,8 +15,15 @@ monolog:
             type:  stream
             path:  %kernel.logs_dir%/%kernel.environment%.log
             level: debug
+        essential:
+            type:  stream
+            path:  %kernel.logs_dir%/%kernel.environment%_ess.log
+            level: notice
         firephp:
             type:  firephp
+            level: info
+        chromephp:
+            type:  chromephp
             level: info
 
 assetic:

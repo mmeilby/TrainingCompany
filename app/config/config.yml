@@ -63,7 +63,8 @@ swiftmailer:
 
 parameters:
     mailuser:      %mailer_user%
-    admin-name:    ttc-test admin
-    feedback-mail: mm@iserve.dk
-    feedback-name: Morten Meilby
+    admin-name:    The Training Company Admin
+    feedback-title: The Training Company Feedback
+    feedback-mail: hvt@training-comp.dk
+    feedback-name: Henrik Vrangbæk Thomsen
     

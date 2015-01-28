@@ -112,7 +112,7 @@ class FeedbackController extends Controller
             'host' => $request->getHost(),
             'survey' => isset($qschema) ? $qschema->getName() : '');
         $message = Swift_Message::newInstance()
-            ->setSubject('TTC-TEST Feedback')
+            ->setSubject($this->container->getParameter('feedback-title'))
             ->setFrom(array($this->container->getParameter('mailuser') => $this->container->getParameter('admin-name')))
             ->setTo(array($this->container->getParameter('feedback-mail') => $this->container->getParameter('feedback-name')))
             ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:feedbackmail.html.twig', $parms), 'text/html');

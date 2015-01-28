@@ -3,74 +3,52 @@ namespace TrainingCompany\QueryBundle\Controller\Admin;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use TrainingCompany\QueryBundle\Entity\Configuration;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
-use DateTime;
 
 class DownloadResponseController extends Controller
 {
     /**
      * List the available responses by survey
-     * @Route("/admin/download/responses/{schemaid}", name="_admin_response_download")
+     * @Route("/admin/download/responses/file/{schemaid}", name="_admin_response_download_file")
      * @Method("GET")
      * @Secure(roles="ROLE_ADMIN")
-     * @Template("TrainingCompanyQueryBundle:Admin:downloadresponses.html.twig")
      */
-    public function downloadResponsesAction($schemaid)
+    public function downloadFileAction($schemaid)
     {
         $em = $this->getDoctrine()->getManager();
         $schema = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('id' => $schemaid));
-        $surveys =
-            $em->createQuery(
-                    "select s.id,s.date,p.name,p.email ".
-                    "from ".Configuration::SurveyRepo()." s ".
-                    "inner join ".
-                            Configuration::PersonRepo()." p ".
-                    "with s.pid=p.id ".
-                    "where s.sid=:schema and s.state=:completed ".
-                    "order by s.state asc, s.date asc")
-                ->setParameter('schema', $schemaid)
-                ->setParameter('completed', QSurveys::$STATE_FINISHED)
-                ->getResult();
+        $outputar = $this->getResponses($schemaid);
+        $tmpfname = tempnam("/tmp", "ttc-test_response_");
+
+        $fp = fopen($tmpfname, "w");
+        foreach ($outputar as $output) {
+            fputs($fp, iconv("UTF-8", "ISO-8859-1", $output));
+        }
+        fclose($fp);
+        
+        $response = new BinaryFileResponse($tmpfname);
+        $response->headers->set('Content-Type', 'text/plain');
+        $response->setContentDisposition(
+                ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+                str_replace(' ', '-', $schema->getName()).'_'.date("j-m-Y").'.txt');
+        return $response;
+    }
+    
+    private function getResponses($schemaid) {
+        $em = $this->getDoctrine()->getManager();
+        $surveys = $this->getSurveyInfo($schemaid);
         $outputar = array();
         foreach ($surveys as $survey) {
 //            $state = $this->get('translator')->trans("FORM.SURVEY.CHOICE.STATUS.".$survey['state'], array(), 'admin');
             $date = date("j-M-Y", $survey['date']);
             $outputstr = $survey['id'].';'.$date.';"'.$survey['name'].'";"'.$survey['email'].'"';
-            $answers =
-                $em->createQuery(
-                        "select r.qno,b.qpage,b.qtype,r.answer,d.value,b.label ".
-                        "from ".Configuration::ResponseRepo()." r ".
-                        "inner join ".
-                                Configuration::SurveyRepo()." s ".
-                        "with r.qid=s.id ".
-                        "inner join ".
-                                Configuration::BlockRepo()." b ".
-                        "with b.qno=r.qno and b.sid=s.sid ".
-                        "left join ".
-                                Configuration::DomainRepo()." d ".
-                        "with d.qbid=b.id and d.domain=r.answer ".
-                        "where r.qid=:survey ".
-                        "order by r.qno asc")
-                    ->setParameter('survey', $survey['id'])
-                    ->getResult();
-            $comments =
-                $em->createQuery(
-                        "select c.qno,b.qpage,b.qtype,c.comment,b.label ".
-                        "from ".Configuration::CommentRepo()." c ".
-                        "inner join ".
-                                Configuration::SurveyRepo()." s ".
-                        "with c.qid=s.id ".
-                        "inner join ".
-                                Configuration::BlockRepo()." b ".
-                        "with b.qno=c.qno and b.sid=s.sid ".
-                        "where c.qid=:survey ".
-                        "order by c.qno asc")
-                    ->setParameter('survey', $survey['id'])
-                    ->getResult();
+            $answers = $this->getAnswers($survey['id']);
+            $comments = $this->getComments($survey['id']);
             $responses = array();
             foreach ($answers as $answer) {
                 $responses[$answer['qno']] = $answer;
@@ -89,6 +67,61 @@ class DownloadResponseController extends Controller
             }
             $outputar[$survey['id']] = $outputstr;
         }
-        return array('output' => $outputar, 'subject' => $schema->getName());
+        return $outputar;
+    }
+    
+    private function getSurveyInfo($schemaid) {
+        $em = $this->getDoctrine()->getManager();
+        return
+            $em->createQuery(
+                    "select s.id,s.date,p.name,p.email ".
+                    "from ".Configuration::SurveyRepo()." s ".
+                    "inner join ".
+                            Configuration::PersonRepo()." p ".
+                    "with s.pid=p.id ".
+                    "where s.sid=:schema and s.state=:completed ".
+                    "order by s.state asc, s.date asc")
+                ->setParameter('schema', $schemaid)
+                ->setParameter('completed', QSurveys::$STATE_FINISHED)
+                ->getResult();
+    }
+    
+    private function getAnswers($surveyid) {
+        $em = $this->getDoctrine()->getManager();
+        return
+            $em->createQuery(
+                    "select r.qno,b.qpage,b.qtype,r.answer,d.value,b.label ".
+                    "from ".Configuration::ResponseRepo()." r ".
+                    "inner join ".
+                            Configuration::SurveyRepo()." s ".
+                    "with r.qid=s.id ".
+                    "inner join ".
+                            Configuration::BlockRepo()." b ".
+                    "with b.qno=r.qno and b.sid=s.sid ".
+                    "left join ".
+                            Configuration::DomainRepo()." d ".
+                    "with d.qbid=b.id and d.domain=r.answer ".
+                    "where r.qid=:survey ".
+                    "order by r.qno asc")
+                ->setParameter('survey', $surveyid)
+                ->getResult();
+    }
+    
+    private function getComments($surveyid) {
+        $em = $this->getDoctrine()->getManager();
+        return
+            $em->createQuery(
+                    "select c.qno,b.qpage,b.qtype,c.comment,b.label ".
+                    "from ".Configuration::CommentRepo()." c ".
+                    "inner join ".
+                            Configuration::SurveyRepo()." s ".
+                    "with c.qid=s.id ".
+                    "inner join ".
+                            Configuration::BlockRepo()." b ".
+                    "with b.qno=c.qno and b.sid=s.sid ".
+                    "where c.qid=:survey ".
+                    "order by c.qno asc")
+                ->setParameter('survey', $surveyid)
+                ->getResult();
     }
 }
