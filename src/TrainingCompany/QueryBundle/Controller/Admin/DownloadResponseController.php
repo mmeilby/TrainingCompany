@@ -28,6 +28,7 @@ class DownloadResponseController extends Controller
         $fp = fopen($tmpfname, "w");
         foreach ($outputar as $output) {
             fputs($fp, iconv("UTF-8", "ISO-8859-1", $output));
+            fputs($fp, "\r\n");
         }
         fclose($fp);
         
