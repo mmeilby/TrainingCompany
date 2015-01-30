@@ -26,7 +26,7 @@ class UserController extends Controller
         if ($form->get('cancel')->isClicked()) {
             return $this->redirect($returnUrl);
         }
-        if ($form->isValid()) {
+        if ($this->checkForm($form, $user)) {
             $qpersons = $em->getRepository(Configuration::PersonRepo())->findOneBy(array('email' => $user->getEmail()));
             if ($qpersons) {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NAMEEXIST', array(), 'admin')));
@@ -108,9 +108,12 @@ class UserController extends Controller
 
     private function makeUserForm(QPersons $user, $action) {
         $formDef = $this->createFormBuilder($user);
-        $formDef->add('name', 'text', array('label' => 'FORM.USER.NAME', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('email', 'text', array('label' => 'FORM.USER.EMAIL', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('username', 'text', array('label' => 'FORM.USER.USERNAME', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('username', 'text', array('label' => 'FORM.USER.USERNAME.LABEL', 'help' => 'FORM.USER.USERNAME.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('name', 'text', array('label' => 'FORM.USER.NAME.LABEL', 'help' => 'FORM.USER.NAME.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('email', 'text', array('label' => 'FORM.USER.EMAIL.LABEL', 'help' => 'FORM.USER.EMAIL.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('phone', 'text', array('label' => 'FORM.USER.PHONE.LABEL', 'help' => 'FORM.USER.PHONE.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('jobtitle', 'text', array('label' => 'FORM.USER.JOB.LABEL', 'help' => 'FORM.USER.JOB.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('jobdomain', 'text', array('label' => 'FORM.USER.DOMAIN.LABEL', 'help' => 'FORM.USER.DOMAIN.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('cancel', 'submit', array('label' => 'FORM.USER.CANCEL.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'buttontype' => 'btn btn-default',
@@ -123,15 +126,20 @@ class UserController extends Controller
     
     private function checkForm($form, QPersons $user) {
         if ($form->isValid()) {
+            $noError = true;
+            if ($user->getUsername() == null || trim($user->getUsername()) == '') {
+                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NOUSERNAME', array(), 'admin')));
+                $noError = false;
+            }
             if ($user->getName() == null || trim($user->getName()) == '') {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NONAME', array(), 'admin')));
-                return false;
+                $noError = false;
             }
             if ($user->getEmail() == null || trim($user->getEmail()) == '') {
-                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NOUSERNAME', array(), 'admin')));
-                return false;
+                $form->addError(new FormError($this->get('translator')->trans('FORM.USER.NOEMAIL', array(), 'admin')));
+                $noError = false;
             }
-            return true;
+            return $noError;
         }
         return false;
     }
@@ -157,7 +165,7 @@ class UserController extends Controller
         $em->flush();
     }
     
-    public function getReferer(Request $request) {
+    private function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');
             $session = $request->getSession();

@@ -11,6 +11,9 @@ FORM:
         NAME:
             LABEL: Beskrivelse
             HELP: Et passende navn på skemaet som kan anvendes ved valg af undersøgelser
+        INVITATION:
+            LABEL: Invitation
+            HELP: En overskrift der indleder invitationen til denne undersøgelse
         SIGNER:
             LABEL: Ansvarlig for undersøgelsen
             HELP: Navn på den ansvarlige - bl.a. underskriver af invitationer
@@ -32,12 +35,75 @@ FORM:
         NOEMAIL: Afsender e-mail mangler - afsender er nødvendig til invitationer
         NAMEEXIST: Beskrivelsen er allerede anvendt - find en variant af beskrivelsen
     SURVEY:
+        DEFAULT: Vælg status...
         CHOICE:
             STATUS:
                 0: Inviteret
                 1: I gang
                 2: Afsluttet
                 3: Fravalgt
+        TITLE:
+            ADD: Tilføj ny relation til undersøgelse
+            CHG: Tilpas relation til undersøgelse
+            DEL: FJERN RELATION TIL UNDERSØGELSE
+        PROMPT:
+            ADD: En ny relation knytter en undersøgelse sammen med en respondent
+            CHG: En relation kan tilpasses så status eller kontaktdato for undersøgelsen ændres
+            DEL: Når relationen fjernes slettes alle tilknyttede svar for den relaterede respondent. Det er ikke muligt at fortryde denne handling!
+        STATE: Status for undersøgelse
+        DATE:
+            LABEL: Kontaktdato
+            HELP: En dato for seneste kontakt med respondenten
+        CANCEL:
+            ADD: Fortryd
+            CHG: Fortryd ændringer
+            DEL: Behold relation
+        SUBMIT:
+            ADD: Tilføj relation
+            CHG: Gem ændringer
+            DEL: FJERN RELATION
+        NODATE: Kontaktdato mangler - angiv en gyldig dato for seneste kontakt med respondenten
+        NOSTATE: Status skal vælges - vælg en passende status for denne relation til undersøgelsen
+    USER:
+        TITLE:
+            ADD: Tilføj ny respondent
+            CHG: Tilpas respondent
+            DEL: FJERN RESPONDENT
+        PROMPT:
+            ADD: En ny respondent kan tilknyttes flere undersøgelser
+            CHG: En respondent kan tilpasses så ændringer af e-mail adresse kan foretages
+            DEL: Når respondenten fjernes slettes alle tilknyttede svar for de relaterede undersøgelser. Det er ikke muligt at fortryde denne handling!
+        USERNAME:
+            LABEL: Brugernavn
+            HELP: Et passende brugernavn til respondenten som kan anvendes ved login fra nye kanaler
+        NAME:
+            LABEL: Fulde navn
+            HELP: Respondentens fulde navn som anvendes i invitationer og på lister
+        EMAIL:
+            LABEL: E-mail
+            HELP: E-mail adresse på respondenten til brug ved invitation til nye undersøgelser
+        PHONE:
+            LABEL: Telefonnummer
+            HELP: Frit felt hvor respondentens kontakttelefon kan angives
+        JOB:
+            LABEL: Titel
+            HELP: Frit felt hvor respondentens jobfunktion kan angives
+        DOMAIN:
+            LABEL: Jobområde
+            HELP: Frit felt hvor respondentens jobområde kan angives
+        CANCEL:
+            ADD: Fortryd
+            CHG: Fortryd ændringer
+            DEL: Behold respondent
+        SUBMIT:
+            ADD: Tilføj respondent
+            CHG: Gem ændringer
+            DEL: FJERN RESPONDENT
+        NOUSERNAME: Brugernavn mangler - en respondent skal have et brugernavn. Benyt eventuelt e-mail adresse.
+        NONAME: Navn mangler - en respondent skal have et navn.
+        NOEMAIL: E-mail mangler - modtageradresse er nødvendig til kommende invitationer.
+        NAMEEXIST: Brugernavn er allerede anvendt - find en variant af brugernavnet eller undersøg for dubletter.
+        CANNOTDELETESELF: Det er ikke muligt at fjerne din egen brugerprofil - log ind med en anden bruger for at fjerne denne.
     INVITE:
         TITLE: Inviter respondent
         CAPTION: Inviter til undersøgelsen %SUBJECT%
@@ -49,9 +115,9 @@ FORM:
         NOITEMS: Alle respondenter har færdiggjort deres svar - der er ingen at rykke
 LIST:
     SURVEYS:
-        TITLE: Undersøgelser
+        TITLE: Relationeer til undersøgelse
         CAPTION: Undersøgelser tilknyttet %SUBJECT%
-        NOITEMS: Der er ingen undersøgelser
+        NOITEMS: Der er ingen respondenter tilknyttet undersøgelsen
     SCHEMAS:
         TITLE: Skemaer
         CAPTION: Skemaer til brug for undersøgelser
@@ -62,7 +128,7 @@ LIST:
         NOITEMS: Der er ingen respondenter
     RESPONSES:
         TITLE: Undersøgelsessvar
-        CAPTION: Svar på undersøgelsen %SUBJECT%
+        CAPTION: Svar givet til undersøgelsen %SUBJECT%
         NOITEMS: Der er ikke afgivet svar
     DOWNLOADRESP:
         TITLE: Resultat af undersøgelse

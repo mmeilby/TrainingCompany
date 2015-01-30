@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
 use TrainingCompany\QueryBundle\Entity\Configuration;
+use TrainingCompany\QueryBundle\Entity\Admin\SurveyForm;
 
 class SurveyController extends Controller
 {
@@ -26,8 +27,8 @@ class SurveyController extends Controller
         if ($form->get('cancel')->isClicked()) {
             return $this->redirect($returnUrl);
         }
-        if ($form->isValid()) {
-            $em->persist($schema);
+        if ($this->checkForm($form, $survey)) {
+            $em->persist($survey);
             $em->flush();
             return $this->redirect($returnUrl);
         }
@@ -85,27 +86,41 @@ class SurveyController extends Controller
         foreach (array(QSurveys::$STATE_INVITED, QSurveys::$STATE_ONGOING, QSurveys::$STATE_FINISHED, QSurveys::$STATE_OPTED) as $stat) {
             $status[$stat] = 'FORM.SURVEY.CHOICE.STATUS.'.$stat;
         }
-//        $surveyForm->setDate(date_format($survey->getDate(), "j-M-Y"));
-
-        $formDef = $this->createFormBuilder($survey);
-        $formDef->add('state', 'choice', array('label' => 'FORM.USER.STATE', 'required' => false, 'choices' => $status, 'placeholder' => 'FORM.USER.DEFAULT', 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('date', 'text', array('label' => 'FORM.USER.DATE', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('qno', 'text', array('label' => 'FORM.USER.QNO', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('token', 'text', array('label' => 'FORM.USER.TOKEN', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
-        $formDef->add('cancel', 'submit', array('label' => 'FORM.USER.CANCEL.'.strtoupper($action),
+        $surveyForm = new SurveyForm();
+        $surveyForm->date = $survey->getDate() != null ? date("j-M-Y", $survey->getDate()) : "";
+        $surveyForm->state = $survey->getState();
+        $formDef = $this->createFormBuilder($surveyForm);
+        $formDef->add('state', 'choice', array('label' => 'FORM.SURVEY.STATE', 'required' => false, 'choices' => $status, 'placeholder' => 'FORM.SURVEY.DEFAULT', 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('date', 'text', array('label' => 'FORM.SURVEY.DATE.LABEL', 'help' => 'FORM.SURVEY.DATE.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('cancel', 'submit', array('label' => 'FORM.SURVEY.CANCEL.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'buttontype' => 'btn btn-default',
                                                 'icon' => 'fa fa-times'));
-        $formDef->add('save', 'submit', array('label' => 'FORM.USER.SUBMIT.'.strtoupper($action),
+        $formDef->add('save', 'submit', array('label' => 'FORM.SURVEY.SUBMIT.'.strtoupper($action),
                                                 'translation_domain' => 'admin',
                                                 'icon' => 'fa fa-check'));
         return $formDef->getForm();
     }
     
     private function checkForm($form, QSurveys $survey) {
+        $surveyForm = $form->getData();
         if ($form->isValid()) {
-//            $survey->setDate(date_create_from_format("j-M-Y", $form->getData()->getDate()));
-            return true;
+            $noErrors = true;
+            if ($surveyForm->date == null || trim($surveyForm->date) == '') {
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SURVEY.NODATE', array(), 'admin')));
+                $noErrors = false;
+            }
+            else {
+                $survey->setDate(date_create_from_format("j-M-Y", $surveyForm->date));
+            }
+            if ($surveyForm->state === null) {
+                $form->addError(new FormError($this->get('translator')->trans('FORM.SURVEY.NOSTATE', array(), 'admin')));
+                $noErrors = false;
+            }
+            else {
+                $survey->setState($surveyForm->state);
+            }
+            return $noErrors;
         }
         return false;
     }
@@ -126,7 +141,7 @@ class SurveyController extends Controller
         $em->flush();
     }
     
-   public function getReferer(Request $request) {
+   private function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');
             $session = $request->getSession();

@@ -6,9 +6,9 @@
 {% block maincontent %}
 <div class="container" role="main">
     <div class="panel panel-success">
-        <div class="panel-heading"><b>{{ ['FORM.USER.TITLE.',action]|join|upper|trans|upper }}</b></div>
+        <div class="panel-heading"><b>{{ ['FORM.SURVEY.TITLE.',action]|join|upper|trans|upper }}</b></div>
         <div class="panel-body lead">
-            {{ ['FORM.USER.PROMPT.',action]|join|upper|trans }}
+            {{ ['FORM.SURVEY.PROMPT.',action]|join|upper|trans }}
         </div>
         <div class="panel-body">
         {{ form(form) }}

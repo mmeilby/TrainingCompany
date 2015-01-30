@@ -95,6 +95,7 @@ class SchemaController extends Controller
     private function makeForm(QSchema $schema, $action) {
         $formDef = $this->createFormBuilder($schema);
         $formDef->add('name', 'text', array('label' => 'FORM.SCHEMA.NAME.LABEL', 'help' => 'FORM.SCHEMA.NAME.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('invitation', 'text', array('label' => 'FORM.SCHEMA.INVITATION.LABEL', 'help' => 'FORM.SCHEMA.INVITATION.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('signer', 'text', array('label' => 'FORM.SCHEMA.SIGNER.LABEL', 'help' => 'FORM.SCHEMA.SIGNER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('sender', 'text', array('label' => 'FORM.SCHEMA.SENDER.LABEL', 'help' => 'FORM.SCHEMA.SENDER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('email', 'text', array('label' => 'FORM.SCHEMA.EMAIL.LABEL', 'help' => 'FORM.SCHEMA.EMAIL.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
@@ -110,15 +111,16 @@ class SchemaController extends Controller
     
     private function checkForm($form, QSchema $schema) {
         if ($form->isValid()) {
+            $noError = true;
             if ($schema->getName() == null || trim($schema->getName()) == '') {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NONAME', array(), 'admin')));
-                return false;
+                $noError = false;
             }
             if ($schema->getEmail() == null || trim($schema->getEmail()) == '') {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NOEMAIL', array(), 'admin')));
-                return false;
+                $noError = false;
             }
-            return true;
+            return $noError;
         }
         return false;
     }
@@ -154,7 +156,7 @@ class SchemaController extends Controller
         $em->flush();
     }
     
-    public function getReferer(Request $request) {
+    private function getReferer(Request $request) {
         if ($request->isMethod('GET')) {
             $returnUrl = $request->headers->get('referer');
             $session = $request->getSession();

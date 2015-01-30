@@ -7,12 +7,6 @@
         <div class="panel-heading"><b>{{ 'LIST.SURVEYS.TITLE'|trans|upper }}</b></div>
         <div class="panel-body lead">
             {{ 'LIST.SURVEYS.CAPTION'|trans({'%SUBJECT%': subject}) }}
-{% if schema is defined %}
-            <br />
-            <a href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
-                {% trans %}Inviter respondenter{% endtrans %}
-            </a>
-{% endif %}
         </div>
         <table class="table table-striped">
             <tbody>
@@ -26,12 +20,6 @@
                     </td>
                     <td>{{ ['FORM.SURVEY.CHOICE.STATUS.',survey.state]|join()|trans([],'admin') }}</td>
                     <td>{{ survey.date|date('j-M-Y') }}</td>
-                    <td>{{ survey.qno }}</td>
-                    <td class="narrow-col">
-                        <a href="{{ path('_admin_survey_add') }}">
-                            <span class="glyphicon glyphicon-file"></span>
-                        </a>    
-                    </td>
                     <td class="narrow-col">
                         <a href="{{ path('_admin_survey_chg', { 'id': survey.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span>
@@ -51,26 +39,18 @@
         {% endfor %}
     {% else %}
                 <tr>
-                    <td class="user">
-                        <a href="{{ path('_admin_survey_add') }}">
+                    <td class="user" colspan="6">
                         {{'LIST.SURVEYS.NOITEMS'|trans|upper}}
-                        </a>    
                     </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="narrow-col">
-                        <a href="{{ path('_admin_survey_add') }}">
-                            <span class="glyphicon glyphicon-file"></span>
-                        </a>    
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
                 </tr>
     {% endif %}
             </tbody>
         </table>
     </div>
+{% if schema is defined %}
+    <a class="btn btn-primary btn-lg" href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">
+        <span class="fa fa-envelope"></span>&nbsp;{% trans %}Inviter respondenter{% endtrans %}
+    </a>
+{% endif %}
 </div>
 {% endblock %}
