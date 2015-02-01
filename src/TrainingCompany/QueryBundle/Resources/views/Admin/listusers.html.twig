@@ -1,16 +1,25 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 {% trans_default_domain "admin" %}
 
+{% block menu %}
+    <li>
+        <a href="{{ path('_admin_user_list') }}">{% trans %}MENU.ADMIN.USERS{% endtrans %}</a>
+    </li>
+    <li>
+        <a href="{{ path('_admin_schema_list') }}">{% trans %}MENU.ADMIN.SCHEMAS{% endtrans %}</a>
+    </li>
+{% endblock %}
+
 {% block maincontent %}
 <div class="container" role="main">
-    <div class="panel panel-success">
+    <div class="panel panel-primary">
         <div class="panel-heading"><b>{{ 'LIST.USERS.TITLE'|trans|upper }}</b></div>
         <div class="panel-body lead">
             {% trans %}LIST.USERS.CAPTION{% endtrans %}
         </div>
+    {% if users|length > 0 %}
         <table class="table table-striped">
             <tbody>
-    {% if users|length > 0 %}
         {% for user in users %}
                 <tr>
                     <td class="user">
@@ -23,11 +32,6 @@
             {% endif %}
                     </td>
                     <td>{{ user.email }}</td>
-                    <td class="narrow-col">
-                        <a href="{{ path('_admin_user_add') }}">
-                            <span class="glyphicon glyphicon-file"></span>
-                        </a>    
-                    </td>
                     <td class="narrow-col">
                         <a href="{{ path('_admin_user_chg', { 'userid': user.id }) }}">
                             <span class="glyphicon glyphicon-edit"></span>
@@ -45,26 +49,18 @@
                     </td>
                 </tr>
         {% endfor %}
-    {% else %}
-                <tr>
-                    <td class="user">
-                        <a href="{{ path('_admin_user_add') }}">
-                        {{'LIST.USERS.NOITEMS'|trans|upper}}
-                        </a>    
-                    </td>
-                    <td></td>
-                    <td class="narrow-col">
-                        <a href="{{ path('_admin_user_add') }}">
-                            <span class="glyphicon glyphicon-file"></span>
-                        </a>    
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-    {% endif %}
             </tbody>
         </table>
+    {% else %}
+        <div class="panel-body">
+            <span class="text-uppercase">
+                {% trans %}LIST.USERS.NOITEMS{% endtrans %}
+            </span>
+        </div>
+    {% endif %}
     </div>
+    <a class="btn btn-primary btn-lg" href="{{ path('_admin_user_add') }}">
+        <span class="fa fa-file"></span>&nbsp;{% trans %}LIST.USERS.NEW{% endtrans %}
+    </a>
 </div>
 {% endblock %}

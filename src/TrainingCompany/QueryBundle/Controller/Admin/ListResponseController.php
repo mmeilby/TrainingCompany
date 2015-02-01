@@ -65,6 +65,6 @@ class ListResponseController extends Controller
         foreach ($responses as $response) {
             ksort($response);
         }
-        return array('responses' => $responses, 'subject' => $schema->getName()."/".$person->getName());
+        return array('responses' => $responses, 'schema' => $schema, 'user' => $person);
     }
 }

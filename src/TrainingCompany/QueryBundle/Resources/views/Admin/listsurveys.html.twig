@@ -1,16 +1,25 @@
 {% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
 {% trans_default_domain "admin" %}
 
+{% block menu %}
+    <li>
+        <a href="{{ path('_admin_user_list') }}">{% trans %}MENU.ADMIN.USERS{% endtrans %}</a>
+    </li>
+    <li>
+        <a href="{{ path('_admin_schema_list') }}">{% trans %}MENU.ADMIN.SCHEMAS{% endtrans %}</a>
+    </li>
+{% endblock %}
+
 {% block maincontent %}
 <div class="container" role="main">
-    <div class="panel panel-success">
+    <div class="panel panel-primary">
         <div class="panel-heading"><b>{{ 'LIST.SURVEYS.TITLE'|trans|upper }}</b></div>
         <div class="panel-body lead">
             {{ 'LIST.SURVEYS.CAPTION'|trans({'%SUBJECT%': subject}) }}
         </div>
+    {% if surveys|length > 0 %}
         <table class="table table-striped">
             <tbody>
-    {% if surveys|length > 0 %}
         {% for survey in surveys %}
                 <tr>
                     <td class="user">
@@ -37,15 +46,15 @@
                     </td>
                 </tr>
         {% endfor %}
-    {% else %}
-                <tr>
-                    <td class="user" colspan="6">
-                        {{'LIST.SURVEYS.NOITEMS'|trans|upper}}
-                    </td>
-                </tr>
-    {% endif %}
             </tbody>
         </table>
+    {% else %}
+        <div class="panel-body">
+            <span class="text-uppercase">
+                {% trans %}LIST.SURVEYS.NOITEMS{% endtrans %}
+            </span>
+        </div>
+    {% endif %}
     </div>
 {% if schema is defined %}
     <a class="btn btn-primary btn-lg" href="{{ path('_admin_invite', { 'schemaid': schema.id }) }}">

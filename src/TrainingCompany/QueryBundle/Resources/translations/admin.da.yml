@@ -110,28 +110,33 @@ FORM:
     FOLLOWUP:
         TITLE: Ryk respondenter for svar
         CAPTION: Følgende respondenter har ikke afsluttet undersøgelsen %SUBJECT%
-        LINK: Send notifikationer til følgende respondenter
-        DONE: Notifikationer er sendt til følgende respondenter
-        NOITEMS: Alle respondenter har færdiggjort deres svar - der er ingen at rykke
+        LINK: Send notifikation til respondenterne
+        DONE: Notifikation er sendt til respondenterne
+        NOITEMS: Der er ingen respondenter at rykke
 LIST:
     SURVEYS:
-        TITLE: Relationeer til undersøgelse
-        CAPTION: Undersøgelser tilknyttet %SUBJECT%
+        TITLE: Status på besvarelser
+        CAPTION: Besvarelser tilknyttet %SUBJECT%
         NOITEMS: Der er ingen respondenter tilknyttet undersøgelsen
     SCHEMAS:
         TITLE: Skemaer
         CAPTION: Skemaer til brug for undersøgelser
         NOITEMS: Der er ingen skemaer
+        NEW: Definer nyt skema
     USERS:
         TITLE: Respondenter
         CAPTION: Oprettede eller inviterede respondenter
         NOITEMS: Der er ingen respondenter
+        NEW: Opret ny respondent
     RESPONSES:
         TITLE: Undersøgelsessvar
-        CAPTION: Svar givet til undersøgelsen %SUBJECT%
+        CAPTION: Svar givet af %USER% på undersøgelsen %SCHEMA%
         NOITEMS: Der er ikke afgivet svar
     DOWNLOADRESP:
         TITLE: Resultat af undersøgelse
         CAPTION: Afsluttede svar på undersøgelsen %SUBJECT%
         NOITEMS: Ingen respondenter har færdiggjort deres svar endnu
-        
+MENU:
+    ADMIN:
+        USERS: Respondenter
+        SCHEMAS: Skemaer

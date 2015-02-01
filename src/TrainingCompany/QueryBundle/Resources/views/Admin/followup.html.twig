@@ -3,23 +3,22 @@
 
 {% block maincontent %}
 <div class="container" role="main">
-    <div class="panel panel-success">
+    <div class="panel panel-primary">
         <div class="panel-heading"><b>{{ 'FORM.FOLLOWUP.TITLE'|trans|upper }}</b></div>
         <div class="panel-body">
-            <h2>{{ 'FORM.FOLLOWUP.CAPTION'|trans({'%SUBJECT%': schema.name}) }}</h2>
-            <p>
-    {% if show %}
-                <a href="{{ path('_admin_send_followup', {'schemaid': schema.id }) }}">
-                    {% trans %}FORM.FOLLOWUP.LINK{% endtrans %}
-                </a>
-    {% else %}
+            <p class="lead">{{ 'FORM.FOLLOWUP.CAPTION'|trans({'%SUBJECT%': schema.name}) }}</p>
+    {% if not show %}
+            <div class="alert alert-info alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert">
+                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
                 <b>{% trans %}FORM.FOLLOWUP.DONE{% endtrans %}</b>
+            </div>
     {% endif %}
-            </p>
         </div>
+    {% if surveys|length > 0 %}
         <table class="table table-striped">
             <tbody>
-    {% if surveys|length > 0 %}
         {% for survey in surveys %}
                 <tr>
                     <td class="user">
@@ -38,18 +37,20 @@
                     </td>
                 </tr>
         {% endfor %}
-    {% else %}
-                <tr>
-                    <td class="user">
-                        {{'FORM.FOLLOWUP.NOITEMS'|trans|upper}}
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-    {% endif %}
             </tbody>
         </table>
+    {% else %}
+        <div class="panel-body">
+            <span class="text-uppercase">
+                {% trans %}FORM.FOLLOWUP.NOITEMS{% endtrans %}
+            </span>
+        </div>
+    {% endif %}
     </div>
+{% if surveys|length > 0 %}
+    <a class="btn btn-primary btn-lg" href="{{ path('_admin_send_followup', {'schemaid': schema.id }) }}">
+        <span class="fa fa-envelope"></span>&nbsp;{% trans %}FORM.FOLLOWUP.LINK{% endtrans %}
+    </a>
+{% endif %}
 </div>
 {% endblock %}
