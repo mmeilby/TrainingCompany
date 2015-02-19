@@ -2,14 +2,14 @@
     <div style="margin-bottom: 30px;">
     {% if title is not null %}
         <h2 class="hidden-xs" style="margin-bottom: 0;">
-            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title }}
+            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title|trans({}, 'admin') }}
         </h2>
         <h4 class="visible-xs-block" style="margin-bottom: 0;">
-            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title }}
+            <i class="{{ iconclass }}" style="margin-right: 8px"></i>{{ title|trans({}, 'admin') }}
         </h4>
     {% endif %}
         <small>
-            The Training Company undersøgelse
+            {% trans from 'admin' %}PAGEHEADER.SUBTITLE{% endtrans %}
     {% if company is not null %}
             <span class="hidden-xs"> - </span> 
             <span class="visible-xs-inline"><br /></span> 
@@ -23,8 +23,8 @@
 {% endmacro %}
 
 {% macro title(text) %}
-    <h4 class="hidden-xs">{{ text }}</h4>
-    <h5 class="visible-xs-block">{{ text }}</h5>
+    <h4 class="hidden-xs">{{ text|trans({}, 'admin') }}</h4>
+    <h5 class="visible-xs-block">{{ text|trans({}, 'admin') }}</h5>
 {% endmacro %}
 
 {% macro footer(leftbutton, rightbutton) %}

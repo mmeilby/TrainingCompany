@@ -1,0 +1,21 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
+{% trans_default_domain "admin" %}
+
+{% form_theme form 'TrainingCompanyQueryBundle::layout.script.html.twig' %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    {{ formatter.header('FORM.AUTH.TITLE', 'fa fa-pencil-square-o', schema.name) }}
+    {{ formatter.title('FORM.AUTH.PROMPT') }}
+    <div class="row">
+        <div class="col-sm-4">
+            {% trans %}FORM.AUTH.TEXT{% endtrans %}
+        </div>
+        <div class="col-sm-8">
+            {{ form(form) }}
+        </div>
+    </div>
+    {{ formatter.footer() }}
+</div>
+{% endblock %}

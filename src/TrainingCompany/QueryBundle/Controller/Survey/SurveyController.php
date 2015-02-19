@@ -50,60 +50,54 @@ class SurveyController extends Controller
             return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
         }
         
-        try {
-            $em = $this->getDoctrine()->getManager();
-            $queryBuilder = new QueryBuilderFactory();
-            $survey = $queryBuilder->loadTemplate($em, $tid, $session->get(SurveyController::$sessionMobileDevice, false));
-            $template = $survey->queryblocks;
-            $pages = count($template);
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = new QueryBuilderFactory();
+        $survey = $queryBuilder->loadTemplate($em, $tid, $session->get(SurveyController::$sessionMobileDevice, false));
+        $template = $survey->queryblocks;
+        $pages = count($template);
 
-            $qschema = $em->getRepository(Configuration::SchemaRepo())->find($tid);
-            if (!$qschema) {
-                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+        $qschema = $em->getRepository(Configuration::SchemaRepo())->find($tid);
+        if (!$qschema) {
+            return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+        }
+
+        $queryBlock = $template[$page];
+        $form = $this->makeForm($queryBlock, $user->getId(), $qid, $page, $pages);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            $formData = $form->getData();
+            foreach ($queryBlock as $block) {
+                $block->readForm($formData);
+                $block->persist($em, $user->getId(), $qid, $page);
             }
-
+            $em->flush();
+            if ($formData->direction == "suspend") {
+                return $this->redirect($this->generateUrl('_suspend'));
+            } else {
+                $page = $formData->direction-1;
+                if ($page >= $pages) {
+                    $qsurveys = $em->getRepository(Configuration::SurveyRepo())->find($qid);
+                    if (!$qsurveys) {
+                        return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+                    }
+                    $qsurveys->setState(QSurveys::$STATE_FINISHED);
+                    $qsurveys->setDate(time());
+                    $em->flush();
+                    return $this->render(
+                            'TrainingCompanyQueryBundle:Default:end.html.twig',
+                            array(
+                                'survey' => $qsurveys,
+                                'company' => $qschema->getName()));
+                }
+            }
+            $session->set(SurveyController::$sessionPage, $page);
             $queryBlock = $template[$page];
             $form = $this->makeForm($queryBlock, $user->getId(), $qid, $page, $pages);
-            $form->handleRequest($request);
-            if ($form->isValid()) {
-                $formData = $form->getData();
-                foreach ($queryBlock as $block) {
-                    $block->readForm($formData);
-                    $block->persist($em, $user->getId(), $qid, $page);
-                }
-                $em->flush();
-                if ($formData->direction == "suspend") {
-                    return $this->redirect($this->generateUrl('_suspend'));
-                } else {
-                    $page = $formData->direction-1;
-                    if ($page >= $pages) {
-                        $qsurveys = $em->getRepository(Configuration::SurveyRepo())->find($qid);
-                        if (!$qsurveys) {
-                            return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-                        }
-                        $qsurveys->setState(QSurveys::$STATE_FINISHED);
-                        $qsurveys->setDate(time());
-                        $em->flush();
-                        return $this->render(
-                                'TrainingCompanyQueryBundle:Default:end.html.twig',
-                                array(
-                                    'survey' => $qsurveys,
-                                    'company' => $qschema->getName()));
-                    }
-                }
-                $session->set(SurveyController::$sessionPage, $page);
-                $queryBlock = $template[$page];
-                $form = $this->makeForm($queryBlock, $user->getId(), $qid, $page, $pages);
-            }
-            return array('form' => $form->createView(),
-                         'company' => $qschema->getName(),
-                         'page' => $page + 1,
-                         'pages' => $pages);
         }
-        catch (\PDOException $e) {
-            $session->set('error', $e->getMessage());
-            return $this->redirect($this->generateUrl('_error'));
-        }
+        return array('form' => $form->createView(),
+                     'company' => $qschema->getName(),
+                     'page' => $page + 1,
+                     'pages' => $pages);
     }
 
     /**
@@ -124,28 +118,6 @@ class SurveyController extends Controller
             $block->populateForm($formData, $formDef);
         }
         $formDef->add('direction', 'hidden');
-/*        
-        if ($qno > 0) {
-            $formDef->add('back', 'submit', array('label' => 'Tilbage',
-                                                    'translation_domain' => 'admin',
-                                                    'icon' => 'fa fa-times'));
-        }
-        $formDef->add('suspend', 'submit', array('label' => 'Pause',
-                                                'translation_domain' => 'admin',
-                                                'buttontype' => 'btn btn-default',
-                                                'icon' => 'fa fa-times'));
-        if ($qno+1 == $pages) {
-            $formDef->add('complete', 'submit', array('label' => 'Afslut',
-                                                    'translation_domain' => 'admin',
-                                                    'icon' => 'fa fa-check'));
-        }
-        else {
-            $formDef->add('next', 'submit', array('label' => 'Videre',
-                                                    'translation_domain' => 'admin',
-                                                    'icon' => 'fa fa-times'));
-        }
- * 
- */
         return $formDef->getForm();
     }
 }

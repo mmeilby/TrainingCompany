@@ -65,6 +65,7 @@ parameters:
     mailuser:      %mailer_user%
     admin-name:    The Training Company Admin
     feedback-title: The Training Company Feedback
-    feedback-mail: hvt@training-comp.dk
+    feedback-mail: info@training-comp.dk
     feedback-name: Henrik Vrangbæk Thomsen
+    sauth-title: The Training Company - invitation
     

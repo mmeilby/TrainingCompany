@@ -20,26 +20,19 @@ class FeedbackController extends Controller
      * @Template("TrainingCompanyQueryBundle:Default:feedback.html.twig")
      */
     public function feedbackWithIDAction(Request $request, $id) {
-        try {
-            $em = $this->getDoctrine()->getManager();
-            /* @var $qsurveys QSurveys */
-            $qsurveys = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('token' => $id));
-            if (!$qsurveys) {
-                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-            }
-            $qpersons = $em->getRepository(Configuration::PersonRepo())->find($qsurveys->getPid());
-            if (!$qpersons) {
-                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-            }
-            $qschema = $em->getRepository(Configuration::SchemaRepo())->find($qsurveys->getSid());
-            if (!$qschema) {
-                return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
-            }
+        $em = $this->getDoctrine()->getManager();
+        /* @var $qsurveys QSurveys */
+        $qsurveys = $em->getRepository(Configuration::SurveyRepo())->findOneBy(array('token' => $id));
+        if (!$qsurveys) {
+            return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
         }
-        catch (\PDOException $e) {
-            $session = $request->getSession();
-            $session->set('error', $e->getMessage());
-            return $this->redirect($this->generateUrl('_error'));
+        $qpersons = $em->getRepository(Configuration::PersonRepo())->find($qsurveys->getPid());
+        if (!$qpersons) {
+            return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
+        }
+        $qschema = $em->getRepository(Configuration::SchemaRepo())->find($qsurveys->getSid());
+        if (!$qschema) {
+            return $this->render('TrainingCompanyQueryBundle:Default:invalid_person.html.twig');
         }
 
         $form = $this->makeForm($qpersons);

@@ -29,6 +29,13 @@ class QSchema
     private $name;
 
     /**
+     * @var string $tag
+     *
+     * @ORM\Column(name="tag", type="string", length=20, nullable=true)
+     */
+    private $tag;
+
+    /**
      * @var string $signer
      *
      * @ORM\Column(name="signer", type="string", length=100, nullable=true)
@@ -87,6 +94,29 @@ class QSchema
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set tag
+     *
+     * @param string $tag
+     * @return QSchema
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+    
+        return $this;
+    }
+
+    /**
+     * Get tag
+     *
+     * @return string
+     */
+    public function getTag()
+    {
+        return $this->tag;
     }
 
     /**

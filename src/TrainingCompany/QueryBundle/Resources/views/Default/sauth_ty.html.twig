@@ -1,0 +1,11 @@
+{% extends "TrainingCompanyQueryBundle::layout.html.twig" %}
+{% import "TrainingCompanyQueryBundle:Macro:pageheader.html.twig" as formatter %}
+{% trans_default_domain "admin" %}
+
+{% block maincontent %}
+<div class="container" role="main">
+    {{ formatter.header('FORM.AUTH.THANKS', 'fa fa-thumbs-o-up') }}
+    {% trans %}FORM.AUTH.THANKYOU{% endtrans %}
+    {{ formatter.footer() }}
+</div>
+{% endblock %}

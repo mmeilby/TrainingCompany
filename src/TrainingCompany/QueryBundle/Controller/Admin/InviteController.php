@@ -7,14 +7,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Session\Session;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use TrainingCompany\QueryBundle\Entity\Admin\NewPerson;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QPersons;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSurveys;
 use TrainingCompany\QueryBundle\Entity\Doctrine\QSchema;
 use TrainingCompany\QueryBundle\Entity\Configuration;
-use TrainingCompany\QueryBundle\Controller\QueryBuilderFactory;
 
 class InviteController extends Controller
 {
@@ -97,18 +95,5 @@ class InviteController extends Controller
                dechex(rand(4096, 65535)).'-'.
                substr(bin2hex(str_shuffle(str_pad($name, 6))), 0, 12);
         return $str;
-    }
-    
-    /**
-     * Fejlside til præsentation af tekniske fejl
-     * @Route("/admin/error", name="_admin_error")
-     * @Template("TrainingCompanyQueryBundle:Default:error.html.twig")
-     */
-    public function errorAction(Request $request) {
-        $formDef = $this->createFormBuilder();
-        $form = $formDef->getForm();
-        $session = $request->getSession();
-        $error = $session->get('error');
-        return array('form' => $form->createView(), 'error' => $error);
     }
 }

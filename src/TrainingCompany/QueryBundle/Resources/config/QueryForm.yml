@@ -1,5 +1,5 @@
 form:
-    template: MV Nordic
+    template: pfa
     company: The Training Company
     signer: Henrik Vrangbæk Thomsen
     email: info@training-comp.dk
@@ -23,85 +23,34 @@ form:
             The Training Company<br/>
             <br/>
     pages:
-        personal:
-            title: Personligt
+        gruppe:
+            title: Gruppeadfærd
             description: >
-                Udfyld følgende spørgsmål om dit arbejde
-            blocks:
-                f1: { type: field, label: Afdeling }
-                f2: { type: field, label: Rolle i jobbet }
-        salgsprocessen:
-            title: Salgsprocessen
-            description: >
-                Angiv den grad af enighed du deler med følgende udsagn for salgsprocessen
-            blocks:
-                f1:
-                    type: satisfaction
-                    valuelist:
-                        1: Meget uenig
-                        2: Lidt uenig
-                        3: Enig
-                        4: Lidt enig
-                        5: Meget enig
-                    labels:
-                        - Jeg er salgsorienteret når kunden henvender sig
-                        - Jeg er opsøgende i salgsarbejdet
-                        - Jeg sælger når jeg har kunden i røret
-                        - Jeg er god til at lytte til kundebehov
-                        - Jeg er god til indvendingsbehandling
-                        - Jeg er god til at lukke en aftale med kunden
-                        - Jeg er god til at skabe relationer til kunderne
-                        - Jeg har god indsigt i de produkter vi sælger i firmaet
-                f2:
-                    type: scale
-                    valuelist: { 10: 10%, 20: 20%, 30: 30%, 40: 40%, 50: 50%, 60: 60%, 70: 70%, 80: 80%, 90: 90%, 100: 100% }
-                    label: Hvor meget tid bruger du på salgsarbejdet om ugen (i forhold til din arbejdstid)
-                f3:
-                    type: scale
-                    valuelist: { 10: 10%, 20: 20%, 30: 30%, 40: 40%, 50: 50%, 60: 60%, 70: 70%, 80: 80%, 90: 90%, 100: 100% }
-                    label: Hvor meget tid bruger du på administrativt arbejde om ugen (i forhold til din arbejdstid)
-        samarbejde:
-            title: Samarbejde
-            description: >
-                Angiv den grad af enighed du deler med følgende udsagn for samarbejdet
-            blocks:
-                f1:
-                    type: satisfaction
-                    valuelist:
-                        1: Meget uenig
-                        2: Lidt uenig
-                        3: Enig
-                        4: Lidt enig
-                        5: Meget enig
-                    labels:
-                        - Jeg har et godt samarbejde med mine nærmeste kolleger
-                        - Jeg har et godt samarbejder med de andre afdelinger
-                        - Ledelsen træffer entydige beslutninger
-                        - Ledelsen er handlingsorienteret
-                        - Ledelsen træffer hurtige beslutninger
-                        - Jeg har klare retningslinjer for mit arbejde
-                        - Jeg er glad for at være ansat i MV-nordic
-                        - Jeg får god støtte fra min nærmeste leder
-        kommunikation:
-            title: Kommunikation
-            description: >
-                Angiv den grad af enighed du deler med følgende udsagn for kommunikation
+                Angiv den grad af enighed du deler med følgende udsagn om din gruppeadfærd
             blocks:
                 f1: 
                     type: satisfaction
                     valuelist:
                         1: Meget uenig
-                        2: Lidt uenig
-                        3: Enig
-                        4: Lidt enig
-                        5: Meget enig
+                        2: Mindre uenig
+                        3: Lidt uenig
+                        4: Enig
+                        5: Lidt enig
+                        6: Mere enig
+                        7: Meget enig
                     labels:
-                        - Jeg får den information jeg har brug for
-                        - Jeg opsøger nødvendig information på egen hånd
-                        - Andre afdelinger fortæller uopfordret hvad de arbejder med
-                        - Jeg har et klart billede af i hvilken retningen firmaet udvikler sig
-                        - Jeg har et klart billede af hvad der forventes af mig i mit job
-                        - Jeg får løbende tilbagemeldinger på mine resultater
+                        # Løsningsorienteret
+                        - Jeg skaber hurtigt kontakt med andre mennesker
+                        - Jeg kan lide at stå op og tale i en forsamling
+                        # Proaktiv
+                        - Jeg tager naturligt styringen i en gruppe
+                        - Jeg påtaler gerne mangler i andres arbejde
+                        # Reaktiv
+                        - Jeg bruger tid på at detaljer er korrekte
+                        - Jeg bruger tid på at det jeg afleverer er korrekt
+                        # Problemorienteret
+                        - Jeg kan godt lide faste rammer for mit arbejde
+                        - Jeg synes forandringer i hverdagen er en udfordring
         kultur:
             title: Kultur
             description: >
@@ -158,11 +107,3 @@ form:
                         # Problemorienteret
                         - Jeg finder tit svære udfordringer i mit job
                         - Jeg synes rammerne for mit arbejde gør det svært at udføre jobbet
-        spørgsmål:
-            title: Beskrivende spørgsmål
-            description: >
-                Her vil vi bede dig om at formulere dig frit om følgende tre emner
-            blocks:
-                f1: { type: comment, label: Hvad finder du vigtigt i et godt salgsarbejde }
-                f2: { type: comment, label: Nævn tre ting som vil gøre salgsarbejdet nemmere for dig }
-                f3: { type: comment, label: Hvad motiverer dig i salgsarbejdet }

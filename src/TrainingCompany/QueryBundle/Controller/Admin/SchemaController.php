@@ -27,11 +27,15 @@ class SchemaController extends Controller
             return $this->redirect($returnUrl);
         }
         if ($this->checkForm($form, $schema)) {
-            $qschemas = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
-            if ($qschemas) {
+            if ($em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()))) {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NAMEEXIST', array(), 'admin')));
             }
-            else {
+            if ($schema->getTag() != null && trim($schema->getTag()) != '') {
+                if ($em->getRepository(Configuration::SchemaRepo())->findOneBy(array('tag' => $schema->getTag()))) {
+                    $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.TAGEXIST', array(), 'admin')));
+                }
+            }
+            if ($form->isValid()) {
                 $em->persist($schema);
                 $em->flush();
                 return $this->redirect($returnUrl);
@@ -57,11 +61,17 @@ class SchemaController extends Controller
             return $this->redirect($returnUrl);
         }
         if ($this->checkForm($form, $schema)) {
-            $qschemas = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
-            if ($qschemas && $qschemas->getId() != $schema->getId()) {
+            $qschemasN = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('name' => $schema->getName()));
+            if ($qschemasN && $qschemasN->getId() != $schema->getId()) {
                 $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.NAMEEXIST', array(), 'admin')));
             }
-            else {
+            if ($schema->getTag() != null && trim($schema->getTag()) != '') {
+                $qschemasT = $em->getRepository(Configuration::SchemaRepo())->findOneBy(array('tag' => $schema->getTag()));
+                if ($qschemasT && $qschemasT->getId() != $schema->getId()) {
+                    $form->addError(new FormError($this->get('translator')->trans('FORM.SCHEMA.TAGEXIST', array(), 'admin')));
+                }
+            }
+            if ($form->isValid()) {
                 $em->flush();
                 return $this->redirect($returnUrl);
             }
@@ -95,6 +105,7 @@ class SchemaController extends Controller
     private function makeForm(QSchema $schema, $action) {
         $formDef = $this->createFormBuilder($schema);
         $formDef->add('name', 'text', array('label' => 'FORM.SCHEMA.NAME.LABEL', 'help' => 'FORM.SCHEMA.NAME.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
+        $formDef->add('tag', 'text', array('label' => 'FORM.SCHEMA.TAG.LABEL', 'help' => 'FORM.SCHEMA.TAG.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('invitation', 'text', array('label' => 'FORM.SCHEMA.INVITATION.LABEL', 'help' => 'FORM.SCHEMA.INVITATION.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('signer', 'text', array('label' => 'FORM.SCHEMA.SIGNER.LABEL', 'help' => 'FORM.SCHEMA.SIGNER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));
         $formDef->add('sender', 'text', array('label' => 'FORM.SCHEMA.SENDER.LABEL', 'help' => 'FORM.SCHEMA.SENDER.HELP', 'required' => false, 'disabled' => $action == 'del', 'translation_domain' => 'admin'));

@@ -41,18 +41,19 @@ class DownloadResponseController extends Controller
     }
     
     private function getResponses($schemaid) {
-        $em = $this->getDoctrine()->getManager();
         $surveys = $this->getSurveyInfo($schemaid);
         $outputar = array();
+        $summary = array();
         foreach ($surveys as $survey) {
-//            $state = $this->get('translator')->trans("FORM.SURVEY.CHOICE.STATUS.".$survey['state'], array(), 'admin');
             $date = date("j-M-Y", $survey['date']);
-            $outputstr = $survey['id'].';'.$date.';"'.$survey['name'].'";"'.$survey['email'].'"';
+            $outputstr = $survey['id'].';'.$date.';"'.$survey['name'].'";"'.$survey['email'].'";"'.$survey['jobtitle'].'";"'.$survey['jobdomain'].'"';
             $answers = $this->getAnswers($survey['id']);
             $comments = $this->getComments($survey['id']);
             $responses = array();
             foreach ($answers as $answer) {
                 $responses[$answer['qno']] = $answer;
+                $summary[$answer['qno']]['label'] = html_entity_decode($answer['label']);
+                $summary[$answer['qno']]['sum'] += $answer['answer'];
             }
             foreach ($comments as $comment) {
                 $responses[$comment['qno']] = $comment;
@@ -68,6 +69,11 @@ class DownloadResponseController extends Controller
             }
             $outputar[$survey['id']] = $outputstr;
         }
+        ksort($summary);
+        $outputar[] = '"SUMMARY"';
+        foreach ($summary as $response) {
+            $outputar[] = '"'.$response['label'].'";'.$response['sum'];
+        }
         return $outputar;
     }
     
@@ -75,7 +81,7 @@ class DownloadResponseController extends Controller
         $em = $this->getDoctrine()->getManager();
         return
             $em->createQuery(
-                    "select s.id,s.date,p.name,p.email ".
+                    "select s.id,s.date,p.name,p.email,p.jobtitle,p.jobdomain ".
                     "from ".Configuration::SurveyRepo()." s ".
                     "inner join ".
                             Configuration::PersonRepo()." p ".

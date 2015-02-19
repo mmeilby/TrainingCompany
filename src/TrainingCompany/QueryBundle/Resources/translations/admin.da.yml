@@ -11,6 +11,9 @@ FORM:
         NAME:
             LABEL: Beskrivelse
             HELP: Et passende navn på skemaet som kan anvendes ved valg af undersøgelser
+        TAG:
+            LABEL: Kaldenavn
+            HELP: Et passende navn på skemaet som kan anvendes til links til undersøgelser
         INVITATION:
             LABEL: Invitation
             HELP: En overskrift der indleder invitationen til denne undersøgelse
@@ -34,6 +37,7 @@ FORM:
         NONAME: Beskrivelse mangler - et skema skal have en beskrivelse
         NOEMAIL: Afsender e-mail mangler - afsender er nødvendig til invitationer
         NAMEEXIST: Beskrivelsen er allerede anvendt - find en variant af beskrivelsen
+        TAGEXIST: Kaldenavnet er allerede anvendt - find en variant af kaldenavnet som passer til beskrivelsen
     SURVEY:
         DEFAULT: Vælg status...
         CHOICE:
@@ -113,6 +117,57 @@ FORM:
         LINK: Send notifikation til respondenterne
         DONE: Notifikation er sendt til respondenterne
         NOITEMS: Der er ingen respondenter at rykke
+    AUTH:
+        TITLE: Tilmeld dig undersøgelsen
+        PROMPT: Du tilmelder dig undersøgelsen ved at udfylde nedenstående felter
+        TEXT: >
+            <p>
+                Tak for din interesse for at deltage i undersøgelsen.
+                For at deltage skal du udfylde formularen med dit navn og e-mail adresse.
+                Vi vil også gerne bede dig om at oplyse den afdeling du arbejder for samt din jobfunktion eller titel.
+            </p>
+            <p>
+                Når du tilmelder dig, sender vi en invitation til at deltage i undersøgelsen,
+                til den e-mail adresse du har oplyst.
+                I invitationen finder du nærmere information om, hvordan du fortsætter.
+            </p>
+            <p>
+                Hvis du ikke modtager en invitation, er du velkommen til at kontakte os -
+                se kontaktoplysningerne nederst på siden.
+            </p>
+            <p>
+                God fornøjelse!
+            </p>
+        THANKS: Tak
+        THANKYOU: >
+            <p>
+                Tak for din interesse for at deltage i undersøgelsen.
+            </p>
+            <p>
+                Vi har sendt dig en invitation til at deltage i undersøgelsen,
+                til den e-mail adresse du har oplyst.
+                I invitationen finder du nærmere information om, hvordan du fortsætter.
+            </p>
+            <p>
+                Hvis du ikke modtager en invitation, er du velkommen til at kontakte os -
+                se kontaktoplysningerne nederst på siden.
+            </p>
+        NAME:
+            LABEL: Fulde navn
+            HELP: Dit fulde navn som anvendes i invitationer og på besvarelser
+        EMAIL:
+            LABEL: E-mail
+            HELP: E-mail adresse hvortil invitation til undersøgelsen kan sendes
+        JOB:
+            LABEL: Titel
+            HELP: Frit felt hvor jobfunktion kan angives
+        DEPT:
+            LABEL: Afdeling
+            HELP: Frit felt hvor afdeling kan angives
+        INVITE: Tilmeld
+        NONAME: Dit navn mangler - vi skal bruge et navn.
+        NOEMAIL: E-mail mangler - modtageradresse er nødvendig for at deltage i undersøgelsen.
+        INVALIDEMAIL: E-mail er ikke anvendelig - vi kan ikke sende en invitation til denne adresse.
 LIST:
     SURVEYS:
         TITLE: Status på besvarelser
@@ -140,3 +195,5 @@ MENU:
     ADMIN:
         USERS: Respondenter
         SCHEMAS: Skemaer
+PAGEHEADER:
+    SUBTITLE: The Training Company undersøgelse
