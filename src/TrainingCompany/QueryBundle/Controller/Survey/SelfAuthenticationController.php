@@ -157,7 +157,7 @@ class SelfAuthenticationController extends Controller
             ->setSubject($schema->getInvitation())
             ->setFrom(array($schema->getEmail() => $schema->getSigner()))
             ->setTo(array($user->getEmail() => $user->getName()))
-            ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:ny_invitemail.html.twig', $parms), 'text/html');
+            ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:invitemail.html.twig', $parms), 'text/html');
         $this->get('mailer')->send($message);
     }
     

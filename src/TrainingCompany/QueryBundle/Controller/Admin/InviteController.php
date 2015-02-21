@@ -72,7 +72,7 @@ class InviteController extends Controller
                 ->setSubject($schema->getInvitation())
                 ->setFrom(array($schema->getEmail() => $schema->getSigner()))
                 ->setTo(array($qpersons->getEmail() => $qpersons->getName()))
-                ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:ny_invitemail.html.twig', $parms), 'text/html');
+                ->setBody($this->renderView('TrainingCompanyQueryBundle:Mail:invitemail.html.twig', $parms), 'text/html');
 //                    ->addPart($this->renderView('TrainingCompanyQueryBundle:Default:invitemail.html.twig', $parms));
             $this->get('mailer')->send($message);
             return array(
